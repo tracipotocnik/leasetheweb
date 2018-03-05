@@ -13,6 +13,7 @@ wp-content/advanced-cache.php
 wp-content/wp-cache-config.php
 sitemap.xml
 sitemap.xml.gz
+node_modules
 *.log
 
 # @TODO writable paths
