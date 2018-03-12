@@ -118,6 +118,7 @@
   &:hover,
   &:focus {
     color: var(--link-hover-color);
+    outline: none;
   }
 }
 

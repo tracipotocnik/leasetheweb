@@ -3187,7 +3187,8 @@ a {
     .footer__social__link {
       margin: 0 0 0 1.5625rem; } }
   .footer__social__link:hover, .footer__social__link:focus {
-    color: var(--link-hover-color); }
+    color: var(--link-hover-color);
+    outline: none; }
 
 .footer__bottom {
   border-top: 1px solid #828282;
@@ -3260,7 +3261,8 @@ a {
 .menu a {
   color: #fff; }
   .menu a:hover, .menu a:focus {
-    color: var(--link-hover-color); }
+    color: var(--link-hover-color);
+    outline: none; }
 
 .primary-nav {
   position: fixed;

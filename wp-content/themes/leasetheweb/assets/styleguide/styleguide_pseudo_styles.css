@@ -331,6 +331,7 @@ a.pseudo-class-focus {
 .footer__social__link.pseudo-class-hover,
 .footer__social__link.pseudo-class-focus {
   color: var(--link-hover-color);
+  outline: none;
 }
 
 .hamburger.pseudo-class-focus {
@@ -340,4 +341,5 @@ a.pseudo-class-focus {
 .menu a.pseudo-class-hover,
 .menu a.pseudo-class-focus {
   color: var(--link-hover-color);
+  outline: none;
 }
