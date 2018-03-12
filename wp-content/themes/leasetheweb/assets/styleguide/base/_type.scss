@@ -1,0 +1,42 @@
+// Type
+
+body {
+  color: var(--text-color-default);
+  font-size: rem-calc(14);
+
+  @include primary-font();
+}
+
+h1 {
+  font-size: rem-calc(60);
+
+  @include primary-font-bold();
+}
+
+h2 {
+  font-size: rem-calc(48);
+
+  @include primary-font-bold();
+}
+
+h3 {
+  font-size: rem-calc(30);
+
+  @include primary-font-bold();
+}
+
+h4 {
+  font-size: rem-calc(24);
+
+  @include primary-font-bold();
+}
+
+a {
+  color: var(--link-color);
+  transition: all $transition;
+
+  &:hover,
+  &:focus {
+    color: var(--link-hover-color);
+  }
+}

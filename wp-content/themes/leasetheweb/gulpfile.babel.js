@@ -222,8 +222,14 @@ gulp.task('default', function() {
   // Watch .js files
   gulp.watch(`${source}/js/**/*.js`, ['scripts']);
 
+  // Watch icon files
+  gulp.watch(`${source}/icons/**/*`, ['icons']);
+
   // Watch image files
   gulp.watch(`${source}/img/**/*`, ['images']);
+
+  // Watch template files
+  gulp.watch('views/**/*', sync.reload);
 });
 
 // Build

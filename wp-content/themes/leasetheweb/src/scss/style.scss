@@ -37,11 +37,17 @@ Description: Custom theme starter kit
 
 // Site Styles
 // ======================
+@import "base/fonts";
 @import "base/icons";
-@import "components/site-header";
+@import "base/type";
+@import "components/ctas";
+@import "components/footer";
+@import "components/hamburger";
+@import "components/menu";
 @import "components/primary-nav";
 @import "components/quote";
-@import "components/ctas";
+@import "components/site-header";
+@import "components/title-bar";
 
 // Utility
 // ======================

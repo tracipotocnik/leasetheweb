@@ -1,3 +1,170 @@
+'use strict';var cssVarPoly={
+init:function init(){
+// first lets see if the browser supports CSS variables
+// No version of IE supports window.CSS.supports, so if that isn't supported in the first place we know CSS variables is not supported
+// Edge supports supports, so check for actual variable support
+if(window.CSS&&window.CSS.supports&&window.CSS.supports('(--foo: red)')){
+// this browser does support variables, abort
+console.log('your browser supports CSS variables, aborting and letting the native support handle things.');
+return;
+}else{
+// edge barfs on console statements if the console is not open... lame!
+console.log('no support for you! polyfill all (some of) the things!!');
+document.querySelector('body').classList.add('cssvars-polyfilled');
+}
+
+cssVarPoly.ratifiedVars={};
+cssVarPoly.varsByBlock={};
+cssVarPoly.oldCSS={};
+
+// start things off
+cssVarPoly.findCSS();
+cssVarPoly.updateCSS();
+},
+
+// find all the css blocks, save off the content, and look for variables
+findCSS:function findCSS(){
+var styleBlocks=document.querySelectorAll('style:not(.inserted),link[type="text/css"]');
+
+// we need to track the order of the style/link elements when we save off the CSS, set a counter
+var counter=1;
+
+// loop through all CSS blocks looking for CSS variables being set
+[].forEach.call(styleBlocks,function(block){
+// console.log(block.nodeName);
+var theCSS=void 0;
+if(block.nodeName==='STYLE'){
+// console.log("style");
+theCSS=block.innerHTML;
+cssVarPoly.findSetters(theCSS,counter);
+}else if(block.nodeName==='LINK'){
+// console.log("link");
+cssVarPoly.getLink(block.getAttribute('href'),counter,function(counter,request){
+cssVarPoly.findSetters(request.responseText,counter);
+cssVarPoly.oldCSS[counter]=request.responseText;
+cssVarPoly.updateCSS();
+});
+theCSS='';
+}
+// save off the CSS to parse through again later. the value may be empty for links that are waiting for their ajax return, but this will maintain the order
+cssVarPoly.oldCSS[counter]=theCSS;
+counter++;
+});
+},
+
+// find all the "--variable: value" matches in a provided block of CSS and add them to the master list
+findSetters:function findSetters(theCSS,counter){
+// console.log(theCSS);
+cssVarPoly.varsByBlock[counter]=theCSS.match(/(--.+:.+;)/g)||[];
+},
+
+// run through all the CSS blocks to update the variables and then inject on the page
+updateCSS:function updateCSS(){
+// first lets loop through all the variables to make sure later vars trump earlier vars
+cssVarPoly.ratifySetters(cssVarPoly.varsByBlock);
+
+// loop through the css blocks (styles and links)
+for(var curCSSID in cssVarPoly.oldCSS){
+// console.log("curCSS:",oldCSS[curCSSID]);
+var newCSS=cssVarPoly.replaceGetters(cssVarPoly.oldCSS[curCSSID],cssVarPoly.ratifiedVars);
+// put it back into the page
+// first check to see if this block exists already
+if(document.querySelector('#inserted'+curCSSID)){
+// console.log("updating")
+document.querySelector('#inserted'+curCSSID).innerHTML=newCSS;
+}else{
+// console.log("adding");
+var style=document.createElement('style');
+style.type='text/css';
+style.innerHTML=newCSS;
+style.classList.add('inserted');
+style.id='inserted'+curCSSID;
+document.getElementsByTagName('head')[0].appendChild(style);
+}
+};
+},
+
+// parse a provided block of CSS looking for a provided list of variables and replace the --var-name with the correct value
+replaceGetters:function replaceGetters(curCSS,varList){
+// console.log(varList);
+for(var theVar in varList){
+// console.log(theVar);
+// match the variable with the actual variable name
+var getterRegex=new RegExp('var\\(\\s*'+theVar+'\\s*\\)','g');
+// console.log(getterRegex);
+// console.log(curCSS);
+curCSS=curCSS.replace(getterRegex,varList[theVar]);
+
+// now check for any getters that are left that have fallbacks
+var getterRegex2=new RegExp('var\\(\\s*.+\\s*,\\s*(.+)\\)','g');
+// console.log(getterRegex);
+// console.log(curCSS);
+var matches=curCSS.match(getterRegex2);
+if(matches){
+// console.log("matches",matches);
+matches.forEach(function(match){
+// console.log(match.match(/var\(.+,\s*(.+)\)/))
+// find the fallback within the getter
+curCSS=curCSS.replace(match,match.match(/var\(.+,\s*(.+)\)/)[1]);
+});
+
+}
+
+// curCSS = curCSS.replace(getterRegex2,varList[theVar]);
+};
+// console.log(curCSS);
+return curCSS;
+},
+
+// determine the css variable name value pair and track the latest
+ratifySetters:function ratifySetters(varList){
+// console.log("varList:",varList);
+// loop through each block in order, to maintain order specificity
+for(var curBlock in varList){
+var curVars=varList[curBlock];
+// console.log("curVars:",curVars);
+// loop through each var in the block
+curVars.forEach(function(theVar){
+// console.log(theVar);
+// split on the name value pair separator
+var matches=theVar.split(/:\s*/);
+// console.log(matches);
+// put it in an object based on the varName. Each time we do this it will override a previous use and so will always have the last set be the winner
+// 0 = the name, 1 = the value, strip off the ; if it is there
+cssVarPoly.ratifiedVars[matches[0]]=matches[1].replace(/;/,'');
+});
+};
+// console.log(ratifiedVars);
+},
+
+// get the CSS file (same domain for now)
+getLink:function getLink(url,counter,success){
+var request=new XMLHttpRequest();
+request.open('GET',url,true);
+request.overrideMimeType('text/css;');
+request.onload=function(){
+if(request.status>=200&&request.status<400){
+// Success!
+// console.log(request.responseText);
+if(typeof success==='function'){
+success(counter,request);
+}
+}else{
+// We reached our target server, but it returned an error
+console.warn('an error was returned from:',url);
+}
+};
+
+request.onerror=function(){
+// There was a connection error of some sort
+console.warn('we could not get anything from:',url);
+};
+
+request.send();
+}};
+
+
+cssVarPoly.init();
 'use strict';var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};/*! Magnific Popup - v1.0.0 - 2015-01-03
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2015 Dmitry Semenov; */
@@ -2314,8 +2481,6 @@ jQuery('#meerkat-wrap').replaceWith(jQuery('#meerkat-container').contents().hide
 * http://scottjehl.github.io/picturefill
 * Copyright (c) 2015 https://github.com/scottjehl/picturefill/blob/master/Authors.txt; Licensed MIT */
 window.matchMedia||(window.matchMedia=function(){"use strict";var a=window.styleMedia||window.media;if(!a){var b=document.createElement("style"),c=document.getElementsByTagName("script")[0],d=null;b.type="text/css",b.id="matchmediajs-test",c.parentNode.insertBefore(b,c),d="getComputedStyle"in window&&window.getComputedStyle(b,null)||b.currentStyle,a={matchMedium:function matchMedium(a){var c="@media "+a+"{ #matchmediajs-test { width: 1px; } }";return b.styleSheet?b.styleSheet.cssText=c:b.textContent=c,"1px"===d.width;}};}return function(b){return{matches:a.matchMedium(b||"all"),media:b||"all"};};}()),function(a,b,c){"use strict";function d(b){"object"==(typeof module==="undefined"?"undefined":_typeof(module))&&"object"==_typeof(module.exports)?module.exports=b:"function"==typeof define&&define.amd&&define("picturefill",function(){return b;}),"object"==(typeof a==="undefined"?"undefined":_typeof(a))&&(a.picturefill=b);}function e(a){var b,c,d,e,f,i=a||{};b=i.elements||g.getAllElements();for(var j=0,k=b.length;k>j;j++){if(c=b[j],d=c.parentNode,e=void 0,f=void 0,"IMG"===c.nodeName.toUpperCase()&&(c[g.ns]||(c[g.ns]={}),i.reevaluate||!c[g.ns].evaluated)){if(d&&"PICTURE"===d.nodeName.toUpperCase()){if(g.removeVideoShim(d),e=g.getMatch(c,d),e===!1)continue;}else e=void 0;(d&&"PICTURE"===d.nodeName.toUpperCase()||!g.sizesSupported&&c.srcset&&h.test(c.srcset))&&g.dodgeSrcset(c),e?(f=g.processSourceSet(e),g.applyBestCandidate(f,c)):(f=g.processSourceSet(c),(void 0===c.srcset||c[g.ns].srcset)&&g.applyBestCandidate(f,c)),c[g.ns].evaluated=!0;}}}function f(){function c(){clearTimeout(d),d=setTimeout(h,60);}g.initTypeDetects(),e();var d,f=setInterval(function(){return e(),/^loaded|^i|^c/.test(b.readyState)?void clearInterval(f):void 0;},250),h=function h(){e({reevaluate:!0});};a.addEventListener?a.addEventListener("resize",c,!1):a.attachEvent&&a.attachEvent("onresize",c);}if(a.HTMLPictureElement)return void d(function(){});b.createElement("picture");var g=a.picturefill||{},h=/\s+\+?\d+(e\d+)?w/;g.ns="picturefill",function(){g.srcsetSupported="srcset"in c,g.sizesSupported="sizes"in c,g.curSrcSupported="currentSrc"in c;}(),g.trim=function(a){return a.trim?a.trim():a.replace(/^\s+|\s+$/g,"");},g.makeUrl=function(){var a=b.createElement("a");return function(b){return a.href=b,a.href;};}(),g.restrictsMixedContent=function(){return"https:"===a.location.protocol;},g.matchesMedia=function(b){return a.matchMedia&&a.matchMedia(b).matches;},g.getDpr=function(){return a.devicePixelRatio||1;},g.getWidthFromLength=function(a){var c;if(!a||a.indexOf("%")>-1!=!1||!(parseFloat(a)>0||a.indexOf("calc(")>-1))return!1;a=a.replace("vw","%"),g.lengthEl||(g.lengthEl=b.createElement("div"),g.lengthEl.style.cssText="border:0;display:block;font-size:1em;left:0;margin:0;padding:0;position:absolute;visibility:hidden",g.lengthEl.className="helper-from-picturefill-js"),g.lengthEl.style.width="0px";try{g.lengthEl.style.width=a;}catch(d){}return b.body.appendChild(g.lengthEl),c=g.lengthEl.offsetWidth,0>=c&&(c=!1),b.body.removeChild(g.lengthEl),c;},g.detectTypeSupport=function(b,c){var d=new a.Image();return d.onerror=function(){g.types[b]=!1,e();},d.onload=function(){g.types[b]=1===d.width,e();},d.src=c,"pending";},g.types=g.types||{},g.initTypeDetects=function(){g.types["image/jpeg"]=!0,g.types["image/gif"]=!0,g.types["image/png"]=!0,g.types["image/svg+xml"]=b.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"),g.types["image/webp"]=g.detectTypeSupport("image/webp","data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=");},g.verifyTypeSupport=function(a){var b=a.getAttribute("type");if(null===b||""===b)return!0;var c=g.types[b];return"string"==typeof c&&"pending"!==c?(g.types[b]=g.detectTypeSupport(b,c),"pending"):"function"==typeof c?(c(),"pending"):c;},g.parseSize=function(a){var b=/(\([^)]+\))?\s*(.+)/g.exec(a);return{media:b&&b[1],length:b&&b[2]};},g.findWidthFromSourceSize=function(c){for(var d,e=g.trim(c).split(/\s*,\s*/),f=0,h=e.length;h>f;f++){var i=e[f],j=g.parseSize(i),k=j.length,l=j.media;if(k&&(!l||g.matchesMedia(l))&&(d=g.getWidthFromLength(k)))break;}return d||Math.max(a.innerWidth||0,b.documentElement.clientWidth);},g.parseSrcset=function(a){for(var b=[];""!==a;){a=a.replace(/^\s+/g,"");var c,d=a.search(/\s/g),e=null;if(-1!==d){c=a.slice(0,d);var f=c.slice(-1);if((","===f||""===c)&&(c=c.replace(/,+$/,""),e=""),a=a.slice(d+1),null===e){var g=a.indexOf(",");-1!==g?(e=a.slice(0,g),a=a.slice(g+1)):(e=a,a="");}}else c=a,a="";(c||e)&&b.push({url:c,descriptor:e});}return b;},g.parseDescriptor=function(a,b){var c,d=b||"100vw",e=a&&a.replace(/(^\s+|\s+$)/g,""),f=g.findWidthFromSourceSize(d);if(e)for(var h=e.split(" "),i=h.length-1;i>=0;i--){var j=h[i],k=j&&j.slice(j.length-1);if("h"!==k&&"w"!==k||g.sizesSupported){if("x"===k){var l=j&&parseFloat(j,10);c=l&&!isNaN(l)?l:1;}}else c=parseFloat(parseInt(j,10)/f);}return c||1;},g.getCandidatesFromSourceSet=function(a,b){for(var c=g.parseSrcset(a),d=[],e=0,f=c.length;f>e;e++){var h=c[e];d.push({url:h.url,resolution:g.parseDescriptor(h.descriptor,b)});}return d;},g.dodgeSrcset=function(a){a.srcset&&(a[g.ns].srcset=a.srcset,a.srcset="",a.setAttribute("data-pfsrcset",a[g.ns].srcset));},g.processSourceSet=function(a){var b=a.getAttribute("srcset"),c=a.getAttribute("sizes"),d=[];return"IMG"===a.nodeName.toUpperCase()&&a[g.ns]&&a[g.ns].srcset&&(b=a[g.ns].srcset),b&&(d=g.getCandidatesFromSourceSet(b,c)),d;},g.backfaceVisibilityFix=function(a){var b=a.style||{},c="webkitBackfaceVisibility"in b,d=b.zoom;c&&(b.zoom=".999",c=a.offsetWidth,b.zoom=d);},g.setIntrinsicSize=function(){var c={},d=function d(a,b,c){b&&a.setAttribute("width",parseInt(b/c,10));};return function(e,f){var h;e[g.ns]&&!a.pfStopIntrinsicSize&&(void 0===e[g.ns].dims&&(e[g.ns].dims=e.getAttribute("width")||e.getAttribute("height")),e[g.ns].dims||(f.url in c?d(e,c[f.url],f.resolution):(h=b.createElement("img"),h.onload=function(){if(c[f.url]=h.width,!c[f.url])try{b.body.appendChild(h),c[f.url]=h.width||h.offsetWidth,b.body.removeChild(h);}catch(a){}e.src===f.url&&d(e,c[f.url],f.resolution),e=null,h.onload=null,h=null;},h.src=f.url)));};}(),g.applyBestCandidate=function(a,b){var c,d,e;a.sort(g.ascendingSort),d=a.length,e=a[d-1];for(var f=0;d>f;f++){if(c=a[f],c.resolution>=g.getDpr()){e=c;break;}}e&&(e.url=g.makeUrl(e.url),b.src!==e.url&&(g.restrictsMixedContent()&&"http:"===e.url.substr(0,"http:".length).toLowerCase()?void 0!==window.console&&console.warn("Blocked mixed content image "+e.url):(b.src=e.url,g.curSrcSupported||(b.currentSrc=b.src),g.backfaceVisibilityFix(b))),g.setIntrinsicSize(b,e));},g.ascendingSort=function(a,b){return a.resolution-b.resolution;},g.removeVideoShim=function(a){var b=a.getElementsByTagName("video");if(b.length){for(var c=b[0],d=c.getElementsByTagName("source");d.length;){a.insertBefore(d[0],c);}c.parentNode.removeChild(c);}},g.getAllElements=function(){for(var a=[],c=b.getElementsByTagName("img"),d=0,e=c.length;e>d;d++){var f=c[d];("PICTURE"===f.parentNode.nodeName.toUpperCase()||null!==f.getAttribute("srcset")||f[g.ns]&&null!==f[g.ns].srcset)&&a.push(f);}return a;},g.getMatch=function(a,b){for(var c,d=b.childNodes,e=0,f=d.length;f>e;e++){var h=d[e];if(1===h.nodeType){if(h===a)return c;if("SOURCE"===h.nodeName.toUpperCase()){null!==h.getAttribute("src")&&void 0!==(typeof console==="undefined"?"undefined":_typeof(console))&&console.warn("The `src` attribute is invalid on `picture` `source` element; instead, use `srcset`.");var i=h.getAttribute("media");if(h.getAttribute("srcset")&&(!i||g.matchesMedia(i))){var j=g.verifyTypeSupport(h);if(j===!0){c=h;break;}if("pending"===j)return!1;}}}}return c;},f(),e._=g,d(e);}(window,window.document,new window.Image());
-"use strict";/*! http://mths.be/placeholder v2.0.8 by @mathias */
-!function(a,b,c){function d(a){var b={},d=/^jQuery\d+$/;return c.each(a.attributes,function(a,c){c.specified&&!d.test(c.name)&&(b[c.name]=c.value);}),b;}function e(a,b){var d=this,e=c(d);if(d.value==e.attr("placeholder")&&e.hasClass("placeholder"))if(e.data("placeholder-password")){if(e=e.hide().next().show().attr("id",e.removeAttr("id").data("placeholder-id")),a===!0)return e[0].value=b;e.focus();}else d.value="",e.removeClass("placeholder"),d==g()&&d.select();}function f(){var a,b=this,f=c(b),g=this.id;if(""==b.value){if("password"==b.type){if(!f.data("placeholder-textinput")){try{a=f.clone().attr({type:"text"});}catch(h){a=c("<input>").attr(c.extend(d(this),{type:"text"}));}a.removeAttr("name").data({"placeholder-password":f,"placeholder-id":g}).bind("focus.placeholder",e),f.data({"placeholder-textinput":a,"placeholder-id":g}).before(a);}f=f.removeAttr("id").hide().prev().attr("id",g).show();}f.addClass("placeholder"),f[0].value=f.attr("placeholder");}else f.removeClass("placeholder");}function g(){try{return b.activeElement;}catch(a){}}var h,i,j="[object OperaMini]"==Object.prototype.toString.call(a.operamini),k="placeholder"in b.createElement("input")&&!j,l="placeholder"in b.createElement("textarea")&&!j,m=c.fn,n=c.valHooks,o=c.propHooks;k&&l?(i=m.placeholder=function(){return this;},i.input=i.textarea=!0):(i=m.placeholder=function(){var a=this;return a.filter((k?"textarea":":input")+"[placeholder]").not(".placeholder").bind({"focus.placeholder":e,"blur.placeholder":f}).data("placeholder-enabled",!0).trigger("blur.placeholder"),a;},i.input=k,i.textarea=l,h={get:function get(a){var b=c(a),d=b.data("placeholder-password");return d?d[0].value:b.data("placeholder-enabled")&&b.hasClass("placeholder")?"":a.value;},set:function set(a,b){var d=c(a),h=d.data("placeholder-password");return h?h[0].value=b:d.data("placeholder-enabled")?(""==b?(a.value=b,a!=g()&&f.call(a)):d.hasClass("placeholder")?e.call(a,!0,b)||(a.value=b):a.value=b,d):a.value=b;}},k||(n.input=h,o.value=h),l||(n.textarea=h,o.value=h),c(function(){c(b).delegate("form","submit.placeholder",function(){var a=c(".placeholder",this).each(e);setTimeout(function(){a.each(f);},10);});}),c(a).bind("beforeunload.placeholder",function(){c(".placeholder").each(function(){this.value="";});}));}(undefined,document,jQuery);
 "use strict";var _typeof2=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f;}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e);},l,l.exports,e,t,n,r);}return n[o].exports;}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++){s(r[o]);}return s;})({1:[function(require,module,exports){
 'use strict';var _typeof=typeof Symbol==="function"&&_typeof2(Symbol.iterator)==="symbol"?function(obj){return typeof obj==="undefined"?"undefined":_typeof2(obj);}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj==="undefined"?"undefined":_typeof2(obj);};!function($){
 
@@ -5739,16 +5904,13 @@ require('foundation-sites/js/foundation.responsiveMenu.js');
 require('foundation-sites/js/foundation.offcanvas.js');
 
 var _jquery=typeof window!=="undefined"?window['jQuery']:typeof global!=="undefined"?global['jQuery']:null;var _jquery2=_interopRequireDefault(_jquery);
-var _prepinputs=require('modules/prepinputs.js');var _prepinputs2=_interopRequireDefault(_prepinputs);
 var _socialShare=require('modules/socialShare.js');var _socialShare2=_interopRequireDefault(_socialShare);
-var _carousel=require('modules/carousel.js');var _carousel2=_interopRequireDefault(_carousel);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}// Foundation Plugins. Add or remove as needed for your site
-// Foundation Utilities
+var _carousel=require('modules/carousel.js');var _carousel2=_interopRequireDefault(_carousel);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+
 (function($){
 // Initialize Foundation
 $(document).foundation();
 
-// Prepare form inputs
-(0,_prepinputs2.default)();
 // Initialize social share functionality
 // Replace the empty string parameter with your Facebook ID
 (0,_socialShare2.default)('');
@@ -5772,11 +5934,14 @@ animationIn:'fade',
 animationSpeed:500,
 opacity:0.9});
 
-})(_jquery2.default);
+
+console.log('did this work?');
+})(_jquery2.default);// Foundation Plugins. Add or remove as needed for your site
+// Foundation Utilities
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{"foundation-sites/js/foundation.core.js":1,"foundation-sites/js/foundation.drilldown.js":2,"foundation-sites/js/foundation.dropdownMenu.js":3,"foundation-sites/js/foundation.offcanvas.js":4,"foundation-sites/js/foundation.responsiveMenu.js":5,"foundation-sites/js/foundation.util.box.js":6,"foundation-sites/js/foundation.util.keyboard.js":7,"foundation-sites/js/foundation.util.mediaQuery.js":8,"foundation-sites/js/foundation.util.motion.js":9,"foundation-sites/js/foundation.util.nest.js":10,"foundation-sites/js/foundation.util.timerAndImageLoader.js":11,"foundation-sites/js/foundation.util.touch.js":12,"foundation-sites/js/foundation.util.triggers.js":13,"modules/carousel.js":15,"modules/prepinputs.js":16,"modules/socialShare.js":17}],15:[function(require,module,exports){
+},{"foundation-sites/js/foundation.core.js":1,"foundation-sites/js/foundation.drilldown.js":2,"foundation-sites/js/foundation.dropdownMenu.js":3,"foundation-sites/js/foundation.offcanvas.js":4,"foundation-sites/js/foundation.responsiveMenu.js":5,"foundation-sites/js/foundation.util.box.js":6,"foundation-sites/js/foundation.util.keyboard.js":7,"foundation-sites/js/foundation.util.mediaQuery.js":8,"foundation-sites/js/foundation.util.motion.js":9,"foundation-sites/js/foundation.util.nest.js":10,"foundation-sites/js/foundation.util.timerAndImageLoader.js":11,"foundation-sites/js/foundation.util.touch.js":12,"foundation-sites/js/foundation.util.triggers.js":13,"modules/carousel.js":15,"modules/socialShare.js":16}],15:[function(require,module,exports){
 (function(global){
 /* eslint-env browser */
 'use strict';Object.defineProperty(exports,"__esModule",{value:true});
@@ -5804,28 +5969,7 @@ carousel;
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{"vendor/jquery.slick.js":18}],16:[function(require,module,exports){
-(function(global){
-/* eslint-env browser */
-'use strict';Object.defineProperty(exports,"__esModule",{value:true});
-
-var _jquery=typeof window!=="undefined"?window['jQuery']:typeof global!=="undefined"?global['jQuery']:null;var _jquery2=_interopRequireDefault(_jquery);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
-
-var prepinputs=function prepinputs(){
-(0,_jquery2.default)('input, textarea').placeholder().
-filter('[type="text"], [type="email"], [type="tel"], [type="password"]').
-addClass('text').end().
-filter('[type="checkbox"]').addClass('checkbox').end().
-filter('[type="radio"]').addClass('radiobutton').end().
-filter('[type="submit"]').addClass('submit').end().
-filter('[type="image"]').addClass('buttonImage');
-};exports.default=
-
-prepinputs;
-
-}).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
-
-},{}],17:[function(require,module,exports){
+},{"vendor/jquery.slick.js":17}],16:[function(require,module,exports){
 (function(global){
 /* eslint-env browser */
 'use strict';Object.defineProperty(exports,"__esModule",{value:true});
@@ -5936,7 +6080,7 @@ socialShare;
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function(global){
 'use strict';var _typeof=typeof Symbol==="function"&&_typeof2(Symbol.iterator)==="symbol"?function(obj){return typeof obj==="undefined"?"undefined":_typeof2(obj);}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj==="undefined"?"undefined":_typeof2(obj);};/*
                                                                                                                                                                                                                                                                                             _ _      _       _

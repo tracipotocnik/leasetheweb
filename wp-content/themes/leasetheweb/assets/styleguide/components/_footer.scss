@@ -1,0 +1,134 @@
+// Footer
+
+.footer {
+  background: $black;
+}
+
+.footer__content {
+  padding: rem-calc(50 0);
+  text-align: center;
+  width: 100%;
+
+  @include breakpoint(medium) {
+    display: flex;
+    padding: rem-calc(110 0);
+    text-align: left;
+  }
+}
+
+.footer__menu-container {
+  @include breakpoint(medium) {
+    display: flex;
+  }
+}
+
+.footer__logo {
+  display: block;
+  margin: 0 auto rem-calc(30);
+  width: rem-calc(75);
+
+  img {
+    width: 100%;
+  }
+
+  @include breakpoint(medium) {
+    align-self: center;
+    margin: 0 rem-calc(60) 0 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.footer__menu {
+  display: block;
+  font-size: rem-calc(14);
+  letter-spacing: rem-calc(0.7);
+  line-height: 1.4;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+
+  @include primary-font-bold();
+
+  &--secondary {
+    @include primary-font();
+  }
+
+  @include breakpoint(medium) {
+    margin-right: rem-calc(27);
+  }
+
+  li {
+    padding: rem-calc(0 0 15);
+
+    @include breakpoint(medium) {
+      &:last-child {
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  a {
+    color: $white;
+
+    &:hover,
+    &:focus {
+      color: var(--link-hover-color);
+    }
+  }
+}
+
+.footer__social {
+  margin-top: rem-calc(30);
+
+  @include breakpoint(medium) {
+    align-items: center;
+    display: flex;
+    margin: 0 0 0 auto;
+  }
+
+  .icon-facebook {
+    height: rem-calc(33);
+    width: rem-calc(18);
+  }
+
+  .icon-twitter {
+    height: rem-calc(25);
+    width: rem-calc(31);
+  }
+
+  .icon-instagram {
+    height: rem-calc(30);
+    width: rem-calc(30);
+  }
+}
+
+.footer__social__link {
+  display: inline-block;
+  color: var(--link-color);
+  margin: 0 rem-calc(15);
+
+  @include breakpoint(medium) {
+    margin: 0 0 0 rem-calc(25);
+  }
+
+  &:hover,
+  &:focus {
+    color: var(--link-hover-color);
+  }
+}
+
+.footer__bottom {
+  border-top: 1px solid $gray;
+  color: $gray;
+  font-size: rem-calc(14);
+  padding: rem-calc(13 0 35);
+  text-align: center;
+}
+
+.footer__copyright {
+  margin: 0;
+}

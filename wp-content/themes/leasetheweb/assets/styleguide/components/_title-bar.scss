@@ -1,0 +1,18 @@
+// Title Bar
+.title-bar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: rem-calc(12 24);
+  width: 100%;
+
+  &::after,
+  &::before {
+    display: none;
+  }
+}
+
+.title-bar-title {
+  line-height: 1;
+  margin: 0;
+}

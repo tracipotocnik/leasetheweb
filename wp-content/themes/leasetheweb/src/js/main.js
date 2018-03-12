@@ -19,7 +19,6 @@ import 'foundation-sites/js/foundation.responsiveMenu.js';
 import 'foundation-sites/js/foundation.offcanvas.js';
 
 import jquery from 'jquery';
-import prepInputs from 'modules/prepinputs.js';
 import socialShare from 'modules/socialShare.js';
 import carousel from 'modules/carousel.js';
 
@@ -27,8 +26,6 @@ import carousel from 'modules/carousel.js';
   // Initialize Foundation
   $(document).foundation();
 
-  // Prepare form inputs
-  prepInputs();
   // Initialize social share functionality
   // Replace the empty string parameter with your Facebook ID
   socialShare('');
@@ -52,4 +49,6 @@ import carousel from 'modules/carousel.js';
     animationSpeed: 500,
     opacity: 0.9,
   });
+
+  console.log('did this work?');
 })(jquery);

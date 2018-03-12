@@ -1,0 +1,18 @@
+// Menu
+
+.menu {
+  > li {
+    > a {
+      padding: rem-calc(21);
+    }
+  }
+
+  a {
+    color: $white;
+
+    &:hover,
+    &:focus {
+      color: var(--link-hover-color);
+    }
+  }
+}

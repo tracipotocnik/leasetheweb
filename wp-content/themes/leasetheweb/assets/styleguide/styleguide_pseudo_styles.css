@@ -158,31 +158,31 @@ select.pseudo-class-disabled {
 .button.primary.pseudo-class-hover,
 .button.primary.pseudo-class-focus {
   background-color: #126195;
-  color: #000;
+  color: #fff;
 }
 
 .button.secondary.pseudo-class-hover,
 .button.secondary.pseudo-class-focus {
   background-color: #5e5e5e;
-  color: #000;
+  color: #fff;
 }
 
 .button.success.pseudo-class-hover,
 .button.success.pseudo-class-focus {
   background-color: #22bb5b;
-  color: #000;
+  color: #212121;
 }
 
 .button.warning.pseudo-class-hover,
 .button.warning.pseudo-class-focus {
   background-color: #cc8b00;
-  color: #000;
+  color: #212121;
 }
 
 .button.alert.pseudo-class-hover,
 .button.alert.pseudo-class-focus {
   background-color: #a53b2a;
-  color: #000;
+  color: #fff;
 }
 
 .button.hollow.pseudo-class-hover,
@@ -239,7 +239,7 @@ select.pseudo-class-disabled {
 .button[disabled].primary.pseudo-class-hover,
 .button[disabled].primary.pseudo-class-focus {
   background-color: #1779ba;
-  color: #000;
+  color: #fff;
 }
 
 .button.disabled.secondary.pseudo-class-hover,
@@ -247,7 +247,7 @@ select.pseudo-class-disabled {
 .button[disabled].secondary.pseudo-class-hover,
 .button[disabled].secondary.pseudo-class-focus {
   background-color: #767676;
-  color: #000;
+  color: #fff;
 }
 
 .button.disabled.success.pseudo-class-hover,
@@ -255,7 +255,7 @@ select.pseudo-class-disabled {
 .button[disabled].success.pseudo-class-hover,
 .button[disabled].success.pseudo-class-focus {
   background-color: #3adb76;
-  color: #000;
+  color: #212121;
 }
 
 .button.disabled.warning.pseudo-class-hover,
@@ -263,7 +263,7 @@ select.pseudo-class-disabled {
 .button[disabled].warning.pseudo-class-hover,
 .button[disabled].warning.pseudo-class-focus {
   background-color: #ffae00;
-  color: #000;
+  color: #212121;
 }
 
 .button.disabled.alert.pseudo-class-hover,
@@ -271,7 +271,7 @@ select.pseudo-class-disabled {
 .button[disabled].alert.pseudo-class-hover,
 .button[disabled].alert.pseudo-class-focus {
   background-color: #cc4b37;
-  color: #000;
+  color: #fff;
 }
 
 .media-object-section.pseudo-class-first-child {
@@ -312,4 +312,32 @@ select.pseudo-class-disabled {
 .mfp-arrow.pseudo-class-focus {
   opacity: 1;
   filter: alpha(opacity=100);
+}
+
+a.pseudo-class-hover,
+a.pseudo-class-focus {
+  color: var(--link-hover-color);
+}
+
+.footer__logo.pseudo-class-focus {
+  outline: none;
+}
+
+.footer__menu a.pseudo-class-hover,
+.footer__menu a.pseudo-class-focus {
+  color: var(--link-hover-color);
+}
+
+.footer__social__link.pseudo-class-hover,
+.footer__social__link.pseudo-class-focus {
+  color: var(--link-hover-color);
+}
+
+.hamburger.pseudo-class-focus {
+  outline: none;
+}
+
+.menu a.pseudo-class-hover,
+.menu a.pseudo-class-focus {
+  color: var(--link-hover-color);
 }

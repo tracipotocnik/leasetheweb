@@ -1,0 +1,19 @@
+// Fonts
+
+@mixin primary-font() {
+  font-family: $primary-font;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@mixin primary-font-medium() {
+  font-family: $primary-font;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@mixin primary-font-bold() {
+  font-family: $primary-font;
+  font-style: normal;
+  font-weight: 700;
+}

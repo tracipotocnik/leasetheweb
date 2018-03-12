@@ -12,13 +12,25 @@
   @include off-canvas-base;
   @include off-canvas-position(right);
 
+  background: $black;
+  font-size: rem-calc(14);
+  letter-spacing: rem-calc(1);
+  padding: rem-calc(20);
+  text-transform: uppercase;
+
   @include breakpoint(large) {
     @include off-canvas-reveal(right);
 
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
     max-height: none;
     overflow: initial;
+    padding: rem-calc(12 16 12 24);
     position: static;
     width: 100%;
+
+    @include primary-font-medium();
 
     ~ .off-canvas-content {
       box-shadow: none;
@@ -29,4 +41,13 @@
       display: none !important;
     }
   }
+
+  ~ .off-canvas-content {
+    transition: transform .5s ease;
+  }
+}
+
+.primary-nav__logo {
+  line-height: 1;
+  margin: 0;
 }

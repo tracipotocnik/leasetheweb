@@ -1,8 +1,56 @@
 <div class="row">
-  <div class="small-12 medium-4 columns">
-    {{footer_widgets}}
-  </div> <!-- /.small-12.medium-4.columns -->
-  <div class="small-12 medium-4 columns">
-    <p class="copyright">&copy; {{"now"|date('Y')}}
-  </div> <!-- /.small-12.medium-4.columns -->
+  <div class="small-12 columns">
+    <div class="footer__content">
+      <div class="footer__menu-container">
+        <a href="{{ site.url }}" class="footer__logo">
+          <img src="{{ TimberImage(options.header_logo).src }}" alt="{{ site.name }}">
+        </a>
+        <ul class="footer__menu footer__menu--primary">
+        {% for item in prim_footer_menu.get_items %}
+          <li>
+            <a href="{{ item.get_link }}">{{ item.title }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+        <ul class="footer__menu footer__menu--secondary">
+        {% for item in sec_footer_menu.get_items %}
+          <li>
+            <a href="{{ item.get_link }}">{{ item.title }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
+      <div class="footer__social">
+        {% if options.twitter_url %}
+          <a href="{{ options.twitter_url }}" target="_blank" class="footer__social__link">
+            <svg class="icon icon-twitter">
+              <title>Twitter</title>
+              <use xlink:href="#twitter"></use>
+            </svg>
+          </a>
+        {% endif %}
+        {% if options.instagram_url %}
+          <a href="{{ options.instagram_url }}" target="_blank" class="footer__social__link">
+            <svg class="icon icon-instagram">
+              <title>Instagram</title>
+              <use xlink:href="#instagram"></use>
+            </svg>
+          </a>
+        {% endif %}
+        {% if options.facebook_url %}
+          <a href="{{ options.facebook_url }}" target="_blank" class="footer__social__link">
+            <svg class="icon icon-facebook">
+              <title>Facebook</title>
+              <use xlink:href="#facebook"></use>
+            </svg>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div> <!-- /.small-12.columns -->
+  <div class="small-12 columns">
+    <div class="footer__bottom">
+      <p class="footer__copyright">&copy; {{"now"|date('Y')}} {{ site.name }}</p>
+    </div>
+  </div> <!-- /.small-12.columns -->
 </div> <!-- /.row -->

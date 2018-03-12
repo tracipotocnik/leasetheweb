@@ -71,6 +71,7 @@
     "del": "^1.2.0",
     "eslint": "^3.19.0",
     "eslint-config-google": "^0.7.1",
+    "foundation-sites": "^6.3.1",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.2",
@@ -100,8 +101,5 @@
     "stylelint-config-standard": "^16.0.0",
     "stylelint-order": "^0.4.3",
     "vinyl-source-stream": "^1.1.0"
-  },
-  "dependencies": {
-    "foundation-sites": "~6.3.1"
   }
 }

@@ -44,11 +44,13 @@ class LeaseTheWebSite extends TimberSite
     public function addToContext($context)
     {
         $context['menu'] = new TimberMenu('header-menu');
+        $context['prim_footer_menu'] = new TimberMenu('prim-footer-menu');
+        $context['sec_footer_menu'] = new TimberMenu('sec-footer-menu');
         $context['site'] = $this;
-        $context['footer_widgets'] = Timber::get_widgets('footer_widgets');
+        $context['options'] = get_fields('options');
         $cta = Timber::get_post(array(
-        'post_type' => 'call_to_action',
-        'post_status' => 'publish'
+          'post_type' => 'call_to_action',
+          'post_status' => 'publish'
         ));
         if ($cta) {
               $context['cta'] = Timber::render(
@@ -77,7 +79,7 @@ class LeaseTheWebSite extends TimberSite
                 'site-js',
                 get_template_directory_uri() . '/assets/js/source.dev.js',
                 array( 'jquery' ),
-                '0.0.3',
+                time(),
                 true
             );
         }
@@ -85,14 +87,6 @@ class LeaseTheWebSite extends TimberSite
 
     public function addSidebars()
     {
-        register_sidebar(array(
-        'id' => 'footer_widgets',
-        'name' => __('Footer'),
-        'description' => __('Widgets in the site global footer'),
-        'before_widget' => '',
-        'after_widget' => ''
-        ));
-
         register_sidebar(array(
           'id' => 'sidebar',
           'name' => __('Default Sidebar'),
@@ -118,7 +112,9 @@ class LeaseTheWebSite extends TimberSite
     {
         register_nav_menus(
             array(
-            'header-menu' => __('Header Menu')
+            'header-menu' => __('Header Menu'),
+            'prim-footer-menu' => __( 'Primary Footer Menu' ),
+            'sec-footer-menu' => __( 'Secondary Footer Menu' ),
             )
         );
     }
@@ -145,12 +141,16 @@ function leasetheweb_get_sidebar_slug($post)
         return $slug;
     }
 
-  // For blog posts, get the blog sidebar
+    // For blog posts, get the blog sidebar
     if ($post->post_type == 'post') {
         return 'blog';
     }
 
     return '';
+}
+
+if (function_exists('acf_add_options_page')) {
+  acf_add_options_page('Theme Settings');
 }
 
 // Customize TinyMCE settings

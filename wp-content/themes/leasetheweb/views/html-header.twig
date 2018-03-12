@@ -14,7 +14,19 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
   <link rel="icon" type="image/x-icon" href="{{theme.path}}/favicon.ico">
-  
+
   <link rel="stylesheet" href="https://use.typekit.net/zha6oby.css">
+
+  <style type="text/css">
+    :root {
+      --primary-color: {{ options.primary_color }};
+      --link-color: {{ options.link_color }};
+      --link-hover-color: {{ options.link_hover_color }};
+      --text-color-default: {{ options.default_text_color }};
+      --text-color-inverted: {{ options.inverted_text_color }};
+      --secondary-color: {{ options.secondary_color }};
+    }
+  </style>
+
   <link rel="stylesheet" href="{{theme.path}}/style.css" type="text/css" media="screen">
   {{function('wp_head')}}

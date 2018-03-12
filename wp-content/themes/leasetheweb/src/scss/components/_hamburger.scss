@@ -1,0 +1,76 @@
+// hamburger
+.hamburger {
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0;
+  height: rem-calc(15);
+  position: relative;
+  margin: 0;
+  padding: 0;
+  text-indent: -9999px;
+  top: rem-calc(1);
+  width: rem-calc(30);
+
+  &:focus {
+    outline: none;
+  }
+
+  a {
+    background-color: rgba(255, 255, 255, 1);
+    display: block;
+    font-size: 0;
+    height: rem-calc(3);
+    left: 0;
+    line-height: 0;
+    position: absolute;
+    right: 0;
+    transition: background-color 0.3s;
+    top: rem-calc(6);
+    width: 100%;
+
+    &:before, &:after {
+      background-color: #fff;
+      content: "";
+      display: block;
+      position: absolute;
+      height: rem-calc(3);
+      left: 0;
+      transition-delay: 0.3s, 0s, 0s;
+      transition-duration: 0.3s, 0.3s, 0.3s;
+      width: 100%;
+    }
+
+    &:before {
+      transition-property: top, transform, background-color;
+      top: -7px;
+    }
+
+    &:after {
+      bottom: -7px;
+      transition-property: bottom, transform, background-color;
+    }
+  }
+
+  &[aria-expanded="true"] {
+    a {
+      background-color: rgba(255, 255, 255, 0);
+
+      &:before, &:after {
+        transition-delay: 0s, 0.3s;
+      }
+
+      &:before {
+        top: 0;
+          transform: rotate(45deg);
+      }
+
+      &:after {
+        bottom: 0;
+        transform: rotate(-45deg);
+      }
+    }
+  }
+}

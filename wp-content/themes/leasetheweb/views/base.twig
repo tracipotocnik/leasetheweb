@@ -16,12 +16,14 @@
       <div class="off-canvas-content" data-off-canvas-content>
         {% block header %}
           <div class="title-bar hide-for-large">
-            <div class="title-bar-left">
-              <h1 class="title-bar-title"><a href="{{site.url}}">{{site.name}}</a></h1>
-            </div> <!-- /.title-bar-left -->
-            <div class="title-bar-right">
-              <button class="menu-icon" type="button" data-toggle="primaryNav"></button>
-            </div> <!-- /.title-bar-right -->
+            <h1 class="title-bar-title">
+              <a href="{{ site.url }}">
+                <img src="{{ TimberImage(options.header_logo).src }}" alt="{{ site.name }}">
+              </a>
+            </h1>
+            <div class="hamburger" role="button" data-toggle="primaryNav">
+              <a href="#">Toggle Right Menu</a>
+            </div>
           </div> <!-- /.title-bar -->
         {% endblock %}
 
@@ -34,8 +36,7 @@
         {% endblock %}
 
         {% block footer %}
-          <hr>
-          <footer class="site-footer" role="contentinfo">
+          <footer class="footer" role="contentinfo">
             {% include 'footer.twig' %}
           </footer> <!-- /.site-footer -->
           <a class="exit-off-canvas"></a>
