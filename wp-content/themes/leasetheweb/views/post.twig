@@ -1,0 +1,27 @@
+{% extends "base.twig" %}
+
+{% block content %}
+  <article>
+    <section class="article-hero">
+      <div class="row">
+        <div class="small-12 medium-8 small-centered columns">
+          <h1 class="article-hero__title">{{ post.title }}</h1>
+          {% if post.author %}
+            <p class="article-hero__author">
+              By {{ post.author }}
+            </p>
+          {% endif %}
+        </div>
+      </div>
+      <div class="article-hero__date">
+        <p class="article-hero__date__content">
+          {{ post.date }}
+        </p>
+      </div>
+    </section>
+
+    {% for module in post.get_field('flexible_content') %}
+      {% include ['modules/'~module.acf_fc_layout~'.twig'] ignore missing %}
+    {% endfor %}
+  </article>
+{% endblock %}

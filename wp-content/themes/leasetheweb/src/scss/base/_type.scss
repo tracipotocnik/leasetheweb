@@ -2,33 +2,49 @@
 
 body {
   color: var(--text-color-default);
-  font-size: rem-calc(14);
+  font-size: rem-calc(16);
 
   @include primary-font();
 }
 
 h1 {
-  font-size: rem-calc(60);
-
-  @include primary-font-bold();
-}
-
-h2 {
   font-size: rem-calc(48);
 
   @include primary-font-bold();
+
+  @include breakpoint(medium) {
+    font-size: rem-calc(60);
+  }
 }
 
-h3 {
+h2 {
   font-size: rem-calc(30);
 
   @include primary-font-bold();
+
+  @include breakpoint(medium) {
+    font-size: rem-calc(48);
+  }
 }
 
-h4 {
+h3 {
   font-size: rem-calc(24);
 
   @include primary-font-bold();
+
+  @include breakpoint(medium) {
+    font-size: rem-calc(30);
+  }
+}
+
+h4 {
+  font-size: rem-calc(18);
+
+  @include primary-font-bold();
+
+  @include breakpoint(medium) {
+    font-size: rem-calc(24);
+  }
 }
 
 a {
@@ -39,4 +55,8 @@ a {
   &:focus {
     color: var(--link-hover-color);
   }
+}
+
+p {
+  margin-bottom: rem-calc(20);
 }

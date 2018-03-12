@@ -40,6 +40,10 @@
     .back {
       display: none !important;
     }
+
+    &.is-open ~ .off-canvas-content {
+      transform: translateX(0);
+    }
   }
 
   ~ .off-canvas-content {
@@ -50,4 +54,12 @@
 .primary-nav__logo {
   line-height: 1;
   margin: 0;
+}
+
+.js-off-canvas-overlay {
+  background: none;
+
+  @include breakpoint(large) {
+    display: none !important;
+  }
 }

@@ -1,0 +1,50 @@
+// Article Hero
+
+.article-hero {
+  background: var(--primary-color);
+  color: var(--text-color-invert, $white);
+  margin-bottom: rem-calc(85);
+  padding: rem-calc(50 0);
+  position: relative;
+  text-align: center;
+
+  @include breakpoint(medium) {
+    padding: rem-calc(100 0 70);
+  }
+}
+
+.article-hero__title {
+  @extend h2;
+
+  margin: 0;
+}
+
+.article-hero__author {
+  color: var(--text-color-default);
+  font-size: rem-calc(16);
+  margin: rem-calc(10) 0 0;
+}
+
+.article-hero__date {
+  background: $black;
+  border-radius: 50%;
+  bottom: 0;
+  display: flex;
+  height: rem-calc(76);
+  left: 50%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  transform: translateX(-50%) translateY(50%);
+  width: rem-calc(76);
+}
+
+.article-hero__date__content {
+  font-size: rem-calc(16);
+  line-height: 1;
+  margin: auto;
+  padding-top: rem-calc(2);
+  text-transform: uppercase;
+
+  @include primary-font-bold();
+}

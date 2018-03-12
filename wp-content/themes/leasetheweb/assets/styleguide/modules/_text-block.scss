@@ -1,0 +1,20 @@
+// Module Text Block
+
+.module-text-block {
+  margin-bottom: rem-calc(72);
+}
+
+.module-text-block__title {
+  @extend h4;
+
+  margin: 0 0 rem-calc(25);
+}
+
+.module-text-block__content {
+  display: block;
+  margin: 0 auto;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}

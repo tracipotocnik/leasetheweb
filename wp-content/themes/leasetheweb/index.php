@@ -7,16 +7,22 @@
 */
 
 if (! class_exists('Timber')) {
-    echo 'Timber not activated. Make sure you activate the plugin in ' .
-    '<a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>';
-    return;
+  echo 'Timber not activated. Make sure you activate the plugin in ' .
+  '<a href="/wp-admin/plugins.php#timber">/wp-admin/plugins.php</a>';
+  return;
 }
 $context = Timber::get_context();
-$context['posts'] = Timber::get_posts();
+$context['post'] = Timber::get_post();
 $templates = array( 'index.twig' );
 
-if (is_post_type_archive('people')) {
-    array_unshift($templates, 'index-grid.twig');
+if (is_singular('post')) {
+  array_unshift( $templates, 'post.twig' );
 }
 
-Timber::render($templates, $context);
+if (post_password_required($post->ID)) {
+  //action URL for the post-level password protection form
+  $context['password_form_action_url'] = add_query_arg('action', 'postpass', wp_login_url());
+  Timber::render('single-password.twig', $context);
+} else {
+  Timber::render($templates, $context);
+}

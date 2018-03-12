@@ -343,3 +343,7 @@ a.pseudo-class-focus {
   color: var(--link-hover-color);
   outline: none;
 }
+
+.module-text-block__content p.pseudo-class-last-child {
+  margin-bottom: 0;
+}

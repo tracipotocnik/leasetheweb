@@ -1313,8 +1313,10 @@ ol,
 li,
 h1,
 h2,
+.article-hero__title,
 h3,
 h4,
+.module-text-block__title,
 h5,
 h6,
 pre,
@@ -1348,8 +1350,10 @@ small {
 
 h1,
 h2,
+.article-hero__title,
 h3,
 h4,
+.module-text-block__title,
 h5,
 h6 {
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
@@ -1358,9 +1362,9 @@ h6 {
   color: inherit;
   text-rendering: optimizeLegibility; }
   h1 small,
-  h2 small,
+  h2 small, .article-hero__title small,
   h3 small,
-  h4 small,
+  h4 small, .module-text-block__title small,
   h5 small,
   h6 small {
     line-height: 0;
@@ -1372,7 +1376,7 @@ h1 {
   margin-top: 0;
   margin-bottom: 0.5rem; }
 
-h2 {
+h2, .article-hero__title {
   font-size: 1.25rem;
   line-height: 1.4;
   margin-top: 0;
@@ -1384,7 +1388,7 @@ h3 {
   margin-top: 0;
   margin-bottom: 0.5rem; }
 
-h4 {
+h4, .module-text-block__title {
   font-size: 1.125rem;
   line-height: 1.4;
   margin-top: 0;
@@ -1405,11 +1409,11 @@ h6 {
 @media print, screen and (min-width: 40em) {
   h1 {
     font-size: 3rem; }
-  h2 {
+  h2, .article-hero__title {
     font-size: 2.5rem; }
   h3 {
     font-size: 1.9375rem; }
-  h4 {
+  h4, .module-text-block__title {
     font-size: 1.5625rem; }
   h5 {
     font-size: 1.25rem; }
@@ -1605,10 +1609,11 @@ kbd {
     margin: 0.5cm; }
   p,
   h2,
+  .article-hero__title,
   h3 {
     orphans: 3;
     widows: 3; }
-  h2,
+  h2, .article-hero__title,
   h3 {
     page-break-after: avoid; } }
 
@@ -3052,34 +3057,46 @@ img.mfp-img {
 
 body {
   color: var(--text-color-default);
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-family: "proxima-nova", sans-serif;
   font-style: normal;
   font-weight: 400; }
 
 h1 {
-  font-size: 3.75rem;
-  font-family: "proxima-nova", sans-serif;
-  font-style: normal;
-  font-weight: 700; }
-
-h2 {
   font-size: 3rem;
   font-family: "proxima-nova", sans-serif;
   font-style: normal;
   font-weight: 700; }
+  @media print, screen and (min-width: 40em) {
+    h1 {
+      font-size: 3.75rem; } }
 
-h3 {
+h2, .article-hero__title {
   font-size: 1.875rem;
   font-family: "proxima-nova", sans-serif;
   font-style: normal;
   font-weight: 700; }
+  @media print, screen and (min-width: 40em) {
+    h2, .article-hero__title {
+      font-size: 3rem; } }
 
-h4 {
+h3 {
   font-size: 1.5rem;
   font-family: "proxima-nova", sans-serif;
   font-style: normal;
   font-weight: 700; }
+  @media print, screen and (min-width: 40em) {
+    h3 {
+      font-size: 1.875rem; } }
+
+h4, .module-text-block__title {
+  font-size: 1.125rem;
+  font-family: "proxima-nova", sans-serif;
+  font-style: normal;
+  font-weight: 700; }
+  @media print, screen and (min-width: 40em) {
+    h4, .module-text-block__title {
+      font-size: 1.5rem; } }
 
 a {
   color: var(--link-color);
@@ -3087,21 +3104,50 @@ a {
   a:hover, a:focus {
     color: var(--link-hover-color); }
 
-.site-lightbox {
-  background: #fff;
-  margin: 20px auto;
-  max-width: 500px;
-  padding: 20px;
-  position: relative;
-  width: 100%; }
+p {
+  margin-bottom: 1.25rem; }
 
-.meerkat-cta {
-  padding: 1.25rem 0 1.875rem 0; }
-  .meerkat-cta h1,
-  .meerkat-cta p {
-    color: #fff; }
-  .meerkat-cta h1 {
-    line-height: 1; }
+.article-hero {
+  background: var(--primary-color);
+  color: var(--text-color-invert, #fff);
+  margin-bottom: 5.3125rem;
+  padding: 3.125rem 0;
+  position: relative;
+  text-align: center; }
+  @media print, screen and (min-width: 40em) {
+    .article-hero {
+      padding: 6.25rem 0 4.375rem; } }
+
+.article-hero__title {
+  margin: 0; }
+
+.article-hero__author {
+  color: var(--text-color-default);
+  font-size: 1rem;
+  margin: 0.625rem 0 0; }
+
+.article-hero__date {
+  background: #212121;
+  border-radius: 50%;
+  bottom: 0;
+  display: flex;
+  height: 4.75rem;
+  left: 50%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  transform: translateX(-50%) translateY(50%);
+  width: 4.75rem; }
+
+.article-hero__date__content {
+  font-size: 1rem;
+  line-height: 1;
+  margin: auto;
+  padding-top: 0.125rem;
+  text-transform: uppercase;
+  font-family: "proxima-nova", sans-serif;
+  font-style: normal;
+  font-weight: 700; }
 
 .footer {
   background: #212121; }
@@ -3122,7 +3168,7 @@ a {
 
 .footer__logo {
   display: block;
-  margin: 0 auto 1.875rem;
+  margin: 0 auto 2.5rem;
   width: 4.6875rem; }
   .footer__logo img {
     width: 100%; }
@@ -3139,7 +3185,7 @@ a {
   letter-spacing: 0.04375rem;
   line-height: 1.4;
   list-style: none;
-  margin: 0;
+  margin: 0 0 1.25rem;
   padding: 0;
   text-transform: uppercase;
   font-family: "proxima-nova", sans-serif;
@@ -3151,7 +3197,7 @@ a {
     font-weight: 400; }
   @media print, screen and (min-width: 40em) {
     .footer__menu {
-      margin-right: 1.6875rem; } }
+      margin: 0 1.6875rem 0 0; } }
   .footer__menu li {
     padding: 0 0 0.9375rem; }
     @media print, screen and (min-width: 40em) {
@@ -3323,7 +3369,9 @@ a {
         box-shadow: none;
         margin-right: 0; }
       .primary-nav .back {
-        display: none !important; } }
+        display: none !important; }
+      .primary-nav.is-open ~ .off-canvas-content {
+        transform: translateX(0); } }
   .primary-nav ~ .off-canvas-content {
     transition: transform .5s ease; }
 
@@ -3331,30 +3379,11 @@ a {
   line-height: 1;
   margin: 0; }
 
-/**
-* Quote/testimonial module
-*/
-.quote {
-  padding: 1em; }
-
-.quote__text {
-  font-size: 1.25em; }
-  .quote__text::before {
-    content: '\201C'; }
-  .quote__text::after {
-    content: '\201D'; }
-
-.quote__attribution {
-  color: #8a8a8a;
-  font-size: 0.75em;
-  font-style: italic; }
-
-.site-header .site-branding {
-  background: url("../img/logo.png") no-repeat 0/75px 75px;
-  padding-left: 75px; }
-
 .js-off-canvas-overlay {
   background: none; }
+  @media print, screen and (min-width: 64em) {
+    .js-off-canvas-overlay {
+      display: none !important; } }
 
 .title-bar {
   align-items: center;
@@ -3368,6 +3397,32 @@ a {
 .title-bar-title {
   line-height: 1;
   margin: 0; }
+
+.module {
+  margin-bottom: 4.375rem; }
+  @media print, screen and (min-width: 40em) {
+    .module {
+      margin-bottom: 6.875rem; } }
+
+.module-image {
+  margin-bottom: 4.5rem; }
+
+.module-image__image {
+  display: block;
+  margin: 0 auto;
+  max-height: 18.75rem; }
+
+.module-text-block {
+  margin-bottom: 4.5rem; }
+
+.module-text-block__title {
+  margin: 0 0 1.5625rem; }
+
+.module-text-block__content {
+  display: block;
+  margin: 0 auto; }
+  .module-text-block__content p:last-child {
+    margin-bottom: 0; }
 
 /**
 * Utility classes

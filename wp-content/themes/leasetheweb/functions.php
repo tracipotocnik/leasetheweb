@@ -48,17 +48,6 @@ class LeaseTheWebSite extends TimberSite
         $context['sec_footer_menu'] = new TimberMenu('sec-footer-menu');
         $context['site'] = $this;
         $context['options'] = get_fields('options');
-        $cta = Timber::get_post(array(
-          'post_type' => 'call_to_action',
-          'post_status' => 'publish'
-        ));
-        if ($cta) {
-              $context['cta'] = Timber::render(
-                  'cta-' . $cta->call_to_action_type . '.twig',
-                  array('post' => $cta),
-                  false
-              );
-        }
         return $context;
     }
 

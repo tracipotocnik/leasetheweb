@@ -24,7 +24,7 @@
 
 .footer__logo {
   display: block;
-  margin: 0 auto rem-calc(30);
+  margin: 0 auto rem-calc(40);
   width: rem-calc(75);
 
   img {
@@ -47,7 +47,7 @@
   letter-spacing: rem-calc(0.7);
   line-height: 1.4;
   list-style: none;
-  margin: 0;
+  margin: 0 0 rem-calc(20);
   padding: 0;
   text-transform: uppercase;
 
@@ -58,7 +58,7 @@
   }
 
   @include breakpoint(medium) {
-    margin-right: rem-calc(27);
+    margin: 0 rem-calc(27) 0 0;
   }
 
   li {

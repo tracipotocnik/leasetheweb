@@ -1,0 +1,11 @@
+// Module Image
+
+.module-image {
+  margin-bottom: rem-calc(72);
+}
+
+.module-image__image {
+  display: block;
+  margin: 0 auto;
+  max-height: rem-calc(300);
+}

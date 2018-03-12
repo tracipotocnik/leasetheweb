@@ -40,14 +40,18 @@ Description: Custom theme starter kit
 @import "base/fonts";
 @import "base/icons";
 @import "base/type";
-@import "components/ctas";
+@import "components/article-hero";
 @import "components/footer";
 @import "components/hamburger";
 @import "components/menu";
 @import "components/primary-nav";
-@import "components/quote";
-@import "components/site-header";
 @import "components/title-bar";
+
+// Modules
+// ======================
+@import "modules/module-base";
+@import "modules/image";
+@import "modules/text-block";
 
 // Utility
 // ======================
