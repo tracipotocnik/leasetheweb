@@ -5,7 +5,7 @@
         {
             "key": "field_5aa6a2cfc38fa",
             "label": "Author",
-            "name": "author",
+            "name": "author_name",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -41,5 +41,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1520870190
+    "modified": 1520876228
 }
