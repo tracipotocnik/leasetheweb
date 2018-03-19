@@ -24,13 +24,31 @@
 }
 
 .three-up-content__blocks {
-  display: flex;
-  margin: 0 rem-calc(-25);
+  @include breakpoint(large) {
+    display: flex;
+    margin: 0 rem-calc(-25);
+  }
 }
 
 .three-up-content__block {
-  padding: rem-calc(0 25);
-  width: 1/3 * 100%;
+  @include breakpoint(medium) {
+    margin: 0 auto;
+    width: 50%;
+  }
+
+  @include breakpoint(large) {
+    margin: 0;
+    padding: rem-calc(0 25);
+    width: 1/3 * 100%;
+  }
+
+  + .three-up-content__block {
+    margin-top: rem-calc(50);
+
+    @include breakpoint(large) {
+      margin-top: 0;
+    }
+  }
 }
 
 .three-up-content__block__icon {
@@ -55,5 +73,5 @@
 }
 
 .three-up-content__button {
-  margin-top: rem-calc(48);
+  margin-top: rem-calc(50);
 }

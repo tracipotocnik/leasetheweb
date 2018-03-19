@@ -3059,6 +3059,7 @@ img.mfp-img {
   letter-spacing: 0.05rem;
   margin: 0;
   min-width: 12.5rem;
+  outline: none;
   padding: 0.9375rem 1.5625rem;
   text-transform: uppercase;
   font-family: "proxima-nova", sans-serif;
@@ -3513,13 +3514,27 @@ p {
   margin-bottom: 2.625rem;
   text-transform: uppercase; }
 
-.three-up-content__blocks {
-  display: flex;
-  margin: 0 -1.5625rem; }
+@media print, screen and (min-width: 64em) {
+  .three-up-content__blocks {
+    display: flex;
+    margin: 0 -1.5625rem; } }
 
-.three-up-content__block {
-  padding: 0 1.5625rem;
-  width: 33.33333%; }
+@media print, screen and (min-width: 40em) {
+  .three-up-content__block {
+    margin: 0 auto;
+    width: 50%; } }
+
+@media print, screen and (min-width: 64em) {
+  .three-up-content__block {
+    margin: 0;
+    padding: 0 1.5625rem;
+    width: 33.33333%; } }
+
+.three-up-content__block + .three-up-content__block {
+  margin-top: 3.125rem; }
+  @media print, screen and (min-width: 64em) {
+    .three-up-content__block + .three-up-content__block {
+      margin-top: 0; } }
 
 .three-up-content__block__icon {
   display: block;
@@ -3537,7 +3552,7 @@ p {
   margin-top: 2.1875rem; }
 
 .three-up-content__button {
-  margin-top: 3rem; }
+  margin-top: 3.125rem; }
 
 .two-up-cta {
   text-align: center;
