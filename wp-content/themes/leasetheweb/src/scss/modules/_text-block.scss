@@ -1,16 +1,16 @@
 // Module Text Block
 
-.module-text-block {
+.text-block {
   margin-bottom: rem-calc(72);
 }
 
-.module-text-block__title {
+.text-block__title {
   @extend h4;
 
   margin: 0 0 rem-calc(25);
 }
 
-.module-text-block__content {
+.text-block__content {
   display: block;
   margin: 0 auto;
 

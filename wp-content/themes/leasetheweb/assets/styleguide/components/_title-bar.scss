@@ -1,6 +1,7 @@
 // Title Bar
 .title-bar {
   align-items: center;
+  background: var(--black-color);
   display: flex;
   justify-content: space-between;
   padding: rem-calc(12 24);

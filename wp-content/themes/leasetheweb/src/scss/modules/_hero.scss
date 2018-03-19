@@ -1,0 +1,58 @@
+// Module Hero
+
+.hero {
+  display: flex;
+  color: var(--text-color-inverted);
+  padding: rem-calc(100 0);
+  position: relative;
+  text-align: center;
+  width: 100%;
+
+  &--large {
+    min-height: rem-calc(600);
+  }
+
+  &--has-image {
+    background: var(--black-color) no-repeat center center;
+    background-size: cover;
+  }
+
+  &--dark {
+    background: var(--black-color);
+  }
+
+  &--primary {
+    background: var(--primary-color);
+  }
+}
+
+.hero__overlay {
+  bottom: 0;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  &--black {
+    background: $black-overlay;
+  }
+
+  &--primary {
+    background: var(--primary-color);
+  }
+}
+
+.hero__content {
+  margin: auto;
+  max-width: rem-calc(610);
+  position: relative;
+}
+
+.hero__subtitle {
+  font-size: rem-calc(16);
+  margin: rem-calc(18) 0 0;
+}
+
+.hero__button {
+  margin-top: rem-calc(30);
+}

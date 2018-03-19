@@ -1,9 +1,0 @@
-// Module Base Styling
-
-.module {
-  margin-bottom: rem-calc(70);
-
-  @include breakpoint(medium) {
-    margin-bottom: rem-calc(110);
-  }
-}

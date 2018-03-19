@@ -1,0 +1,48 @@
+<section class="three-up-content
+  {% if module.three_up_content_background == 'primary' %}
+    three-up-content--primary
+  {% endif %}
+  {% if module.three_up_content_background == 'dark' %}
+    three-up-content--dark
+  {% endif %}">
+  <div class="row">
+    <div class="small-12 columns">
+      {% if module.three_up_content_title %}
+        <h2 class="three-up-content__title">{{ module.three_up_content_title }}</h2>
+      {% endif %}
+      <div class="three-up-content__blocks">
+        {% for block in module.three_up_content_blocks %}
+          <div class="three-up-content__block">
+            {% if block.three_up_content_block_icon %}
+              <img src="{{ TimberImage(block.three_up_content_block_icon).src }}" class="three-up-content__block__icon">
+            {% endif %}
+            {% if block.three_up_content_block_title %}
+              <h3 class="three-up-content__block__title">{{ block.three_up_content_block_title }}</h3>
+            {% endif %}
+            {% if block.three_up_content_block_body %}
+              <div class="three-up-content__block__body">
+                {{ block.three_up_content_block_body }}
+              </div>
+            {% endif %}
+            {% if block.three_up_content_block_button_text and block.three_up_content_block_button_url %}
+              <a class="three-up-content__block__button button button--small
+                {% if module.three_up_content_background != 'none' %}
+                  button--inverse
+                {% endif %}" href="{{ block.three_up_content_block_button_url }}">
+                {{ block.three_up_content_block_button_text }}
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      {% if module.three_up_content_button_text and module.three_up_content_button_url %}
+        <a class="three-up-content__button button
+          {% if module.three_up_content_background != 'none' %}
+            button--inverse
+          {% endif %}" href="{{ module.three_up_content_button_url }}">
+          {{ module.three_up_content_button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>

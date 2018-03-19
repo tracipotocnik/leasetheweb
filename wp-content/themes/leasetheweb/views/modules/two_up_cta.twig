@@ -1,0 +1,24 @@
+<section class="two-up-cta">
+  {% for block in module.two_up_cta_blocks %}
+    <div class="two-up-cta__block
+      {% if block.two_up_cta_background == 'dark' %}
+        two-up-cta__block--dark
+      {% endif %}">
+        <div class="two-up-cta__content">
+        {% if block.two_up_cta_title %}
+          <h2 class="two-up-cta__title">{{ block.two_up_cta_title }}</h2>
+        {% endif %}
+        {% if block.two_up_cta_body %}
+          <div class="two-up-cta__body">
+            {{ block.two_up_cta_body }}
+          </div>
+        {% endif %}
+        {% if block.two_up_cta_button_text and block.two_up_cta_button_url %}
+          <a class="two-up-cta__button button" href="{{ block.two_up_cta_button_url }}">
+            {{ block.two_up_cta_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</section>

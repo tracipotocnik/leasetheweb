@@ -1,0 +1,54 @@
+{% set classes %}
+  {% if module.hero_size == 'large' %}
+    hero--large
+  {% endif %}
+  {% if module.hero_background_type == 'solid_dark' %}
+    hero--dark
+  {% endif %}
+  {% if module.hero_background_type == 'solid_primary' %}
+    hero--primary
+  {% endif %}
+  {% if module.hero_background_type == 'image' %}
+    hero--has-image
+  {% endif %}
+{% endset %}
+<section class="hero {{ classes }}"
+  {% if module.hero_background_type == 'image' and module.hero_background_image %}
+    style="background-image: url({{ TimberImage(module.hero_background_image).src }})"
+  {% endif %}>
+{% if module.hero_background_type == 'image' and module.hero_background_overlay != 'none' %}
+  {% set overlay_classes %}
+    {% if module.hero_background_overlay == 'black' %}
+      hero__overlay--black
+    {% endif %}
+    {% if module.hero_background_overlay == 'primary' %}
+      hero__overlay--primary
+    {% endif %}
+  {% endset %}
+  <div class="hero__overlay {{ overlay_classes }}"
+    {% if module.hero_background_overlay_opacity %}
+      style="opacity: 0.{{ module.hero_background_overlay_opacity }}"
+    {% endif %}>
+  </div>
+{% endif %}
+  <div class="hero__content">
+    <div class="row">
+      <div class="small-12 columns">
+        {% if module.hero_title %}
+          <h1 class="hero__title">{{ module.hero_title }}</h1>
+        {% endif %}
+        {% if module.hero_subtitle %}
+          <p class="hero__subtitle">{{ module.hero_subtitle }}</p>
+        {% endif %}
+        {% if module.hero_button_text and module.hero_button_url %}
+          <a class="hero__button button
+            {% if (module.hero_background_type == 'image' and module.hero_background_overlay == 'primary') or module.hero_background_type == 'solid_primary' %}
+              button--inverse
+            {% endif %}" href="{{ module.hero_button_url }}">
+            {{ module.hero_button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

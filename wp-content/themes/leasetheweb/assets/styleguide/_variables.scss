@@ -1,9 +1,8 @@
 // Site Variables
 //
 
-$black: #212121;
-$white: #fff;
 $gray: #828282;
+$black-overlay: #000;
 
 $primary-font: "proxima-nova", sans-serif;
 
@@ -13,3 +12,9 @@ $transition: 0.3s ease;
 // Menu
 /////////////////////////////
 $offcanvas-fixed-reveal: false;
+
+$module-spacing-mobile: 70;
+$module-spacing-desktop: 110;
+
+$row-width: 950;
+$gutter: 15;

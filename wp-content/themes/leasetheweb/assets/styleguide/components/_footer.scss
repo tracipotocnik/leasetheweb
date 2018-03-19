@@ -1,7 +1,7 @@
 // Footer
 
 .footer {
-  background: $black;
+  background: var(--black-color);
 }
 
 .footer__content {
@@ -72,7 +72,7 @@
   }
 
   a {
-    color: $white;
+    color: var(--text-color-inverted);;
 
     &:hover,
     &:focus {
@@ -108,7 +108,7 @@
 
 .footer__social__link {
   display: inline-block;
-  color: var(--link-color);
+  color: var(--primary-color);
   margin: 0 rem-calc(15);
 
   @include breakpoint(medium) {
@@ -117,7 +117,7 @@
 
   &:hover,
   &:focus {
-    color: var(--link-hover-color);
+    color: var(--primary-hover-color);
     outline: none;
   }
 }

@@ -12,7 +12,7 @@
   @include off-canvas-base;
   @include off-canvas-position(right);
 
-  background: $black;
+  background: var(--black-color);
   font-size: rem-calc(14);
   letter-spacing: rem-calc(1);
   padding: rem-calc(20);

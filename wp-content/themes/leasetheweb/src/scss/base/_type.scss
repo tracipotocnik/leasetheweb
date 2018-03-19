@@ -9,6 +9,7 @@ body {
 
 h1 {
   font-size: rem-calc(48);
+  line-height: 1.15;
 
   @include primary-font-bold();
 
@@ -19,6 +20,8 @@ h1 {
 
 h2 {
   font-size: rem-calc(30);
+  letter-spacing: rem-calc(0.3);
+  line-height: 1.2;
 
   @include primary-font-bold();
 
@@ -29,6 +32,7 @@ h2 {
 
 h3 {
   font-size: rem-calc(24);
+  line-height: 1.2;
 
   @include primary-font-bold();
 
@@ -58,5 +62,6 @@ a {
 }
 
 p {
+  letter-spacing: rem-calc(0.2);
   margin-bottom: rem-calc(20);
 }

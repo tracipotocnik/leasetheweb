@@ -38,7 +38,9 @@ Description: Custom theme starter kit
 // Site Styles
 // ======================
 @import "base/fonts";
+@import "base/buttons";
 @import "base/icons";
+@import "base/layout";
 @import "base/type";
 @import "components/article-hero";
 @import "components/footer";
@@ -49,9 +51,11 @@ Description: Custom theme starter kit
 
 // Modules
 // ======================
-@import "modules/module-base";
-@import "modules/image";
+@import "modules/image-block";
+@import "modules/hero";
 @import "modules/text-block";
+@import "modules/three-up-content";
+@import "modules/two-up-cta";
 
 // Utility
 // ======================

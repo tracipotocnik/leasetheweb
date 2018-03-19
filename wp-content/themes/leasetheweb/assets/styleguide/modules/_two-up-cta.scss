@@ -1,0 +1,56 @@
+// Module Two Up CTA
+
+.two-up-cta {
+  text-align: center;
+  width: 100%;
+
+  @include breakpoint(medium) {
+    display: flex;
+  }
+}
+
+.two-up-cta__block {
+  padding: rem-calc($module-spacing-mobile $gutter);
+
+  @include breakpoint(medium) {
+    padding: rem-calc($module-spacing-desktop $gutter);
+    width: 50%;
+  }
+
+  &--dark {
+    background: var(--black-color);
+    color: var(--text-color-inverted);
+  }
+
+  @include breakpoint(medium) {
+    &:first-child {
+      .two-up-cta__content {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.two-up-cta__content {
+  @include breakpoint(medium) {
+    max-width: rem-calc($row-width/2);
+  }
+}
+
+.two-up-cta__title {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.two-up-cta__body {
+  font-size: rem-calc(24);
+  margin-top: rem-calc(30);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.two-up-cta__button {
+  margin-top: rem-calc(42);
+}
