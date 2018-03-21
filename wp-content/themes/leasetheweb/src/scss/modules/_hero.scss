@@ -9,7 +9,7 @@
   width: 100%;
 
   &--large {
-    min-height: rem-calc(780);
+    min-height: rem-calc(600);
   }
 
   &--has-image {
@@ -44,7 +44,7 @@
 
 .hero__content {
   margin: auto;
-  max-width: rem-calc(610);
+  max-width: rem-calc(780);
   position: relative;
 }
 

@@ -3459,7 +3459,7 @@ p {
   text-align: center;
   width: 100%; }
   .hero--large {
-    min-height: 48.75rem; }
+    min-height: 37.5rem; }
   .hero--has-image {
     background: var(--black-color) no-repeat center center;
     background-size: cover; }
@@ -3481,7 +3481,7 @@ p {
 
 .hero__content {
   margin: auto;
-  max-width: 38.125rem;
+  max-width: 48.75rem;
   position: relative; }
 
 .hero__subtitle {
