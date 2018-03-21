@@ -1,7 +1,25 @@
 // Module Text Block
 
 .text-block {
-  margin-bottom: rem-calc(72);
+  margin: rem-calc($module-spacing-mobile) 0;
+
+  @include breakpoint(medium) {
+    margin: rem-calc($module-spacing-desktop 0);
+  }
+
+  &--small {
+    margin: rem-calc(72) 0;
+  }
+
+  .columns {
+    + .columns {
+      margin-top: rem-calc(50);
+
+      @include breakpoint(large) {
+        margin-top: 0;
+      }
+    }
+  }
 }
 
 .text-block__title {

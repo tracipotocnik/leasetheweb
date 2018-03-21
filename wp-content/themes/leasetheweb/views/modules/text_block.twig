@@ -1,14 +1,26 @@
 <section class="text-block">
   <div class="row">
-    <div class="small-12 medium-8 large-6 small-centered columns">
-      {% if module.text_block_title %}
-        <h2 class="text-block__title">
-          {{ module.text_block_title }}
-        </h2>
-      {% endif %}
-      <div class="text-block__content">
-        {{ module.text_block_content }}
+    {% for block in module.text_block_block %}
+      <div class="small-12 medium-8 large-6 columns
+      {% if module.text_block_block|length > 1 %}
+        large-push-0
+        {% if loop.index == 2 %}
+          medium-pull-2
+        {% else %}
+          medium-push-2
+        {% endif %}
+      {% else %}
+        small-centered
+      {% endif %}">
+        {% if block.text_block_title %}
+          <h2 class="text-block__title">
+            {{ block.text_block_title }}
+          </h2>
+        {% endif %}
+        <div class="text-block__content">
+          {{ block.text_block_content }}
+        </div>
       </div>
-    </div>
+    {% endfor %}
   </div>
 </section>

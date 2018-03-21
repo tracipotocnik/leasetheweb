@@ -20,7 +20,7 @@
       </div>
     </section>
 
-    {% for module in post.get_field('flexible_content') %}
+    {% for module in post.get_field('post_content') %}
       {% include ['modules/'~module.acf_fc_layout~'.twig'] ignore missing %}
     {% endfor %}
   </article>
