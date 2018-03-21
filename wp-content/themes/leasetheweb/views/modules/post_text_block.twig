@@ -1,0 +1,14 @@
+<section class="text-block text-block--small">
+  <div class="row">
+    <div class="small-12 medium-8 large-6 small-centered columns">
+      {% if module.post_text_block_title %}
+        <h2 class="text-block__title">
+          {{ module.post_text_block_title }}
+        </h2>
+      {% endif %}
+      <div class="text-block__content">
+        {{ module.post_text_block_content }}
+      </div>
+    </div>
+  </div>
+</section>
