@@ -69,7 +69,7 @@ gulp.task('stylelint', function() {
   }));
 });
 
-gulp.task('styles', function() {
+gulp.task('styles', ['stylelint'], function() {
   return gulp.src([
     `${source}/scss/style.scss`,
   ])
@@ -95,7 +95,7 @@ gulp.task('lint', () =>
 );
 
 // Browserify
-gulp.task('browserify', function() {
+gulp.task('browserify', ['lint'], function() {
   return browserify({
     entries: `${source}/js/main.js`,
     debug: true,

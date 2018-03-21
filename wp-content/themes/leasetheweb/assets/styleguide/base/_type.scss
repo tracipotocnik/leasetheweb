@@ -8,7 +8,7 @@ body {
 }
 
 h1 {
-  font-size: rem-calc(48);
+  font-size: rem-calc(36);
   line-height: 1.15;
 
   @include primary-font-bold();
@@ -26,7 +26,7 @@ h2 {
   @include primary-font-bold();
 
   @include breakpoint(medium) {
-    font-size: rem-calc(48);
+    font-size: rem-calc(36);
   }
 }
 

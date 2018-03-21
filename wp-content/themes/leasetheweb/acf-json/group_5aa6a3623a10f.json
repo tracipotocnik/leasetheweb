@@ -305,6 +305,31 @@
                     "display": "block",
                     "sub_fields": [
                         {
+                            "key": "field_5ab29b7695a93",
+                            "label": "Full Width",
+                            "name": "image_full_width",
+                            "type": "checkbox",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "yes": "Yes"
+                            },
+                            "allow_custom": 0,
+                            "save_custom": 0,
+                            "default_value": [
+
+                            ],
+                            "layout": "vertical",
+                            "toggle": 0,
+                            "return_format": "value"
+                        },
+                        {
                             "key": "field_5aa6a62e911fb",
                             "label": "Image",
                             "name": "image",
@@ -708,5 +733,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1521430155
+    "modified": 1521654741
 }

@@ -1,9 +1,15 @@
-<section class="image-block">
-  <div class="row">
-    <div class="small-12 columns">
-      <figure>
-        <img src="{{ TimberImage(module.image).src }}" class="image-block__image">
-      </figure>
+  {% if module.image_full_width == 'yes' %}
+  <section class="image-block">
+    <div class="row">
+      <div class="small-12 columns">
+        <figure>
+          <img src="{{ TimberImage(module.image).src }}" class="image-block__image">
+        </figure>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+{% else %}
+  <section class="image-block image-block--full-width"
+    style="background-image: url({{ TimberImage(module.image).src }});">
+  </section>
+{% endif %}

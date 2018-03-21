@@ -72,7 +72,7 @@
   }
 
   a {
-    color: var(--text-color-inverted);;
+    color: var(--text-color-inverted);
 
     &:hover,
     &:focus {
@@ -107,8 +107,8 @@
 }
 
 .footer__social__link {
-  display: inline-block;
   color: var(--primary-color);
+  display: inline-block;
   margin: 0 rem-calc(15);
 
   @include breakpoint(medium) {

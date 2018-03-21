@@ -9,3 +9,10 @@
   margin: 0 auto;
   max-height: rem-calc(300);
 }
+
+.image-block--full-width {
+  background: var(--black-color) no-repeat center center;
+  background-size: cover;
+  height: rem-calc(600);
+  margin: 0;
+}

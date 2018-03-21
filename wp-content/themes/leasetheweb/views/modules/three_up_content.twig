@@ -13,24 +13,28 @@
       <div class="three-up-content__blocks">
         {% for block in module.three_up_content_blocks %}
           <div class="three-up-content__block">
-            {% if block.three_up_content_block_icon %}
-              <img src="{{ TimberImage(block.three_up_content_block_icon).src }}" class="three-up-content__block__icon">
-            {% endif %}
-            {% if block.three_up_content_block_title %}
-              <h3 class="three-up-content__block__title">{{ block.three_up_content_block_title }}</h3>
-            {% endif %}
-            {% if block.three_up_content_block_body %}
-              <div class="three-up-content__block__body">
-                {{ block.three_up_content_block_body }}
-              </div>
-            {% endif %}
+            <div class="three-up-content__block__content">
+              {% if block.three_up_content_block_icon %}
+                <img src="{{ TimberImage(block.three_up_content_block_icon).src }}" class="three-up-content__block__icon">
+              {% endif %}
+              {% if block.three_up_content_block_title %}
+                <h3 class="three-up-content__block__title">{{ block.three_up_content_block_title }}</h3>
+              {% endif %}
+              {% if block.three_up_content_block_body %}
+                <div class="three-up-content__block__body">
+                  {{ block.three_up_content_block_body }}
+                </div>
+              {% endif %}
+            </div>
             {% if block.three_up_content_block_button_text and block.three_up_content_block_button_url %}
-              <a class="three-up-content__block__button button button--small
-                {% if module.three_up_content_background != 'none' %}
-                  button--inverse
-                {% endif %}" href="{{ block.three_up_content_block_button_url }}">
-                {{ block.three_up_content_block_button_text }}
-              </a>
+              <div class="three-up-content__block__button">
+                <a class="button button--small
+                  {% if module.three_up_content_background != 'none' %}
+                    button--inverse
+                  {% endif %}" href="{{ block.three_up_content_block_button_url }}">
+                  {{ block.three_up_content_block_button_text }}
+                </a>
+              </div>
             {% endif %}
           </div>
         {% endfor %}

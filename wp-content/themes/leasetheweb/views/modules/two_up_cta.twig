@@ -4,7 +4,7 @@
       {% if block.two_up_cta_background == 'dark' %}
         two-up-cta__block--dark
       {% endif %}">
-        <div class="two-up-cta__content">
+      <div class="two-up-cta__content">
         {% if block.two_up_cta_title %}
           <h2 class="two-up-cta__title">{{ block.two_up_cta_title }}</h2>
         {% endif %}
@@ -14,9 +14,11 @@
           </div>
         {% endif %}
         {% if block.two_up_cta_button_text and block.two_up_cta_button_url %}
-          <a class="two-up-cta__button button" href="{{ block.two_up_cta_button_url }}">
-            {{ block.two_up_cta_button_text }}
-          </a>
+          <div class="two-up-cta__button">
+            <a class="button" href="{{ block.two_up_cta_button_url }}">
+              {{ block.two_up_cta_button_text }}
+            </a>
+          </div>
         {% endif %}
       </div>
     </div>

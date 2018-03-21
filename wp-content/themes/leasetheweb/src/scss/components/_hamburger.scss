@@ -7,9 +7,9 @@
   display: inline-block;
   font-size: 0;
   height: rem-calc(15);
-  position: relative;
   margin: 0;
   padding: 0;
+  position: relative;
   text-indent: -9999px;
   top: rem-calc(1);
   width: rem-calc(30);
@@ -27,28 +27,29 @@
     line-height: 0;
     position: absolute;
     right: 0;
-    transition: background-color 0.3s;
     top: rem-calc(6);
+    transition: background-color 0.3s;
     width: 100%;
 
-    &:before, &:after {
+    &::before,
+    &::after {
       background-color: #fff;
       content: "";
       display: block;
-      position: absolute;
       height: rem-calc(3);
       left: 0;
+      position: absolute;
       transition-delay: 0.3s, 0s, 0s;
       transition-duration: 0.3s, 0.3s, 0.3s;
       width: 100%;
     }
 
-    &:before {
-      transition-property: top, transform, background-color;
+    &::before {
       top: -7px;
+      transition-property: top, transform, background-color;
     }
 
-    &:after {
+    &::after {
       bottom: -7px;
       transition-property: bottom, transform, background-color;
     }
@@ -58,16 +59,17 @@
     a {
       background-color: rgba(255, 255, 255, 0);
 
-      &:before, &:after {
+      &::before,
+      &::after {
         transition-delay: 0s, 0.3s;
       }
 
-      &:before {
+      &::before {
         top: 0;
-          transform: rotate(45deg);
+        transform: rotate(45deg);
       }
 
-      &:after {
+      &::after {
         bottom: 0;
         transform: rotate(-45deg);
       }

@@ -3096,7 +3096,7 @@ body {
   font-weight: 400; }
 
 h1 {
-  font-size: 3rem;
+  font-size: 2.25rem;
   line-height: 1.15;
   font-family: "proxima-nova", sans-serif;
   font-style: normal;
@@ -3114,7 +3114,7 @@ h2, .article-hero__title {
   font-weight: 700; }
   @media print, screen and (min-width: 40em) {
     h2, .article-hero__title {
-      font-size: 3rem; } }
+      font-size: 2.25rem; } }
 
 h3 {
   font-size: 1.5rem;
@@ -3264,8 +3264,8 @@ p {
     width: 1.875rem; }
 
 .footer__social__link {
-  display: inline-block;
   color: var(--primary-color);
+  display: inline-block;
   margin: 0 0.9375rem; }
   @media print, screen and (min-width: 40em) {
     .footer__social__link {
@@ -3292,9 +3292,9 @@ p {
   display: inline-block;
   font-size: 0;
   height: 0.9375rem;
-  position: relative;
   margin: 0;
   padding: 0;
+  position: relative;
   text-indent: -9999px;
   top: 0.0625rem;
   width: 1.875rem; }
@@ -3309,33 +3309,33 @@ p {
     line-height: 0;
     position: absolute;
     right: 0;
-    transition: background-color 0.3s;
     top: 0.375rem;
+    transition: background-color 0.3s;
     width: 100%; }
-    .hamburger a:before, .hamburger a:after {
+    .hamburger a::before, .hamburger a::after {
       background-color: #fff;
       content: "";
       display: block;
-      position: absolute;
       height: 0.1875rem;
       left: 0;
+      position: absolute;
       transition-delay: 0.3s, 0s, 0s;
       transition-duration: 0.3s, 0.3s, 0.3s;
       width: 100%; }
-    .hamburger a:before {
-      transition-property: top, transform, background-color;
-      top: -7px; }
-    .hamburger a:after {
+    .hamburger a::before {
+      top: -7px;
+      transition-property: top, transform, background-color; }
+    .hamburger a::after {
       bottom: -7px;
       transition-property: bottom, transform, background-color; }
   .hamburger[aria-expanded="true"] a {
     background-color: rgba(255, 255, 255, 0); }
-    .hamburger[aria-expanded="true"] a:before, .hamburger[aria-expanded="true"] a:after {
+    .hamburger[aria-expanded="true"] a::before, .hamburger[aria-expanded="true"] a::after {
       transition-delay: 0s, 0.3s; }
-    .hamburger[aria-expanded="true"] a:before {
+    .hamburger[aria-expanded="true"] a::before {
       top: 0;
       transform: rotate(45deg); }
-    .hamburger[aria-expanded="true"] a:after {
+    .hamburger[aria-expanded="true"] a::after {
       bottom: 0;
       transform: rotate(-45deg); }
 
@@ -3411,7 +3411,7 @@ p {
       .primary-nav.is-open ~ .off-canvas-content {
         transform: translateX(0); } }
   .primary-nav ~ .off-canvas-content {
-    transition: transform .5s ease; }
+    transition: transform 0.5s ease; }
 
 .primary-nav__logo {
   line-height: 1;
@@ -3445,15 +3445,21 @@ p {
   margin: 0 auto;
   max-height: 18.75rem; }
 
+.image-block--full-width {
+  background: var(--black-color) no-repeat center center;
+  background-size: cover;
+  height: 37.5rem;
+  margin: 0; }
+
 .hero {
-  display: flex;
   color: var(--text-color-inverted);
+  display: flex;
   padding: 6.25rem 0;
   position: relative;
   text-align: center;
   width: 100%; }
   .hero--large {
-    min-height: 37.5rem; }
+    min-height: 48.75rem; }
   .hero--has-image {
     background: var(--black-color) no-repeat center center;
     background-size: cover; }
@@ -3498,8 +3504,8 @@ p {
     margin-bottom: 0; }
 
 .three-up-content {
-  text-align: center;
-  padding: 4.375rem 0; }
+  padding: 4.375rem 0;
+  text-align: center; }
   @media print, screen and (min-width: 40em) {
     .three-up-content {
       padding: 6.875rem 0; } }
@@ -3526,6 +3532,8 @@ p {
 
 @media print, screen and (min-width: 64em) {
   .three-up-content__block {
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: 0 1.5625rem;
     width: 33.33333%; } }
@@ -3535,6 +3543,9 @@ p {
   @media print, screen and (min-width: 64em) {
     .three-up-content__block + .three-up-content__block {
       margin-top: 0; } }
+
+.three-up-content__block__content {
+  margin-bottom: auto; }
 
 .three-up-content__block__icon {
   display: block;
@@ -3570,13 +3581,13 @@ p {
   .two-up-cta__block--dark {
     background: var(--black-color);
     color: var(--text-color-inverted); }
-  @media print, screen and (min-width: 40em) {
-    .two-up-cta__block:first-child .two-up-cta__content {
-      margin-left: auto; } }
 
-@media print, screen and (min-width: 40em) {
-  .two-up-cta__content {
-    max-width: 29.6875rem; } }
+.two-up-cta__content {
+  margin: 0 auto; }
+  @media print, screen and (min-width: 40em) {
+    .two-up-cta__content {
+      max-width: 100%;
+      width: 29.6875rem; } }
 
 .two-up-cta__title {
   margin: 0;

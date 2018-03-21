@@ -1,7 +1,7 @@
 // Three Up Content
 .three-up-content {
-  text-align: center;
   padding: rem-calc($module-spacing-mobile 0);
+  text-align: center;
 
   @include breakpoint(medium) {
     padding: rem-calc($module-spacing-desktop 0);
@@ -37,6 +37,8 @@
   }
 
   @include breakpoint(large) {
+    display: flex;
+    flex-direction: column;
     margin: 0;
     padding: rem-calc(0 25);
     width: 1/3 * 100%;
@@ -49,6 +51,10 @@
       margin-top: 0;
     }
   }
+}
+
+.three-up-content__block__content {
+  margin-bottom: auto;
 }
 
 .three-up-content__block__icon {

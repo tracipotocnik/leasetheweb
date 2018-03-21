@@ -21,19 +21,14 @@
     background: var(--black-color);
     color: var(--text-color-inverted);
   }
-
-  @include breakpoint(medium) {
-    &:first-child {
-      .two-up-cta__content {
-        margin-left: auto;
-      }
-    }
-  }
 }
 
 .two-up-cta__content {
+  margin: 0 auto;
+
   @include breakpoint(medium) {
-    max-width: rem-calc($row-width/2);
+    max-width: 100%;
+    width: rem-calc($row-width/2);
   }
 }
 

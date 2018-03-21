@@ -1,15 +1,15 @@
 // Module Hero
 
 .hero {
-  display: flex;
   color: var(--text-color-inverted);
+  display: flex;
   padding: rem-calc(100 0);
   position: relative;
   text-align: center;
   width: 100%;
 
   &--large {
-    min-height: rem-calc(600);
+    min-height: rem-calc(780);
   }
 
   &--has-image {
