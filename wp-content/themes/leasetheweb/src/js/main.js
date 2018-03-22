@@ -49,6 +49,4 @@ import carousel from 'modules/carousel.js';
     animationSpeed: 500,
     opacity: 0.9,
   });
-
-  console.log('did this work?');
 })(jquery);

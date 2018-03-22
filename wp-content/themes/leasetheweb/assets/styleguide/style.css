@@ -3570,8 +3570,7 @@ p {
     color: var(--text-color-inverted); }
 
 .three-up-content__title {
-  margin-bottom: 2.625rem;
-  text-transform: uppercase; }
+  margin-bottom: 2.625rem; }
 
 @media print, screen and (min-width: 64em) {
   .three-up-content__blocks {

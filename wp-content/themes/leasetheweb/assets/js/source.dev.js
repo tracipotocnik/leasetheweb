@@ -5934,8 +5934,6 @@ animationIn:'fade',
 animationSpeed:500,
 opacity:0.9});
 
-
-console.log('did this work?');
 })(_jquery2.default);// Foundation Plugins. Add or remove as needed for your site
 // Foundation Utilities
 
