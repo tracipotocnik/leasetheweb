@@ -3,13 +3,19 @@
 .hero {
   color: var(--text-color-inverted);
   display: flex;
-  padding: rem-calc(100 0);
+  padding: rem-calc(63 0);
   position: relative;
   text-align: center;
   width: 100%;
 
+  @include breakpoint(medium) {
+    padding: rem-calc(100 0);
+  }
+
   &--large {
-    min-height: rem-calc(600);
+    @include breakpoint(medium) {
+      min-height: rem-calc(600);
+    }
   }
 
   &--has-image {

@@ -3,15 +3,21 @@
   border-radius: rem-calc(28);
   border-width: 2px;
   color: var(--text-color-inverted);
-  font-size: rem-calc(15);
+  font-size: rem-calc(14);
   letter-spacing: rem-calc(0.8);
   margin: 0;
-  min-width: rem-calc(200);
+  min-width: rem-calc(160);
   outline: none;
-  padding: rem-calc(15 25);
+  padding: rem-calc(12 25);
   text-transform: uppercase;
 
   @include primary-font-bold();
+
+  @include breakpoint(medium) {
+    font-size: rem-calc(15);
+    min-width: rem-calc(200);
+    padding: rem-calc(15 25);
+  }
 
   &:hover,
   &:focus {

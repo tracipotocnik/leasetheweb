@@ -15,8 +15,14 @@ $transition: 0.3s ease;
 /////////////////////////////
 $offcanvas-fixed-reveal: false;
 
-$module-spacing-mobile: 70;
+$module-spacing-mobile: 65;
 $module-spacing-desktop: 110;
 
-$row-width: 950;
-$gutter: 15;
+$row-width: 1000;
+$global-width: #{$row-width}px;
+$gutter-mobile: 25;
+$gutter-desktop: 30;
+$grid-column-gutter: (
+  small: 50px,
+  medium: 60px,
+);
