@@ -1,0 +1,40 @@
+<section class="table-block
+  {% if module.table_block_background == 'primary' %}
+    table-block--primary
+  {% endif %}
+  {% if module.table_block_background == 'dark' %}
+    table-block--dark
+  {% endif %}">
+  <div class="row">
+    <div class="small-12 columns">
+      {% if module.table_block_title %}
+        <h3 class="table-block__title">{{ module.table_block_title }}</h3>
+      {% endif %}
+      {% if module.table_block_table %}
+        {% set table = module.table_block_table %}
+        <div class="table-block__table">
+          <table>
+            {% if table.header %}
+              <thead>
+                <tr>
+                  {% for th in table.header %}
+                    <th>{{ th.c }}</th>
+                  {% endfor %}
+                </tr>
+              </thead>
+            {% endif %}
+            <tbody>
+              {% for tr in table.body %}
+                <tr>
+                  {% for td in tr %}
+                    <td>{{ td.c }}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

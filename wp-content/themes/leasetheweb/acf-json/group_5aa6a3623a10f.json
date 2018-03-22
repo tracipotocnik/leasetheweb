@@ -696,6 +696,75 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "5ab2bde862681": {
+                    "key": "5ab2bde862681",
+                    "name": "table_block",
+                    "label": "Table",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5ab2be0f62683",
+                            "label": "Background",
+                            "name": "table_block_background",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "none": "None",
+                                "primary": "Primary Color",
+                                "dark": "Dark"
+                            },
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "default_value": "none",
+                            "layout": "vertical",
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_5ab2bdf162682",
+                            "label": "Title",
+                            "name": "table_block_title",
+                            "type": "text",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_5ab2be3862684",
+                            "label": "Table",
+                            "name": "table_block_table",
+                            "type": "table",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "use_header": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Module",
@@ -722,5 +791,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1521659325
+    "modified": 1521663365
 }

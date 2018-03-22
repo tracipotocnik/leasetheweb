@@ -6,8 +6,16 @@
   &--full-width {
     background: var(--black-color) no-repeat center center;
     background-size: cover;
-    height: rem-calc(600);
+    height: rem-calc(250);
     margin: 0;
+
+    @include breakpoint(medium) {
+      height: rem-calc(400);
+    }
+
+    @include breakpoint(large) {
+      height: rem-calc(600);
+    }
   }
 }
 

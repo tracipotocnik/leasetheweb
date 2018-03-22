@@ -80,7 +80,7 @@ a.pseudo-class-focus {
 }
 
 .menu.menu-hover li.pseudo-class-hover {
-  background-color: #e6e6e6;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .show-on-focus.pseudo-class-active,
@@ -109,14 +109,14 @@ a.pseudo-class-focus {
 textarea.pseudo-class-focus {
   outline: none;
   border: 1px solid #8a8a8a;
-  background-color: #fefefe;
+  background-color: #fff;
   box-shadow: 0 0 5px #cacaca;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
 }
 
 input.pseudo-class-disabled,
 textarea.pseudo-class-disabled {
-  background-color: #e6e6e6;
+  background-color: rgba(0, 0, 0, 0.25);
   cursor: not-allowed;
 }
 
@@ -139,32 +139,32 @@ textarea.pseudo-class-disabled {
 select.pseudo-class-focus {
   outline: none;
   border: 1px solid #8a8a8a;
-  background-color: #fefefe;
+  background-color: #fff;
   box-shadow: 0 0 5px #cacaca;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
 }
 
 select.pseudo-class-disabled {
-  background-color: #e6e6e6;
+  background-color: rgba(0, 0, 0, 0.25);
   cursor: not-allowed;
 }
 
 .button.pseudo-class-hover,
 .button.pseudo-class-focus {
   background-color: #14679e;
-  color: #fefefe;
+  color: #fff;
 }
 
 .button.primary.pseudo-class-hover,
 .button.primary.pseudo-class-focus {
   background-color: #126195;
-  color: #fefefe;
+  color: #fff;
 }
 
 .button.secondary.pseudo-class-hover,
 .button.secondary.pseudo-class-focus {
   background-color: #5e5e5e;
-  color: #fefefe;
+  color: #fff;
 }
 
 .button.success.pseudo-class-hover,
@@ -182,7 +182,7 @@ select.pseudo-class-disabled {
 .button.alert.pseudo-class-hover,
 .button.alert.pseudo-class-focus {
   background-color: #a53b2a;
-  color: #fefefe;
+  color: #fff;
 }
 
 .button.hollow.pseudo-class-hover,
@@ -231,7 +231,7 @@ select.pseudo-class-disabled {
 .button[disabled].pseudo-class-hover,
 .button[disabled].pseudo-class-focus {
   background-color: #1779ba;
-  color: #fefefe;
+  color: #fff;
 }
 
 .button.disabled.primary.pseudo-class-hover,
@@ -239,7 +239,7 @@ select.pseudo-class-disabled {
 .button[disabled].primary.pseudo-class-hover,
 .button[disabled].primary.pseudo-class-focus {
   background-color: #1779ba;
-  color: #fefefe;
+  color: #fff;
 }
 
 .button.disabled.secondary.pseudo-class-hover,
@@ -247,7 +247,7 @@ select.pseudo-class-disabled {
 .button[disabled].secondary.pseudo-class-hover,
 .button[disabled].secondary.pseudo-class-focus {
   background-color: #767676;
-  color: #fefefe;
+  color: #fff;
 }
 
 .button.disabled.success.pseudo-class-hover,
@@ -271,7 +271,7 @@ select.pseudo-class-disabled {
 .button[disabled].alert.pseudo-class-hover,
 .button[disabled].alert.pseudo-class-focus {
   background-color: #cc4b37;
-  color: #fefefe;
+  color: #fff;
 }
 
 .media-object-section.pseudo-class-first-child {
@@ -352,6 +352,10 @@ a.pseudo-class-focus {
 .menu a.pseudo-class-focus {
   color: var(--link-hover-color);
   outline: none;
+}
+
+.table-block__table tr.pseudo-class-last-child td {
+  border: 0;
 }
 
 .text-block__content p.pseudo-class-last-child {
