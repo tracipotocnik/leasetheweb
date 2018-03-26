@@ -1473,12 +1473,12 @@ blockquote {
   border-left: 1px solid #cacaca; }
   blockquote, blockquote p {
     line-height: 1.6;
-    color: #8a8a8a; }
+    color: #4b4b4b; }
 
 cite {
   display: block;
   font-size: 0.8125rem;
-  color: #8a8a8a; }
+  color: #4b4b4b; }
   cite:before {
     content: "— "; }
 
@@ -1510,7 +1510,7 @@ kbd {
   margin-bottom: 0.5rem;
   font-weight: normal;
   line-height: 1.4;
-  color: #8a8a8a; }
+  color: #4b4b4b; }
 
 .lead {
   font-size: 125%;
@@ -1596,7 +1596,7 @@ kbd {
     content: " (" attr(title) ")"; }
   pre,
   blockquote {
-    border: 1px solid #8a8a8a;
+    border: 1px solid #4b4b4b;
     page-break-inside: avoid; }
   thead {
     display: table-header-group; }
@@ -1891,7 +1891,7 @@ textarea {
   [type='text']:focus, [type='password']:focus, [type='date']:focus, [type='datetime']:focus, [type='datetime-local']:focus, [type='month']:focus, [type='week']:focus, [type='email']:focus, [type='number']:focus, [type='search']:focus, [type='tel']:focus, [type='time']:focus, [type='url']:focus, [type='color']:focus,
   textarea:focus {
     outline: none;
-    border: 1px solid #8a8a8a;
+    border: 1px solid #4b4b4b;
     background-color: #fff;
     box-shadow: 0 0 5px #cacaca;
     transition: box-shadow 0.5s, border-color 0.25s ease-in-out; }
@@ -2044,7 +2044,7 @@ select {
   font-size: 1rem;
   line-height: normal;
   color: #0a0a0a;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%28138, 138, 138%29'></polygon></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='24' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%2875, 75, 75%29'></polygon></svg>");
   background-origin: content-box;
   background-position: right -1rem center;
   background-repeat: no-repeat;
@@ -2056,7 +2056,7 @@ select {
       background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAYCAYAAACbU/80AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAIpJREFUeNrEkckNgDAMBBfRkEt0ObRBBdsGXUDgmQfK4XhH2m8czQAAy27R3tsw4Qfe2x8uOO6oYLb6GlOor3GF+swURAOmUJ+RwtEJs9WvTGEYxBXqI1MQAZhCfUQKRzDMVj+TwrAIV6jvSUEkYAr1LSkcyTBb/V+KYfX7xAeusq3sLDtGH3kEGACPWIflNZfhRQAAAABJRU5ErkJggg=="); } }
   select:focus {
     outline: none;
-    border: 1px solid #8a8a8a;
+    border: 1px solid #4b4b4b;
     background-color: #fff;
     box-shadow: 0 0 5px #cacaca;
     transition: box-shadow 0.5s, border-color 0.25s ease-in-out; }
@@ -3133,6 +3133,7 @@ h3 {
 
 h4, .text-block__title {
   font-size: 1.125rem;
+  letter-spacing: 0.0125rem;
   font-family: "proxima-nova", sans-serif;
   font-style: normal;
   font-weight: 700; }
@@ -3441,6 +3442,80 @@ p {
 .title-bar-title {
   line-height: 1;
   margin: 0; }
+
+.accordion-list {
+  padding: 4.0625rem 0; }
+  @media print, screen and (min-width: 40em) {
+    .accordion-list {
+      padding: 6.875rem 0; } }
+
+.accordion-list__title {
+  color: var(--primary-color);
+  margin-bottom: 2.625rem; }
+
+.accordion-list__item {
+  border-top: 2px solid #d8d8d8;
+  padding: 2rem 0 1.75rem;
+  position: relative; }
+  .accordion-list__item:last-child {
+    border-bottom: 2px solid #d8d8d8; }
+
+.accordion-list__item-toggle {
+  background-color: transparent;
+  border: 0;
+  color: #4b4b4b;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 1px;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 1.25rem 0 1.25rem 1.875rem;
+  position: absolute;
+  right: 0;
+  -webkit-tap-highlight-color: transparent;
+  text-transform: none;
+  top: 50%;
+  transform: translateY(-50%); }
+  .accordion-list__item-toggle .icon-plus,
+  .accordion-list__item-toggle .icon-minus {
+    display: block;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    transition: opacity 0.1s; }
+  .accordion-list__item-toggle .icon-minus {
+    opacity: 0; }
+  .accordion-active .accordion-list__item-toggle .icon-plus {
+    opacity: 0; }
+  .accordion-active .accordion-list__item-toggle .icon-minus {
+    opacity: 1; }
+
+.accordion-list__item-title {
+  cursor: pointer;
+  margin: 0;
+  padding-right: 1.875rem;
+  position: relative;
+  font-family: "proxima-nova", sans-serif;
+  font-style: normal;
+  font-weight: 400; }
+
+.accordion-list__item-content {
+  overflow: hidden;
+  transition: height ease 0.5s; }
+  .accordion-list__item-content[aria-hidden=true] {
+    height: 0 !important; }
+
+.accordion-list__item-body {
+  margin: 0;
+  max-width: 55.3125rem;
+  overflow: hidden;
+  padding: 1.875rem 0 0.1875rem 0; }
+  .accordion-list__item-body p:last-child {
+    margin: 0; }
 
 .image-block {
   margin: 4.5rem 0; }

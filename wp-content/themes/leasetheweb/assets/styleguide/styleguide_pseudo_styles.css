@@ -108,7 +108,7 @@ a.pseudo-class-focus {
 [type='color'].pseudo-class-focus,
 textarea.pseudo-class-focus {
   outline: none;
-  border: 1px solid #8a8a8a;
+  border: 1px solid #4b4b4b;
   background-color: #fff;
   box-shadow: 0 0 5px #cacaca;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
@@ -138,7 +138,7 @@ textarea.pseudo-class-disabled {
 
 select.pseudo-class-focus {
   outline: none;
-  border: 1px solid #8a8a8a;
+  border: 1px solid #4b4b4b;
   background-color: #fff;
   box-shadow: 0 0 5px #cacaca;
   transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
@@ -352,6 +352,14 @@ a.pseudo-class-focus {
 .menu a.pseudo-class-focus {
   color: var(--link-hover-color);
   outline: none;
+}
+
+.accordion-list__item.pseudo-class-last-child {
+  border-bottom: 2px solid #d8d8d8;
+}
+
+.accordion-list__item-body p.pseudo-class-last-child {
+  margin: 0;
 }
 
 .table-block__table tr.pseudo-class-last-child td {

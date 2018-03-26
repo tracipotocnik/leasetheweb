@@ -1,0 +1,98 @@
+// Accordion List
+
+.accordion-list {
+  padding: rem-calc($module-spacing-mobile 0);
+
+  @include breakpoint(medium) {
+    padding: rem-calc($module-spacing-desktop 0);
+  }
+}
+
+.accordion-list__title {
+  color: var(--primary-color);
+  margin-bottom: rem-calc(42);
+}
+
+.accordion-list__item {
+  border-top: 2px solid $lighter-gray;
+  padding: rem-calc(32 0 28);
+  position: relative;
+
+  &:last-child {
+    border-bottom: 2px solid $lighter-gray;
+  }
+}
+
+.accordion-list__item-toggle {
+  background-color: transparent;
+  border: 0;
+  color: $dark-gray;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: 1px;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: rem-calc(20 0 20 30);
+  position: absolute;
+  right: 0;
+  -webkit-tap-highlight-color: transparent;
+  text-transform: none;
+  top: 50%;
+  transform: translateY(-50%);
+
+  .icon-plus,
+  .icon-minus {
+    display: block;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    transform: translateY(-50%);
+    transition: opacity 0.1s;
+  }
+
+  .icon-minus {
+    opacity: 0;
+  }
+
+  .accordion-active & {
+    .icon-plus {
+      opacity: 0;
+    }
+
+    .icon-minus {
+      opacity: 1;
+    }
+  }
+}
+
+.accordion-list__item-title {
+  cursor: pointer;
+  margin: 0;
+  padding-right: rem-calc(30);
+  position: relative;
+
+  @include primary-font();
+}
+
+.accordion-list__item-content {
+  overflow: hidden;
+  transition: height ease 0.5s;
+
+  &[aria-hidden=true] {
+    height: 0 !important;
+  }
+}
+
+.accordion-list__item-body {
+  margin: 0;
+  max-width: rem-calc(885);
+  overflow: hidden;
+  padding: rem-calc(30 0 3 0);
+
+  p:last-child {
+    margin: 0;
+  }
+}

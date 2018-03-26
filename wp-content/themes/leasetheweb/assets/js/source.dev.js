@@ -5905,8 +5905,9 @@ require('foundation-sites/js/foundation.offcanvas.js');
 
 var _jquery=typeof window!=="undefined"?window['jQuery']:typeof global!=="undefined"?global['jQuery']:null;var _jquery2=_interopRequireDefault(_jquery);
 var _socialShare=require('modules/socialShare.js');var _socialShare2=_interopRequireDefault(_socialShare);
-var _carousel=require('modules/carousel.js');var _carousel2=_interopRequireDefault(_carousel);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
-
+var _carousel=require('modules/carousel.js');var _carousel2=_interopRequireDefault(_carousel);
+var _accordion=require('modules/accordion.js');var _accordion2=_interopRequireDefault(_accordion);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}// Foundation Plugins. Add or remove as needed for your site
+// Foundation Utilities
 (function($){
 // Initialize Foundation
 $(document).foundation();
@@ -5917,6 +5918,9 @@ $(document).foundation();
 
 // Initialize carousels
 (0,_carousel2.default)();
+
+// Initialize accordions
+(0,_accordion2.default)();
 
 // Initialize Plugins
 $('.magnific-trigger').magnificPopup({
@@ -5934,12 +5938,70 @@ animationIn:'fade',
 animationSpeed:500,
 opacity:0.9});
 
-})(_jquery2.default);// Foundation Plugins. Add or remove as needed for your site
-// Foundation Utilities
+})(_jquery2.default);
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{"foundation-sites/js/foundation.core.js":1,"foundation-sites/js/foundation.drilldown.js":2,"foundation-sites/js/foundation.dropdownMenu.js":3,"foundation-sites/js/foundation.offcanvas.js":4,"foundation-sites/js/foundation.responsiveMenu.js":5,"foundation-sites/js/foundation.util.box.js":6,"foundation-sites/js/foundation.util.keyboard.js":7,"foundation-sites/js/foundation.util.mediaQuery.js":8,"foundation-sites/js/foundation.util.motion.js":9,"foundation-sites/js/foundation.util.nest.js":10,"foundation-sites/js/foundation.util.timerAndImageLoader.js":11,"foundation-sites/js/foundation.util.touch.js":12,"foundation-sites/js/foundation.util.triggers.js":13,"modules/carousel.js":15,"modules/socialShare.js":16}],15:[function(require,module,exports){
+},{"foundation-sites/js/foundation.core.js":1,"foundation-sites/js/foundation.drilldown.js":2,"foundation-sites/js/foundation.dropdownMenu.js":3,"foundation-sites/js/foundation.offcanvas.js":4,"foundation-sites/js/foundation.responsiveMenu.js":5,"foundation-sites/js/foundation.util.box.js":6,"foundation-sites/js/foundation.util.keyboard.js":7,"foundation-sites/js/foundation.util.mediaQuery.js":8,"foundation-sites/js/foundation.util.motion.js":9,"foundation-sites/js/foundation.util.nest.js":10,"foundation-sites/js/foundation.util.timerAndImageLoader.js":11,"foundation-sites/js/foundation.util.touch.js":12,"foundation-sites/js/foundation.util.triggers.js":13,"modules/accordion.js":15,"modules/carousel.js":16,"modules/socialShare.js":17}],15:[function(require,module,exports){
+(function(global){
+/* eslint-env browser */
+'use strict';Object.defineProperty(exports,"__esModule",{value:true});
+
+var _jquery=typeof window!=="undefined"?window['jQuery']:typeof global!=="undefined"?global['jQuery']:null;var _jquery2=_interopRequireDefault(_jquery);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+
+var accordion=function accordion(){
+var $toggleButton=(0,_jquery2.default)('[data-accordion-toggle]');
+
+/**
+                                                                         * Removes accordion container height declaration
+                                                                         */
+function prepToggleContainer(){
+$toggleButton.each(function(e){
+var $this=(0,_jquery2.default)(this);// eslint-disable-line no-invalid-this
+var $toggleContent=$this.closest('.accordion-list__item').
+find($toggleButton.data('accordion-toggle'));
+var isHidden=$toggleContent.attr('aria-hidden')==='false'?
+false:true;
+$toggleContent.attr('aria-hidden',false);
+$toggleContent.css('height','');
+$toggleContent.css('height',$toggleContent.height());
+$toggleContent.attr('aria-hidden',isHidden);
+});
+}
+
+/**
+     * Toggles accordion container
+     */
+function toggle(){
+var toggleSection=function toggleSection(e){
+var $this=(0,_jquery2.default)(e.currentTarget);
+console.log($this);// eslint-disable-line no-console
+$this.toggleClass('accordion-active');
+var $currentToggleContainer=$this.closest('.accordion-list__item').
+find($this.data('accordion-toggle'));
+var isHidden=$currentToggleContainer.
+attr('aria-hidden')==='false'?false:true;
+$currentToggleContainer.attr('aria-hidden',!isHidden);
+};
+
+$toggleButton.on('click',toggleSection);
+}
+
+(0,_jquery2.default)(document).ready(function(){
+prepToggleContainer();
+toggle();
+});
+
+(0,_jquery2.default)(window).on('resize',function(){
+prepToggleContainer();
+});
+};exports.default=
+
+accordion;
+
+}).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
+
+},{}],16:[function(require,module,exports){
 (function(global){
 /* eslint-env browser */
 'use strict';Object.defineProperty(exports,"__esModule",{value:true});
@@ -5967,7 +6029,7 @@ carousel;
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{"vendor/jquery.slick.js":17}],16:[function(require,module,exports){
+},{"vendor/jquery.slick.js":18}],17:[function(require,module,exports){
 (function(global){
 /* eslint-env browser */
 'use strict';Object.defineProperty(exports,"__esModule",{value:true});
@@ -6078,7 +6140,7 @@ socialShare;
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 (function(global){
 'use strict';var _typeof=typeof Symbol==="function"&&_typeof2(Symbol.iterator)==="symbol"?function(obj){return typeof obj==="undefined"?"undefined":_typeof2(obj);}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj==="undefined"?"undefined":_typeof2(obj);};/*
                                                                                                                                                                                                                                                                                             _ _      _       _

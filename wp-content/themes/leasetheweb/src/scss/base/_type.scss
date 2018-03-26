@@ -43,6 +43,7 @@ h3 {
 
 h4 {
   font-size: rem-calc(18);
+  letter-spacing: rem-calc(0.2);
 
   @include primary-font-bold();
 

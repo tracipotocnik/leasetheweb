@@ -1,0 +1,38 @@
+<section class="accordion-list">
+  <div class="row">
+    <div class="small-12 columns">
+      {% if module.accordion_list_headline %}
+        <h3 class="accordion-list__title">
+          {{ module.accordion_list_headline }}
+        </h3>
+      {% endif %}
+      {% for block in module.accordion_list_item %}
+        <div class="accordion-list__item">
+          {% if block.accordion_list_item_title %}
+            <h4 class="accordion-list__item-title"
+              data-accordion-toggle=".accordion-list__item-content">
+              {{ block.accordion_list_item_title }}
+              <button class="accordion-list__item-toggle">
+                <svg class="icon icon-plus">
+                  <title>Show</title>
+                  <use xlink:href="#plus"></use>
+                </svg>
+                <svg class="icon icon-minus">
+                  <title>Hide</title>
+                  <use xlink:href="#minus"></use>
+                </svg>
+              </button>
+            </h4>
+          {% endif %}
+          <div class="accordion-list__item-content">
+            {% if block.accordion_list_item_body %}
+              <div class="accordion-list__item-body">
+                {{ block.accordion_list_item_body }}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

@@ -21,6 +21,7 @@ import 'foundation-sites/js/foundation.offcanvas.js';
 import jquery from 'jquery';
 import socialShare from 'modules/socialShare.js';
 import carousel from 'modules/carousel.js';
+import accordion from 'modules/accordion.js';
 
 (function($) {
   // Initialize Foundation
@@ -32,6 +33,9 @@ import carousel from 'modules/carousel.js';
 
   // Initialize carousels
   carousel();
+
+  // Initialize accordions
+  accordion();
 
   // Initialize Plugins
   $('.magnific-trigger').magnificPopup({
