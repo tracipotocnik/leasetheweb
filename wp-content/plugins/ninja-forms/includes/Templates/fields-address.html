@@ -1,20 +1,21 @@
-<script id="tmpl-nf-field-tel" type="text/template">
+<script id="tmpl-nf-field-address" type="text/template">
 	<input
-			type="tel"
+			type="text"
 			value="{{{ data.value }}}"
 			class="{{{ data.renderClasses() }}} nf-element"
 
 			id="nf-field-{{{ data.id }}}"
 			<# if( ! data.disable_browser_autocompletes ){ #>
 			name="{{ data.custom_name_attribute || 'nf-field-' + data.id + '-' + data.type }}"
-			autocomplete="tel"
+			autocomplete="address-line1"
 			<# } else { #>
 			name="{{ data.custom_name_attribute || 'nf-field-' + data.id }}"
 			{{{ data.maybeDisableAutocomplete() }}}
 			<# } #>
 			{{{ data.renderPlaceholder() }}}
+			{{{ data.maybeDisabled() }}}
 
 			aria-invalid="false"
 			aria-describedby="nf-error-{{{ data.id }}}"
-	>
+			>
 </script>
