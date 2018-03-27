@@ -1,0 +1,76 @@
+// Module Text and Image Block
+
+.text-image-block {
+  position: relative;
+
+  @include breakpoint(medium) {
+    padding: rem-calc($module-spacing-desktop 0);
+  }
+
+  &--dark {
+    background: var(--black-color);
+    color: var(--text-color-inverted);
+  }
+
+  &--primary {
+    background: var(--primary-color);
+    color: var(--text-color-inverted);
+  }
+}
+
+.text-image-block__image {
+  background: no-repeat center center;
+  background-size: cover;
+  height: rem-calc(300);
+
+  @include breakpoint(medium) {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 50%;
+
+    .text-image-block--image-right & {
+      left: 50%;
+    }
+  }
+}
+
+.text-image-block__content {
+  padding: rem-calc($module-spacing-mobile) 0;
+
+  @include breakpoint(medium) {
+    padding: 0 0 0 rem-calc(90);
+
+    .text-image-block--image-right & {
+      padding-left: 0;
+      padding-right: rem-calc(90);
+    }
+  }
+}
+
+.text-image-block__title {
+  margin-bottom: rem-calc(25);
+}
+
+.text-image-block__body {
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.text-image-block__buttons {
+  margin: rem-calc(20 -3 0);
+
+  .button {
+    margin: rem-calc(10 3 0);
+
+    .text-image-block--primary & {
+      @extend .button--inverse;
+
+      + .button {
+        @extend .button--inverse-outline;
+      }
+    }
+  }
+}

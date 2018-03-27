@@ -25,6 +25,17 @@
   }
 }
 
+.button--outline {
+  background: transparent;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+
+  &:hover,
+  &:focus {
+    background: var(--primary-color);
+  }
+}
+
 .button--inverse {
   background: var(--text-color-inverted);
   border-color: var(--text-color-inverted);
@@ -33,6 +44,19 @@
   &:hover,
   &:focus {
     background: transparent;
+    color: var(--text-color-inverted);
+  }
+}
+
+.button--inverse-outline {
+  background: transparent;
+  border-color: var(--text-color-inverted);
+  color: var(--text-color-inverted);
+
+  &:hover,
+  &:focus {
+    background: var(--text-color-inverted);
+    color: var(--text-color-default);
   }
 }
 

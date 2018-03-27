@@ -1,4 +1,10 @@
-<section class="accordion-list">
+<section class="accordion-list
+  {% if module.accordion_list_background == 'primary' %}
+    accordion-list--primary
+  {% endif %}
+  {% if module.accordion_list_background == 'dark' %}
+    accordion-list--dark
+  {% endif %}">
   <div class="row">
     <div class="small-12 columns">
       {% if module.accordion_list_headline %}

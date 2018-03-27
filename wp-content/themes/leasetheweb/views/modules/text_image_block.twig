@@ -1,0 +1,45 @@
+<section class="text-image-block
+  text-image-block--image-{{ module.text_image_block_alignment }}
+  {% if module.text_image_block_background == 'primary' %}
+    text-image-block--primary
+  {% endif %}
+  {% if module.text_image_block_background == 'dark' %}
+    text-image-block--dark
+  {% endif %}">
+  {% if module.text_image_block_image %}
+    <div class="text-image-block__image"
+      style="background-image: url({{ TimberImage(module.text_image_block_image).src }});">
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="small-12 medium-6 columns
+      {% if module.text_image_block_alignment == 'left' %}
+        medium-push-6
+      {% endif %}">
+      <div class="text-image-block__content">
+        {% if module.text_image_block_title %}
+          <h3 class="text-image-block__title">
+            {{ module.text_image_block_title }}
+          </h3>
+        {% endif %}
+        <div class="text-image-block__body">
+          {{ module.text_image_block_body }}
+        </div>
+        {% if (module.text_image_block_button_1_text and module.text_image_block_button_1_url) or (module.text_image_block_button_2_text and module.text_image_block_button_2_url) %}
+          <div class="text-image-block__buttons">
+            {% if module.text_image_block_button_1_text and module.text_image_block_button_1_url %}
+              <a class="button button--small" href="{{ module.text_image_block_button_1_url }}">
+                {{ module.text_image_block_button_1_text }}
+              </a>
+            {% endif %}
+            {% if module.text_image_block_button_2_text and module.text_image_block_button_2_url %}
+              <a class="button button--small button--outline" href="{{ module.text_image_block_button_2_url }}">
+                {{ module.text_image_block_button_2_text }}
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>

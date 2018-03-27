@@ -1,4 +1,10 @@
-<section class="text-block">
+<section class="text-block
+  {% if module.text_block_background == 'primary' %}
+    text-block--primary
+  {% endif %}
+  {% if module.text_block_background == 'dark' %}
+    text-block--dark
+  {% endif %}">
   <div class="row">
     {% for block in module.text_block_block %}
       <div class="small-12 medium-8 large-6 columns

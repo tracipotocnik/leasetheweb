@@ -1,14 +1,25 @@
 // Module Text Block
 
 .text-block {
-  margin: rem-calc($module-spacing-mobile) 0;
+  padding: rem-calc($module-spacing-mobile) 0;
 
   @include breakpoint(medium) {
-    margin: rem-calc($module-spacing-desktop 0);
+    padding: rem-calc($module-spacing-desktop 0);
   }
 
-  &--small {
+  &--dark {
+    background: var(--black-color);
+    color: var(--text-color-inverted);
+  }
+
+  &--primary {
+    background: var(--primary-color);
+    color: var(--text-color-inverted);
+  }
+
+  &--post {
     margin: rem-calc(72) 0;
+    padding: 0;
   }
 
   .columns {

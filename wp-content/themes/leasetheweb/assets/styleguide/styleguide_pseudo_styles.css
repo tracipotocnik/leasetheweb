@@ -319,9 +319,25 @@ select.pseudo-class-disabled {
   background: var(--primary-hover-color);
 }
 
+.button--outline.pseudo-class-hover,
+.button--outline.pseudo-class-focus {
+  background: var(--primary-color);
+}
+
 .button--inverse.pseudo-class-hover,
-.button--inverse.pseudo-class-focus {
+.text-image-block--primary .text-image-block__buttons .button.pseudo-class-hover,
+.button--inverse.pseudo-class-focus,
+.text-image-block--primary .text-image-block__buttons .button.pseudo-class-focus {
   background: transparent;
+  color: var(--text-color-inverted);
+}
+
+.button--inverse-outline.pseudo-class-hover,
+.text-image-block--primary .text-image-block__buttons .button + .button.pseudo-class-hover,
+.button--inverse-outline.pseudo-class-focus,
+.text-image-block--primary .text-image-block__buttons .button + .button.pseudo-class-focus {
+  background: var(--text-color-inverted);
+  color: var(--text-color-default);
 }
 
 a.pseudo-class-hover,
@@ -367,6 +383,10 @@ a.pseudo-class-focus {
 }
 
 .text-block__content p.pseudo-class-last-child {
+  margin-bottom: 0;
+}
+
+.text-image-block__body p.pseudo-class-last-child {
   margin-bottom: 0;
 }
 
