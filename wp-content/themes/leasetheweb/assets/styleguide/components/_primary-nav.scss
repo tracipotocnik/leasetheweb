@@ -63,3 +63,34 @@
     display: none !important;
   }
 }
+
+.is-dropdown-submenu {
+  background: var(--black-color);
+  border: 0;
+
+  &.menu {
+    > li {
+      > a {
+        padding: rem-calc(18);
+      }
+    }
+  }
+}
+
+.dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a::after {
+  display: none;
+}
+
+.is-drilldown-submenu-parent > a::after {
+  border-color: transparent transparent transparent var(--primary-color);
+}
+
+.js-drilldown-back > a::before {
+  border-color: transparent var(--primary-color) transparent transparent;
+  margin-right: rem-calc(15);
+  margin-top: rem-calc(-4);
+}
+
+.is-drilldown-submenu {
+  background: var(--black-color);
+}

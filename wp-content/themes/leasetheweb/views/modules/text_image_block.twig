@@ -5,6 +5,9 @@
   {% endif %}
   {% if module.text_image_block_background == 'dark' %}
     text-image-block--dark
+  {% endif %}
+  {% if module.text_image_block_image_size == 'one_third' %}
+    text-image-block--image-one-third
   {% endif %}">
   {% if module.text_image_block_image %}
     <div class="text-image-block__image"
@@ -13,6 +16,12 @@
   {% endif %}
   <div class="row">
     <div class="small-12 medium-6 columns
+      {% if module.text_image_block_image_size == 'one_third' %}
+        large-8
+        {% if module.text_image_block_alignment == 'left' %}
+          large-push-4
+        {% endif %}
+      {% endif %}
       {% if module.text_image_block_alignment == 'left' %}
         medium-push-6
       {% endif %}">

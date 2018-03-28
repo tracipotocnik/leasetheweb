@@ -10,7 +10,6 @@
       <a href="{{item.get_link}}">{{item.title}}</a>
       {% if item.get_children %}
       <ul class="nested menu submenu vertical">
-        <li class="back"><a href="#">Back</a></li>
         {% for child in item.get_children %}
           <li><a href="{{child.get_link}}">{{child.title}}</a></li>
         {% endfor %}
