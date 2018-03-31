@@ -42,13 +42,23 @@ h3 {
 }
 
 h4 {
-  font-size: rem-calc(18);
+  font-size: rem-calc(20);
   letter-spacing: rem-calc(0.2);
 
   @include primary-font-bold();
 
   @include breakpoint(medium) {
     font-size: rem-calc(24);
+  }
+}
+
+h5 {
+  font-size: rem-calc(18);
+
+  @include primary-font-medium();
+
+  @include breakpoint(medium) {
+    font-size: rem-calc(20);
   }
 }
 

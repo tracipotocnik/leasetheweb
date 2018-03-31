@@ -62,6 +62,14 @@
 
 .text-image-block__title {
   margin-bottom: rem-calc(25);
+
+  + .text-image-block__subtitle {
+    margin-top: rem-calc(-22);
+  }
+}
+
+.text-image-block__subtitle {
+  margin-bottom: rem-calc(25);
 }
 
 .text-image-block__body {

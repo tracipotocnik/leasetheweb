@@ -31,6 +31,11 @@
             {{ module.text_image_block_title }}
           </h3>
         {% endif %}
+        {% if module.text_image_block_subtitle %}
+          <h5 class="text-image-block__subtitle">
+            {{ module.text_image_block_subtitle }}
+          </h5>
+        {% endif %}
         <div class="text-image-block__body">
           {{ module.text_image_block_body }}
         </div>

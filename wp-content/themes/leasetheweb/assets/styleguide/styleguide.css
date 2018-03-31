@@ -3274,7 +3274,7 @@ h3 {
       font-size: 1.875rem; } }
 
 h4, .text-block__title {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   letter-spacing: 0.0125rem;
   font-family: "proxima-nova", sans-serif;
   font-style: normal;
@@ -3282,6 +3282,15 @@ h4, .text-block__title {
   @media print, screen and (min-width: 40em) {
     h4, .text-block__title {
       font-size: 1.5rem; } }
+
+h5 {
+  font-size: 1.125rem;
+  font-family: "proxima-nova", sans-serif;
+  font-style: normal;
+  font-weight: 500; }
+  @media print, screen and (min-width: 40em) {
+    h5 {
+      font-size: 1.25rem; } }
 
 a {
   color: var(--link-color);
@@ -4047,6 +4056,11 @@ p {
         padding-right: 5.625rem; } }
 
 .text-image-block__title {
+  margin-bottom: 1.5625rem; }
+  .text-image-block__title + .text-image-block__subtitle {
+    margin-top: -1.375rem; }
+
+.text-image-block__subtitle {
   margin-bottom: 1.5625rem; }
 
 .text-image-block__body p:last-child {
