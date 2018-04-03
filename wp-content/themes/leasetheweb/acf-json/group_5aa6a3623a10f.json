@@ -1143,6 +1143,130 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "5ac2ebbd2f993": {
+                    "key": "5ac2ebbd2f993",
+                    "name": "reviews",
+                    "label": "Reviews",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_5ac2eed1b65f9",
+                            "label": "Background",
+                            "name": "reviews_background",
+                            "type": "radio",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "none": "None",
+                                "primary": "Primary Color",
+                                "dark": "Dark"
+                            },
+                            "allow_null": 0,
+                            "other_choice": 0,
+                            "save_other_choice": 0,
+                            "default_value": "none",
+                            "layout": "vertical",
+                            "return_format": "value"
+                        },
+                        {
+                            "key": "field_5ac2ebe82f994",
+                            "label": "Reviews",
+                            "name": "reviews",
+                            "type": "repeater",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "collapsed": "",
+                            "min": 0,
+                            "max": 0,
+                            "layout": "block",
+                            "button_label": "Add Review",
+                            "sub_fields": [
+                                {
+                                    "key": "field_5ac2ec052f995",
+                                    "label": "Star Count",
+                                    "name": "review_star_count",
+                                    "type": "select",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "choices": {
+                                        "1": "1",
+                                        "2": "2",
+                                        "3": "3",
+                                        "4": "4",
+                                        "5": "5"
+                                    },
+                                    "default_value": [
+                                        5
+                                    ],
+                                    "allow_null": 0,
+                                    "multiple": 0,
+                                    "ui": 0,
+                                    "ajax": 0,
+                                    "return_format": "value",
+                                    "placeholder": ""
+                                },
+                                {
+                                    "key": "field_5ac2ed382f996",
+                                    "label": "Quote",
+                                    "name": "review_quote",
+                                    "type": "textarea",
+                                    "instructions": "Include quotation marks",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "maxlength": "",
+                                    "rows": 3,
+                                    "new_lines": ""
+                                },
+                                {
+                                    "key": "field_5ac2eda82f997",
+                                    "label": "Attribution",
+                                    "name": "review_attribution",
+                                    "type": "text",
+                                    "instructions": "",
+                                    "required": 0,
+                                    "conditional_logic": 0,
+                                    "wrapper": {
+                                        "width": "",
+                                        "class": "",
+                                        "id": ""
+                                    },
+                                    "default_value": "",
+                                    "placeholder": "",
+                                    "prepend": "",
+                                    "append": "",
+                                    "maxlength": ""
+                                }
+                            ]
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "button_label": "Add Module",
@@ -1169,5 +1293,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1522537270
+    "modified": 1522727281
 }

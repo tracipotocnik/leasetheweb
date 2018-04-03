@@ -47,6 +47,7 @@ Author URI: http://www.leasethewebsite.com
 @import "components/hamburger";
 @import "components/menu";
 @import "components/primary-nav";
+@import "components/slick";
 @import "components/title-bar";
 
 // Modules
@@ -54,10 +55,12 @@ Author URI: http://www.leasethewebsite.com
 @import "modules/accordion-list";
 @import "modules/image-block";
 @import "modules/hero";
+@import "modules/reviews";
 @import "modules/table-block";
 @import "modules/text-block";
 @import "modules/text-image-block";
 @import "modules/three-up-content";
+@import "modules/three-up-rotator";
 @import "modules/two-up-cta";
 
 // Utility

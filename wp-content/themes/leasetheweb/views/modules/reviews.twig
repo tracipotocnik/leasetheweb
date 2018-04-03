@@ -1,0 +1,48 @@
+<section class="review-section
+  {% if module.reviews_background == 'primary' %}
+    review-section--primary
+  {% endif %}
+  {% if module.reviews_background == 'dark' %}
+    review-section--dark
+  {% endif %}">
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="three-up-rotator js-carousel">
+        {% for block in module.reviews %}
+          {% if block.review_quote %}
+            <div class="three-up-rotator__slide">
+              <div class="review">
+                <div class="review__stars review__stars--{{ block.review_star_count }}">
+                  <svg class="icon icon-star">
+                    <title>Star</title>
+                    <use xlink:href="#star"></use>
+                  </svg>
+                  <svg class="icon icon-star">
+                    <title>Star</title>
+                    <use xlink:href="#star"></use>
+                  </svg>
+                  <svg class="icon icon-star">
+                    <title>Star</title>
+                    <use xlink:href="#star"></use>
+                  </svg>
+                  <svg class="icon icon-star">
+                    <title>Star</title>
+                    <use xlink:href="#star"></use>
+                  </svg>
+                  <svg class="icon icon-star">
+                    <title>Star</title>
+                    <use xlink:href="#star"></use>
+                  </svg>
+                </div>
+                <p class="review__quote">{{ block.review_quote }}</p>
+                {% if block.review_attribution %}
+                  <p class="review__attribution">&ndash; {{ block.review_attribution }}</p>
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

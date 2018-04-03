@@ -6,17 +6,28 @@ import 'vendor/jquery.slick.js';
 
 const carousel = function() {
   $('.js-carousel').slick({
-    adaptiveHeight: true,
-    dots: false,
-    centerMode: true,
-    slidesToShow: 1,
+    slidesToShow: 3,
+    slidesToScroll: 1,
     arrows: true,
-    centerPadding: '0px',
-    infinite: false,
-    prevArrow: '<button type="button" class="tiny">'
-        + '<i class="fa fa-chevron-left"></i></button>',
-    nextArrow: '<button type="button" class="tiny">' +
-        '<i class="fa fa-chevron-right"></i></button>',
+    dots: false,
+    focusOnSelect: false,
+    infinite: true,
+    responsive: [
+      {
+        breakpoint: 950,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 700,
+        settings: {
+          arrows: false,
+          dots: true,
+          slidesToShow: 1,
+        },
+      },
+    ],
   });
 };
 

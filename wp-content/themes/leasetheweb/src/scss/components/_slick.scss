@@ -1,0 +1,116 @@
+// Slick Slider
+
+.slick-slide {
+  outline: 0 none;
+}
+
+.slick-prev,
+.slick-next {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: transparent;
+  cursor: pointer;
+  display: inline-block;
+  height: rem-calc(67);
+  line-height: 1;
+  outline: 0;
+  padding: rem-calc(15);
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  top: 50%;
+  transform: translateY(-50%);
+  user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: rem-calc(50);
+  z-index: 1;
+
+  &::before {
+    display: block;
+  }
+}
+
+.slick-prev {
+  left: rem-calc(-15);
+
+  @include breakpoint(medium) {
+    left: rem-calc(-35);
+  }
+
+  @include breakpoint(large) {
+    left: rem-calc(-50);
+  }
+
+  &::before {
+    content: url('assets/img/caret-left.svg');
+  }
+}
+
+.slick-next {
+  right: rem-calc(-15);
+
+  @include breakpoint(medium) {
+    right: rem-calc(-35);
+  }
+
+  @include breakpoint(large) {
+    right: rem-calc(-50);
+  }
+
+  &::before {
+    content: url('assets/img/caret-right.svg');
+  }
+}
+
+.slick-dots {
+  bottom: rem-calc(-45);
+  display: block;
+  left: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: 100%;
+
+  li {
+    cursor: pointer;
+    display: inline-block;
+    height: rem-calc(12);
+    margin: 0 rem-calc(6);
+    padding: 0;
+    position: relative;
+    width: rem-calc(12);
+
+    &.slick-active {
+      button {
+        background: $dark-gray;
+      }
+    }
+  }
+
+  button {
+    background: $light-gray;
+    border: 0;
+    border-radius: 50%;
+    color: transparent;
+    cursor: pointer;
+    display: block;
+    font-size: 0;
+    height: rem-calc(12);
+    line-height: 0;
+    outline: none;
+    padding: 0;
+    transition: all $transition;
+    width: rem-calc(12);
+
+    &:hover,
+    &:focus {
+      background: $dark-gray;
+      outline: none;
+    }
+  }
+}
