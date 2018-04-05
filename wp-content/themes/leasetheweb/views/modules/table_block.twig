@@ -1,9 +1,10 @@
-<section class="table-block
+<section class="table-block module
   {% if module.table_block_background == 'primary' %}
-    table-block--primary
-  {% endif %}
-  {% if module.table_block_background == 'dark' %}
-    table-block--dark
+    module--primary
+  {% elseif module.table_block_background == 'dark' %}
+    module--dark
+  {% else %}
+    module--none
   {% endif %}">
   <div class="row">
     <div class="small-12 columns">

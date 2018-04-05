@@ -52,8 +52,15 @@
 }
 
 .primary-nav__logo {
+  height: rem-calc(65);
   line-height: 1;
   margin: 0;
+
+  a,
+  img {
+    display: block;
+    height: 100%;
+  }
 }
 
 .js-off-canvas-overlay {

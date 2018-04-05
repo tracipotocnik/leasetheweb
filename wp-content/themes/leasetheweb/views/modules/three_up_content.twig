@@ -1,9 +1,10 @@
-<section class="three-up-content
+<section class="three-up-content module
   {% if module.three_up_content_background == 'primary' %}
-    three-up-content--primary
-  {% endif %}
-  {% if module.three_up_content_background == 'dark' %}
-    three-up-content--dark
+    module--primary
+  {% elseif module.three_up_content_background == 'dark' %}
+    module--dark
+  {% else %}
+    module--none
   {% endif %}">
   <div class="row">
     <div class="small-12 columns">
@@ -15,7 +16,9 @@
           <div class="three-up-content__block">
             <div class="three-up-content__block__content">
               {% if block.three_up_content_block_icon %}
-                <img src="{{ TimberImage(block.three_up_content_block_icon).src }}" class="three-up-content__block__icon">
+                <div class="three-up-content__block__icon">
+                  <img src="{{ TimberImage(block.three_up_content_block_icon).src }}">
+                </div>
               {% endif %}
               {% if block.three_up_content_block_title %}
                 <h3 class="three-up-content__block__title">{{ block.three_up_content_block_title }}</h3>

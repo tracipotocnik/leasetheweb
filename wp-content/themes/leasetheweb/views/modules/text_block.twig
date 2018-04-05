@@ -1,22 +1,40 @@
-<section class="text-block
+<section class="text-block module
   {% if module.text_block_background == 'primary' %}
-    text-block--primary
+    module--primary
+  {% elseif module.text_block_background == 'dark' %}
+    module--dark
+  {% else %}
+    module--none
   {% endif %}
-  {% if module.text_block_background == 'dark' %}
-    text-block--dark
+  {% if module.text_block_block|length > 1 %}
+    text-block--stacked
   {% endif %}">
   <div class="row">
     {% for block in module.text_block_block %}
-      <div class="small-12 medium-8 large-6 columns
-      {% if module.text_block_block|length > 1 %}
-        large-push-0
-        {% if loop.index == 2 %}
-          medium-pull-2
+      <div class="small-12 medium-8 columns
+      {% if module.text_block_width == 'medium' %}
+        large-8
+        {% if module.text_block_block|length > 1 %}
+          {% if loop.index == 2 %}
+            medium-pull-2
+          {% else %}
+            medium-push-2
+          {% endif %}
         {% else %}
-          medium-push-2
+          small-centered
         {% endif %}
       {% else %}
-        small-centered
+        large-6
+        {% if module.text_block_block|length > 1 %}
+          large-push-0
+          {% if loop.index == 2 %}
+            medium-pull-2
+          {% else %}
+            medium-push-2
+          {% endif %}
+        {% else %}
+          small-centered
+        {% endif %}
       {% endif %}">
         {% if block.text_block_title %}
           <h2 class="text-block__title">

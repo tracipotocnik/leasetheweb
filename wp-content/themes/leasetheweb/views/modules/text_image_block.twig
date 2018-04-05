@@ -1,13 +1,14 @@
 <section class="text-image-block
   text-image-block--image-{{ module.text_image_block_alignment }}
-  {% if module.text_image_block_background == 'primary' %}
-    text-image-block--primary
-  {% endif %}
-  {% if module.text_image_block_background == 'dark' %}
-    text-image-block--dark
-  {% endif %}
+
   {% if module.text_image_block_image_size == 'one_third' %}
     text-image-block--image-one-third
+  {% endif %}
+
+  {% if module.text_image_block_background == 'primary' %}
+    text-image-block--primary
+  {% elseif module.text_image_block_background == 'dark' %}
+    text-image-block--dark
   {% endif %}">
   {% if module.text_image_block_image %}
     <div class="text-image-block__image"

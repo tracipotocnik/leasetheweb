@@ -1,23 +1,5 @@
 // Table Block
 
-.table-block {
-  padding: rem-calc($module-spacing-mobile 0);
-
-  @include breakpoint(medium) {
-    padding: rem-calc($module-spacing-desktop 0);
-  }
-
-  &--dark {
-    background: var(--black-color);
-    color: var(--text-color-inverted);
-  }
-
-  &--primary {
-    background: var(--primary-color);
-    color: var(--text-color-inverted);
-  }
-}
-
 .table-block__title {
   margin: 0 0 rem-calc(42);
 }
@@ -27,8 +9,8 @@
   border: 1px solid $light-gray;
   border-radius: rem-calc(10);
 
-  .table-block--dark &,
-  .table-block--primary & {
+  .module--dark &,
+  .module--primary & {
     border: 0;
   }
 

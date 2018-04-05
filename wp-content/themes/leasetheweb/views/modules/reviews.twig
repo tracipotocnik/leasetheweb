@@ -1,9 +1,10 @@
-<section class="review-section
+<section class="review-section module
   {% if module.reviews_background == 'primary' %}
-    review-section--primary
-  {% endif %}
-  {% if module.reviews_background == 'dark' %}
-    review-section--dark
+    module--primary
+  {% elseif module.reviews_background == 'dark' %}
+    module--dark
+  {% else %}
+    module--none
   {% endif %}">
   <div class="row">
     <div class="small-12 columns">

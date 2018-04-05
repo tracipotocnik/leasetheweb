@@ -42,8 +42,8 @@
 
       .text-image-block--primary &,
       .text-image-block--dark &,
-      .text-block--primary &,
-      .text-block--dark & {
+      .module--primary &,
+      .module--dark & {
         color: var(--text-color-inverted);
       }
     }
@@ -67,8 +67,9 @@
   [type=time],
   [type=url],
   [type=week],
-  textarea {
-    background: $lightest-gray;
+  textarea,
+  select {
+    background-color: $lightest-gray;
     border-color: transparent;
     box-shadow: none;
     color: var(--text-color-default);
@@ -78,9 +79,9 @@
 
     .text-image-block--primary &,
     .text-image-block--dark &,
-    .text-block--primary &,
-    .text-block--dark & {
-      background: $white;
+    .module--primary &,
+    .module--dark & {
+      background-color: $white;
     }
 
     .text-block & {
@@ -89,6 +90,10 @@
       max-width: rem-calc(415);
       text-align: center;
     }
+  }
+
+  select {
+    padding-right: rem-calc(24);
   }
 
   input[type=button],
@@ -100,5 +105,13 @@
     .text-block--primary & {
       @extend .button--inverse;
     }
+  }
+
+  .label-right {
+    text-align: left;
+  }
+
+  .stars {
+    display: inline-block;
   }
 }

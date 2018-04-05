@@ -2,14 +2,14 @@
   {% if module.hero_size == 'large' %}
     hero--large
   {% endif %}
-  {% if module.hero_background_type == 'solid_dark' %}
-    hero--dark
-  {% endif %}
-  {% if module.hero_background_type == 'solid_primary' %}
-    hero--primary
-  {% endif %}
   {% if module.hero_background_type == 'image' %}
     hero--has-image
+  {% endif %}
+
+  {% if module.hero_background_type == 'solid_dark' %}
+    hero--dark
+  {% elseif module.hero_background_type == 'solid_primary' %}
+    hero--primary
   {% endif %}
 {% endset %}
 <section class="hero {{ classes }}"
