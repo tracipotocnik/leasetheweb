@@ -6,7 +6,7 @@
   {% else %}
     module--none
   {% endif %}
-  {% if module.text_block_block|length > 1 %}
+  {% if module.text_block_block|length > 1 and module.text_block_width == 'medium' %}
     text-block--stacked
   {% endif %}">
   <div class="row">
