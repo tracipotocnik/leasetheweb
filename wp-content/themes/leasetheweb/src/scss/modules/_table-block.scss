@@ -4,10 +4,45 @@
   margin: 0 0 rem-calc(42);
 }
 
+.table-block__table-wrapper {
+  margin: 0 -#{$gutter-mobile}px;
+  position: relative;
+
+  @include breakpoint(medium) {
+    margin: 0;
+  }
+
+  &::after {
+    background-image: linear-gradient(to left, $white 20%, rgba(255, 255, 255, 0.4));
+    content: "";
+    display: block;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: rem-calc(35);
+
+    @include breakpoint(medium) {
+      display: none;
+    }
+  }
+}
+
 .table-block__table {
   background: $white;
   border: 1px solid $light-gray;
-  border-radius: rem-calc(10);
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @include breakpoint(medium) {
+    border-radius: rem-calc(10);
+    overflow: initial;
+  }
 
   .module--dark &,
   .module--primary &,

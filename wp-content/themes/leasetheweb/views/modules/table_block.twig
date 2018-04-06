@@ -15,27 +15,29 @@
       {% endif %}
       {% if module.table_block_table %}
         {% set table = module.table_block_table %}
-        <div class="table-block__table">
-          <table>
-            {% if table.header %}
-              <thead>
-                <tr>
-                  {% for th in table.header %}
-                    <th>{{ th.c }}</th>
-                  {% endfor %}
-                </tr>
-              </thead>
-            {% endif %}
-            <tbody>
-              {% for tr in table.body %}
-                <tr>
-                  {% for td in tr %}
-                    <td>{{ td.c }}</td>
-                  {% endfor %}
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+        <div class="table-block__table-wrapper">
+          <div class="table-block__table">
+            <table>
+              {% if table.header %}
+                <thead>
+                  <tr>
+                    {% for th in table.header %}
+                      <th>{{ th.c }}</th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+              {% endif %}
+              <tbody>
+                {% for tr in table.body %}
+                  <tr>
+                    {% for td in tr %}
+                      <td>{{ td.c }}</td>
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       {% endif %}
     </div>

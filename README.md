@@ -30,3 +30,5 @@ If you would like to keep a separate set of configuration for local development,
 
 ![alt](http://i.imgur.com/fzIeQBP.png, '')
 
+### Push to Upstream
+`terminus site:list --format=list | terminus site:mass-update:apply --upstream=d4c30b3f-5135-4e6c-b39a-4f8000f82cd7`
