@@ -30,6 +30,10 @@
   &--primary {
     background: var(--primary-color);
   }
+
+  &--secondary {
+    background: var(--secondary-color);
+  }
 }
 
 .hero__overlay {
@@ -45,6 +49,10 @@
 
   &--primary {
     background: var(--primary-color);
+  }
+
+  &--secondary {
+    background: var(--secondary-color);
   }
 }
 

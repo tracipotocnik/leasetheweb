@@ -4,7 +4,8 @@
   color: var(--primary-color);
   margin-bottom: rem-calc(42);
 
-  .accordion-list--primary & {
+  .module--primary &,
+  .module--secondary & {
     color: inherit;
   }
 }
@@ -19,6 +20,7 @@
   }
 
   .module--primary &,
+  .module--secondary &,
   .module--dark & {
     border-color: inherit;
   }
@@ -45,6 +47,7 @@
   transform: translateY(-50%);
 
   .module--primary &,
+  .module--secondary &,
   .module--dark & {
     color: inherit;
   }

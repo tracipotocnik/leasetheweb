@@ -10,6 +10,8 @@
     hero--dark
   {% elseif module.hero_background_type == 'solid_primary' %}
     hero--primary
+  {% elseif module.hero_background_type == 'solid_secondary' %}
+    hero--secondary
   {% endif %}
 {% endset %}
 <section class="hero {{ classes }}"
@@ -20,9 +22,10 @@
   {% set overlay_classes %}
     {% if module.hero_background_overlay == 'black' %}
       hero__overlay--black
-    {% endif %}
-    {% if module.hero_background_overlay == 'primary' %}
+    {% elseif module.hero_background_overlay == 'primary' %}
       hero__overlay--primary
+    {% elseif module.hero_background_overlay == 'secondary' %}
+      hero__overlay--secondary
     {% endif %}
   {% endset %}
   <div class="hero__overlay {{ overlay_classes }}"
@@ -43,6 +46,8 @@
         {% if module.hero_button_text and module.hero_button_url %}
           <a class="hero__button button
             {% if (module.hero_background_type == 'image' and module.hero_background_overlay == 'primary') or module.hero_background_type == 'solid_primary' %}
+              button--inverse
+            {% elseif (module.hero_background_type == 'image' and module.hero_background_overlay == 'secondary') or module.hero_background_type == 'solid_secondary' %}
               button--inverse
             {% endif %}" href="{{ module.hero_button_url }}">
             {{ module.hero_button_text }}

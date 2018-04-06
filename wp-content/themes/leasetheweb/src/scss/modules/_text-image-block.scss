@@ -16,6 +16,11 @@
     background: var(--primary-color);
     color: var(--text-color-inverted);
   }
+
+  &--secondary {
+    background: var(--secondary-color);
+    color: var(--text-color-inverted);
+  }
 }
 
 .text-image-block__image {
@@ -84,7 +89,8 @@
   .button {
     margin: rem-calc(10 3 0);
 
-    .text-image-block--primary & {
+    .text-image-block--primary &,
+    .text-image-block--secondary & {
       @extend .button--inverse;
 
       + .button {

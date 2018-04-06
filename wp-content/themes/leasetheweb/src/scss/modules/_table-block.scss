@@ -10,7 +10,8 @@
   border-radius: rem-calc(10);
 
   .module--dark &,
-  .module--primary & {
+  .module--primary &,
+  .module--secondary & {
     border: 0;
   }
 

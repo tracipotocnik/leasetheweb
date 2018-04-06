@@ -1,6 +1,8 @@
 <section class="accordion-list module
   {% if module.accordion_list_background == 'primary' %}
     module--primary
+  {% elseif module.accordion_list_background == 'secondary' %}
+    module--secondary
   {% elseif module.accordion_list_background == 'dark' %}
     module--dark
   {% else %}

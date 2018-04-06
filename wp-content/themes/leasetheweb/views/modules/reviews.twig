@@ -1,6 +1,8 @@
 <section class="review-section module
   {% if module.reviews_background == 'primary' %}
     module--primary
+  {% elseif module.reviews_background == 'secondary' %}
+    module--secondary
   {% elseif module.reviews_background == 'dark' %}
     module--dark
   {% else %}

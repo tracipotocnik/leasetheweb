@@ -25,6 +25,15 @@
     }
   }
 
+  &--secondary {
+    background: var(--secondary-color);
+    color: var(--text-color-inverted);
+
+    + .module--secondary {
+      padding-top: 0;
+    }
+  }
+
   &--none {
     + .module--none {
       padding-top: 0;

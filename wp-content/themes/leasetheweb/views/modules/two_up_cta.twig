@@ -3,6 +3,10 @@
     <div class="two-up-cta__block
       {% if block.two_up_cta_background == 'dark' %}
         two-up-cta__block--dark
+      {% elseif block.two_up_cta_background == 'primary' %}
+        two-up-cta__block--primary
+      {% elseif block.two_up_cta_background == 'secondary' %}
+        two-up-cta__block--secondary
       {% endif %}">
       <div class="two-up-cta__content">
         {% if block.two_up_cta_title %}

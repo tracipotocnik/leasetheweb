@@ -21,6 +21,23 @@
     background: var(--black-color);
     color: var(--text-color-inverted);
   }
+
+  &--primary {
+    background: var(--primary-color);
+    color: var(--text-color-inverted);
+  }
+
+  &--secondary {
+    background: var(--secondary-color);
+    color: var(--text-color-inverted);
+  }
+
+  &--primary,
+  &--secondary {
+    .button {
+      @extend .button--inverse;
+    }
+  }
 }
 
 .two-up-cta__content {

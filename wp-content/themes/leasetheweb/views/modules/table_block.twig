@@ -1,6 +1,8 @@
 <section class="table-block module
   {% if module.table_block_background == 'primary' %}
     module--primary
+  {% elseif module.table_block_background == 'secondary' %}
+    module--secondary
   {% elseif module.table_block_background == 'dark' %}
     module--dark
   {% else %}

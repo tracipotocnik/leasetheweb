@@ -1,6 +1,8 @@
 <section class="three-up-content module
   {% if module.three_up_content_background == 'primary' %}
     module--primary
+  {% elseif module.three_up_content_background == 'secondary' %}
+    module--secondary
   {% elseif module.three_up_content_background == 'dark' %}
     module--dark
   {% else %}
