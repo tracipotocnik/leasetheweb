@@ -9,6 +9,7 @@ class NF_AJAX_Controllers_Form extends NF_Abstracts_Controller
         add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 
         add_action( 'wp_ajax_nf_ajax_get_new_nonce', array( $this, 'get_new_nonce' ) );
+	    add_action( 'wp_ajax_nopriv_nf_ajax_get_new_nonce', array( $this, 'get_new_nonce' ) );
         add_action( 'wp_ajax_nf_save_form',   array( $this, 'save' )   );
         add_action( 'wp_ajax_nf_delete_form', array( $this, 'delete' ) );
     }

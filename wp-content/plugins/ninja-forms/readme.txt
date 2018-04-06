@@ -3,7 +3,7 @@ Contributors: wpninjasllc, kstover, jameslaws, kbjohnson90, klhall1987, krmoorho
 Tags: form, forms, contact form, custom form, form builder, form creator, form manager, form creation, contact forms, custom forms, forms builder, forms creator, forms manager, forms creation, form administration,
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 3.2.19
+Stable tag: 3.2.21
 License: GPLv2 or later
 
 Drag and drop fields in an intuitive UI to create contact forms, email subscription forms, order forms, payment forms, send emails and more!
@@ -111,12 +111,14 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 
 == Upgrade Notice ==
 
-= 3.2.19 (5 April 2018) =
+= 3.2.21 (6 April 2018) =
 
 *Bugs:*
 
 * Resolved an issue that was causing the save progress table settings to not display properly in the form builder.
 * Resolved a long-standing bug that rarely caused form submissions to fail.
+* Resolved a bug that was sometimes causing form submission to fail.
+* Resolved an issue with the automatic update process.
 
 *Changes:*
 
@@ -125,6 +127,18 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 * Users below PHP version 5.6 will now be seeing a notice, informing them of the outdated version.
 
 == Changelog ==
+
+= 3.2.21 (6 April 2018) =
+
+*Bugs:*
+
+* Resolved an issue with the automatic update process.
+
+= 3.2.20 (6 April 2018) =
+
+*Bugs:*
+
+* Resolved a bug that was sometimes causing form submission to fail.
 
 = 3.2.19 (5 April 2018) =
 

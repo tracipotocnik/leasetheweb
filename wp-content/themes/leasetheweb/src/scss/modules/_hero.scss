@@ -21,6 +21,7 @@
   &--has-image {
     background: var(--black-color) no-repeat center center;
     background-size: cover;
+    color: var(--text-color-inverted);
   }
 
   &--dark {
