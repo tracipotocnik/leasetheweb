@@ -1,7 +1,7 @@
 // Module Hero
 
 .hero {
-  color: var(--text-color-inverted);
+  color: var(--text-color-default);
   display: flex;
   padding: rem-calc(63 0);
   position: relative;
@@ -25,14 +25,17 @@
 
   &--dark {
     background: var(--black-color);
+    color: var(--text-color-inverted);
   }
 
   &--primary {
     background: var(--primary-color);
+    color: var(--text-color-inverted);
   }
 
   &--secondary {
     background: var(--secondary-color);
+    color: var(--text-color-inverted);
   }
 }
 

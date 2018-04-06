@@ -60,6 +60,7 @@
                                 "id": ""
                             },
                             "choices": {
+                                "none": "None",
                                 "solid_dark": "Solid Color - Dark",
                                 "solid_primary": "Solid Color - Primary",
                                 "solid_secondary": "Solid Color - Secondary",
@@ -1327,5 +1328,5 @@
     ],
     "active": 1,
     "description": "",
-    "modified": 1522988326
+    "modified": 1522991702
 }
