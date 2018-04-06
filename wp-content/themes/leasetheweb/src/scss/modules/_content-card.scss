@@ -1,0 +1,74 @@
+// Module Content Card
+
+.content-card__wrapper {
+  margin: -10px;
+
+  @include breakpoint(medium) {
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.content-card {
+  padding: rem-calc(10);
+
+  @include breakpoint(medium) {
+    width: 50%;
+  }
+}
+
+.content-card__inner {
+  background: $white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.content-card__image {
+  background: no-repeat center center;
+  background-size: cover;
+  height: rem-calc(240);
+}
+
+.content-card__content {
+  padding: rem-calc(40 30);
+
+  @include breakpoint(medium) {
+    padding: rem-calc(40);
+  }
+
+  @include breakpoint(large) {
+    padding: rem-calc(60 65);
+  }
+}
+
+.content-card__preheader {
+  margin: 0 0 rem-calc(8);
+
+  &__primary {
+    text-transform: uppercase;
+
+    @include primary-font-bold();
+  }
+
+  &__divider {
+    display: inline-block;
+    padding: rem-calc(0 1);
+  }
+}
+
+.content-card__title {
+  margin-bottom: 0;
+}
+
+.content-card__body {
+  margin-top: rem-calc(25);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.content-card__button {
+  margin-top: rem-calc(25);
+}

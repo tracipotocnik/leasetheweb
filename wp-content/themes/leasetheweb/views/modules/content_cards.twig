@@ -1,0 +1,57 @@
+<section class="module module--light">
+  <div class="row">
+    <div class="small-12 columns">
+      <div class="content-card__wrapper">
+        {% for block in module.content_card %}
+          <div class="content-card">
+            <div class="content-card__inner">
+              {% if block.content_card_image %}
+                <div class="content-card__image"
+                  style="background-image: url({{ TimberImage(block.content_card_image).src }});">
+                </div>
+              {% endif %}
+              <div class="content-card__content">
+                {% if block.content_card_preheader_primary or block.content_card_preheader_secondary %}
+                  <p class="content-card__preheader">
+                    {% if block.content_card_preheader_primary %}
+                      <span class="content-card__preheader__primary">
+                        {{ block.content_card_preheader_primary }}
+                      </span>
+                    {% endif %}
+                    {% if block.content_card_preheader_secondary %}
+                      {% if block.content_card_preheader_primary %}
+                        <span class="content-card__preheader__divider">
+                          |
+                        </span>
+                      {% endif %}
+                      <span class="content-card__preheader__secondary">
+                        {{ block.content_card_preheader_secondary }}
+                      </span>
+                    {% endif %}
+                  </p>
+                {% endif %}
+                {% if block.content_card_title %}
+                  <h3 class="content-card__title">
+                    {{ block.content_card_title }}
+                  </h3>
+                {% endif %}
+                {% if block.content_card_body %}
+                  <div class="content-card__body">
+                    {{ block.content_card_body }}
+                  </div>
+                {% endif %}
+                {% if block.content_card_button_text and block.content_card_button_url %}
+                  <div class="content-card__button">
+                    <a class="button button--small button--dark" href="{{ block.content_card_button_url }}">
+                      {{ block.content_card_button_text }}
+                    </a>
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>

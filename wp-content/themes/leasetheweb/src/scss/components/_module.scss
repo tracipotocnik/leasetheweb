@@ -16,6 +16,14 @@
     }
   }
 
+  &--light {
+    background: $tan;
+
+    + .module--light {
+      padding-top: 0;
+    }
+  }
+
   &--primary {
     background: var(--primary-color);
     color: var(--text-color-inverted);

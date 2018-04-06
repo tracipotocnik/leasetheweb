@@ -10,6 +10,7 @@
   outline: none;
   padding: rem-calc(12 25);
   text-transform: uppercase;
+  transition: all 0.25s ease-out;
 
   @include primary-font-bold();
 
@@ -36,6 +37,18 @@
   }
 }
 
+.button--dark {
+  background: var(--black-color);
+  border-color: var(--black-color);
+  color: var(--text-color-inverted);
+
+  &:hover,
+  &:focus {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+  }
+}
+
 .button--inverse {
   background: var(--text-color-inverted);
   border-color: var(--text-color-inverted);
@@ -43,8 +56,8 @@
 
   &:hover,
   &:focus {
-    background: transparent;
-    color: var(--text-color-inverted);
+    background: var(--text-color-inverted);
+    border-color: var(--text-color-inverted);
   }
 }
 
