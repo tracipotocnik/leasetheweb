@@ -1,16 +1,10 @@
 // Module Hero
 
 .hero {
-  color: var(--text-color-default);
   display: flex;
-  padding: rem-calc(63 0);
   position: relative;
   text-align: center;
   width: 100%;
-
-  @include breakpoint(medium) {
-    padding: rem-calc(100 0);
-  }
 
   &--large {
     @include breakpoint(medium) {
@@ -21,21 +15,6 @@
   &--has-image {
     background: var(--black-color) no-repeat center center;
     background-size: cover;
-    color: var(--text-color-inverted);
-  }
-
-  &--dark {
-    background: var(--black-color);
-    color: var(--text-color-inverted);
-  }
-
-  &--primary {
-    background: var(--primary-color);
-    color: var(--text-color-inverted);
-  }
-
-  &--secondary {
-    background: var(--secondary-color);
     color: var(--text-color-inverted);
   }
 }

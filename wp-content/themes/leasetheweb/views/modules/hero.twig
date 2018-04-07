@@ -7,14 +7,16 @@
   {% endif %}
 
   {% if module.hero_background_type == 'solid_dark' %}
-    hero--dark
+    module--dark
   {% elseif module.hero_background_type == 'solid_primary' %}
-    hero--primary
+    module--primary
   {% elseif module.hero_background_type == 'solid_secondary' %}
-    hero--secondary
+    module--secondary
+  {% elseif module.hero_background_type == 'none' %}
+    module--none
   {% endif %}
 {% endset %}
-<section class="hero {{ classes }}"
+<section class="hero module {{ classes }}"
   {% if module.hero_background_type == 'image' and module.hero_background_image %}
     style="background-image: url({{ TimberImage(module.hero_background_image).src }})"
   {% endif %}>
