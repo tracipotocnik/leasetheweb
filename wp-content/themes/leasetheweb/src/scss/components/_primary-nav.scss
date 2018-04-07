@@ -101,3 +101,9 @@
 .is-drilldown-submenu {
   background: var(--black-color);
 }
+
+.is-submenu-parent-item {
+  a {
+    color: var(--primary-color);
+  }
+}

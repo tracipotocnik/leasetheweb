@@ -14,6 +14,13 @@
 }
 
 .title-bar-title {
+  height: rem-calc(65);
   line-height: 1;
   margin: 0;
+
+  a,
+  img {
+    display: block;
+    height: 100%;
+  }
 }

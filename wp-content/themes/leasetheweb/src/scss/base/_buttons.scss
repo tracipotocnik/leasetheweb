@@ -56,8 +56,8 @@
 
   &:hover,
   &:focus {
-    background: var(--text-color-inverted);
-    border-color: var(--text-color-inverted);
+    background: transparent;
+    color: var(--text-color-inverted);
   }
 }
 

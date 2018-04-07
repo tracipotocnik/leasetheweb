@@ -58,7 +58,13 @@
   }
 
   th {
+    white-space: nowrap;
+
     @include primary-font-bold();
+
+    @include breakpoint(medium) {
+      white-space: normal;
+    }
   }
 
   th,
