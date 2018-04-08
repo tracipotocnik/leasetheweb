@@ -103,7 +103,7 @@
             "label": "Head Block",
             "name": "head_block",
             "type": "textarea",
-            "instructions": "Appears before CSS in the &lt;head&gt;",
+            "instructions": "Code inserted before CSS declared in the &lt;head&gt;",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -122,7 +122,7 @@
             "label": "Scripts Block",
             "name": "scripts_block",
             "type": "textarea",
-            "instructions": "Appears before the closing &lt;\/body&gt;",
+            "instructions": "Code inserted before the closing &lt;\/body&gt; tag",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -230,5 +230,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1523165705
+    "modified": 1523195489
 }
