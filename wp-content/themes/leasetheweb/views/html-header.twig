@@ -17,6 +17,10 @@
 
   <link rel="stylesheet" href="https://use.typekit.net/zha6oby.css">
 
+  {% if options.head_block %}
+    {{ options.head_block }}
+  {% endif %}
+
   <style type="text/css">
     :root {
       --primary-color: {{ options.primary_color }};
@@ -27,6 +31,26 @@
       --text-color-inverted: {{ options.inverted_text_color }};
       --secondary-color: {{ options.secondary_color }};
       --black-color: {{ options.black }};
+      {% if options.primary_font %}
+        --primary-font: {{ options.primary_font }}, sans-serif;
+      {% else %}
+        --primary-font: 'proxima-nova', sans-serif;
+      {% endif %}
+      {% if options.primary_font_regular_weight %}
+        --primary-font-regular-weight: {{ options.primary_font_regular_weight }};
+      {% else %}
+        --primary-font-regular-weight: 400;
+      {% endif %}
+      {% if options.primary_font_medium_weight %}
+        --primary-font-medium-weight: {{ options.primary_font_medium_weight }};
+      {% else %}
+        --primary-font-medium-weight: 500;
+      {% endif %}
+      {% if options.primary_font_bold_weight %}
+        --primary-font-bold-weight: {{ options.primary_font_bold_weight }};
+      {% else %}
+        --primary-font-bold-weight: 700;
+      {% endif %}
     }
   </style>
 

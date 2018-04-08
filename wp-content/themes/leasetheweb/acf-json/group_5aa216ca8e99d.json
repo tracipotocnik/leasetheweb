@@ -97,6 +97,120 @@
             },
             "default_value": "",
             "placeholder": ""
+        },
+        {
+            "key": "field_5ac9a5c164b06",
+            "label": "Head Block",
+            "name": "head_block",
+            "type": "textarea",
+            "instructions": "Appears before CSS in the &lt;head&gt;",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5ac9a6a364b07",
+            "label": "Scripts Block",
+            "name": "scripts_block",
+            "type": "textarea",
+            "instructions": "Appears before the closing &lt;\/body&gt;",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5ac9a899d0426",
+            "label": "Primary Font",
+            "name": "primary_font",
+            "type": "text",
+            "instructions": "Defaults to Proxima Nova if left blank. Fallback is set to sans-serif. Do not end in a semi-colon.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ac9a94fd0427",
+            "label": "Primary Font Regular Weight",
+            "name": "primary_font_regular_weight",
+            "type": "text",
+            "instructions": "Defaults to 400 if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ac9a962d0428",
+            "label": "Primary Font Medium Weight",
+            "name": "primary_font_medium_weight",
+            "type": "text",
+            "instructions": "Defaults to 500 if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ac9a970d0429",
+            "label": "Primary Font Bold Weight",
+            "name": "primary_font_bold_weight",
+            "type": "text",
+            "instructions": "Defaults to 700 if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -116,5 +230,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1520827406
+    "modified": 1523165705
 }

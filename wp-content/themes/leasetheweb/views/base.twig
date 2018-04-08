@@ -47,4 +47,8 @@
     </div> <!-- /.off-canvas-wrapper-inner -->
   </div> <!-- /.off-canvas-wrapper -->
   {{ function('wp_footer') }}
+
+  {% if options.scripts_block %}
+    {{ options.scripts_block }}
+  {% endif %}
 </body>

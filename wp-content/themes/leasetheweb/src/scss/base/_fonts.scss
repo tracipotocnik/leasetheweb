@@ -1,19 +1,19 @@
 // Fonts
 
 @mixin primary-font() {
-  font-family: $primary-font;
+  font-family: var(--primary-font);
   font-style: normal;
-  font-weight: 400;
+  font-weight: var(--primary-font-regular-weight);
 }
 
 @mixin primary-font-medium() {
-  font-family: $primary-font;
+  font-family: var(--primary-font);
   font-style: normal;
-  font-weight: 500;
+  font-weight: var(--primary-font-medium-weight);
 }
 
 @mixin primary-font-bold() {
-  font-family: $primary-font;
+  font-family: var(--primary-font);
   font-style: normal;
-  font-weight: 700;
+  font-weight: var(--primary-font-bold-weight);
 }
