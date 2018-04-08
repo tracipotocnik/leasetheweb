@@ -17,8 +17,8 @@
 
   <link rel="stylesheet" href="https://use.typekit.net/zha6oby.css">
 
-  {% if options.head_block %}
-    {{ options.head_block }}
+  {% if options.head_block_pre_css %}
+    {{ options.head_block_pre_css }}
   {% endif %}
 
   <style type="text/css">
@@ -55,4 +55,9 @@
   </style>
 
   <link rel="stylesheet" href="{{theme.path}}/style.css" type="text/css" media="screen">
+
+  {% if options.head_block_post_css %}
+    {{ options.head_block_post_css }}
+  {% endif %}
+
   {{function('wp_head')}}

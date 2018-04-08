@@ -100,10 +100,29 @@
         },
         {
             "key": "field_5ac9a5c164b06",
-            "label": "Head Block",
-            "name": "head_block",
+            "label": "Head Block - Pre CSS",
+            "name": "head_block_pre_css",
             "type": "textarea",
-            "instructions": "Code inserted before CSS declared in the &lt;head&gt;",
+            "instructions": "Code inserted before CSS declared in the &lt;head&gt;. Include font declarations here.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5aca813c54ad6",
+            "label": "Head Block - Post CSS",
+            "name": "head_block_post_css",
+            "type": "textarea",
+            "instructions": "Code inserted after CSS declared in the &lt;head&gt;. Include CSS overrides here.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -230,5 +249,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1523195489
+    "modified": 1523220897
 }
