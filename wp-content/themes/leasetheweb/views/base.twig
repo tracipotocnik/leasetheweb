@@ -5,7 +5,12 @@
 {% endblock %}
 
 <body class="{{body_class}}" data-template="base.twig">
+  {% if options.scripts_block_top %}
+    {{ options.scripts_block_top }}
+  {% endif %}
+
   {% include 'icon-sprite.twig' %}
+
   <div class="off-canvas-wrapper">
     <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
 
@@ -48,7 +53,7 @@
   </div> <!-- /.off-canvas-wrapper -->
   {{ function('wp_footer') }}
 
-  {% if options.scripts_block %}
-    {{ options.scripts_block }}
+  {% if options.scripts_block_bottom %}
+    {{ options.scripts_block_bottom }}
   {% endif %}
 </body>

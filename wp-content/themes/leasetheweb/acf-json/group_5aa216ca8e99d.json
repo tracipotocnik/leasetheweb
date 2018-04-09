@@ -137,11 +137,30 @@
             "new_lines": ""
         },
         {
-            "key": "field_5ac9a6a364b07",
-            "label": "Scripts Block",
-            "name": "scripts_block",
+            "key": "field_5acad7be5e817",
+            "label": "Scripts Block - Top",
+            "name": "scripts_block_top",
             "type": "textarea",
-            "instructions": "Code inserted before the closing &lt;\/body&gt; tag",
+            "instructions": "Code inserted after the opening &lt;body&gt; tag.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5ac9a6a364b07",
+            "label": "Scripts Block - Bottom",
+            "name": "scripts_block_bottom",
+            "type": "textarea",
+            "instructions": "Code inserted before the closing &lt;\/body&gt; tag.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -230,6 +249,25 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5acad77c5e816",
+            "label": "",
+            "name": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -249,5 +287,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1523220897
+    "modified": 1523242979
 }
