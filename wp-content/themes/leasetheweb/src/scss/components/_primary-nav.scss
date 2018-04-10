@@ -25,7 +25,7 @@
     display: flex;
     justify-content: space-between;
     max-height: none;
-    overflow: initial;
+    overflow: inherit;
     padding: rem-calc(12 16 12 24);
     position: static;
     width: 100%;
@@ -43,6 +43,10 @@
 
     &.is-open ~ .off-canvas-content {
       transform: translateX(0);
+    }
+
+    > .menu {
+      margin-left: auto;
     }
   }
 

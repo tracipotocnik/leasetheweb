@@ -18,10 +18,18 @@ import 'foundation-sites/js/foundation.dropdownMenu.js';
 import 'foundation-sites/js/foundation.responsiveMenu.js';
 import 'foundation-sites/js/foundation.offcanvas.js';
 
+import cssVars from 'css-vars-ponyfill';
+
 import jquery from 'jquery';
 import socialShare from 'modules/socialShare.js';
 import carousel from 'modules/carousel.js';
 import accordion from 'modules/accordion.js';
+
+cssVars({
+  onComplete: function() {
+    jquery('#css-vars-ponyfill').appendTo('head');
+  },
+});
 
 (function($) {
   // Initialize Foundation

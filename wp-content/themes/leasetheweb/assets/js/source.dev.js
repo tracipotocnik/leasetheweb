@@ -1,170 +1,3 @@
-'use strict';var cssVarPoly={
-init:function init(){
-// first lets see if the browser supports CSS variables
-// No version of IE supports window.CSS.supports, so if that isn't supported in the first place we know CSS variables is not supported
-// Edge supports supports, so check for actual variable support
-if(window.CSS&&window.CSS.supports&&window.CSS.supports('(--foo: red)')){
-// this browser does support variables, abort
-console.log('your browser supports CSS variables, aborting and letting the native support handle things.');
-return;
-}else{
-// edge barfs on console statements if the console is not open... lame!
-console.log('no support for you! polyfill all (some of) the things!!');
-document.querySelector('body').classList.add('cssvars-polyfilled');
-}
-
-cssVarPoly.ratifiedVars={};
-cssVarPoly.varsByBlock={};
-cssVarPoly.oldCSS={};
-
-// start things off
-cssVarPoly.findCSS();
-cssVarPoly.updateCSS();
-},
-
-// find all the css blocks, save off the content, and look for variables
-findCSS:function findCSS(){
-var styleBlocks=document.querySelectorAll('style:not(.inserted),link[type="text/css"]');
-
-// we need to track the order of the style/link elements when we save off the CSS, set a counter
-var counter=1;
-
-// loop through all CSS blocks looking for CSS variables being set
-[].forEach.call(styleBlocks,function(block){
-// console.log(block.nodeName);
-var theCSS=void 0;
-if(block.nodeName==='STYLE'){
-// console.log("style");
-theCSS=block.innerHTML;
-cssVarPoly.findSetters(theCSS,counter);
-}else if(block.nodeName==='LINK'){
-// console.log("link");
-cssVarPoly.getLink(block.getAttribute('href'),counter,function(counter,request){
-cssVarPoly.findSetters(request.responseText,counter);
-cssVarPoly.oldCSS[counter]=request.responseText;
-cssVarPoly.updateCSS();
-});
-theCSS='';
-}
-// save off the CSS to parse through again later. the value may be empty for links that are waiting for their ajax return, but this will maintain the order
-cssVarPoly.oldCSS[counter]=theCSS;
-counter++;
-});
-},
-
-// find all the "--variable: value" matches in a provided block of CSS and add them to the master list
-findSetters:function findSetters(theCSS,counter){
-// console.log(theCSS);
-cssVarPoly.varsByBlock[counter]=theCSS.match(/(--.+:.+;)/g)||[];
-},
-
-// run through all the CSS blocks to update the variables and then inject on the page
-updateCSS:function updateCSS(){
-// first lets loop through all the variables to make sure later vars trump earlier vars
-cssVarPoly.ratifySetters(cssVarPoly.varsByBlock);
-
-// loop through the css blocks (styles and links)
-for(var curCSSID in cssVarPoly.oldCSS){
-// console.log("curCSS:",oldCSS[curCSSID]);
-var newCSS=cssVarPoly.replaceGetters(cssVarPoly.oldCSS[curCSSID],cssVarPoly.ratifiedVars);
-// put it back into the page
-// first check to see if this block exists already
-if(document.querySelector('#inserted'+curCSSID)){
-// console.log("updating")
-document.querySelector('#inserted'+curCSSID).innerHTML=newCSS;
-}else{
-// console.log("adding");
-var style=document.createElement('style');
-style.type='text/css';
-style.innerHTML=newCSS;
-style.classList.add('inserted');
-style.id='inserted'+curCSSID;
-document.getElementsByTagName('head')[0].appendChild(style);
-}
-};
-},
-
-// parse a provided block of CSS looking for a provided list of variables and replace the --var-name with the correct value
-replaceGetters:function replaceGetters(curCSS,varList){
-// console.log(varList);
-for(var theVar in varList){
-// console.log(theVar);
-// match the variable with the actual variable name
-var getterRegex=new RegExp('var\\(\\s*'+theVar+'\\s*\\)','g');
-// console.log(getterRegex);
-// console.log(curCSS);
-curCSS=curCSS.replace(getterRegex,varList[theVar]);
-
-// now check for any getters that are left that have fallbacks
-var getterRegex2=new RegExp('var\\(\\s*.+\\s*,\\s*(.+)\\)','g');
-// console.log(getterRegex);
-// console.log(curCSS);
-var matches=curCSS.match(getterRegex2);
-if(matches){
-// console.log("matches",matches);
-matches.forEach(function(match){
-// console.log(match.match(/var\(.+,\s*(.+)\)/))
-// find the fallback within the getter
-curCSS=curCSS.replace(match,match.match(/var\(.+,\s*(.+)\)/)[1]);
-});
-
-}
-
-// curCSS = curCSS.replace(getterRegex2,varList[theVar]);
-};
-// console.log(curCSS);
-return curCSS;
-},
-
-// determine the css variable name value pair and track the latest
-ratifySetters:function ratifySetters(varList){
-// console.log("varList:",varList);
-// loop through each block in order, to maintain order specificity
-for(var curBlock in varList){
-var curVars=varList[curBlock];
-// console.log("curVars:",curVars);
-// loop through each var in the block
-curVars.forEach(function(theVar){
-// console.log(theVar);
-// split on the name value pair separator
-var matches=theVar.split(/:\s*/);
-// console.log(matches);
-// put it in an object based on the varName. Each time we do this it will override a previous use and so will always have the last set be the winner
-// 0 = the name, 1 = the value, strip off the ; if it is there
-cssVarPoly.ratifiedVars[matches[0]]=matches[1].replace(/;/,'');
-});
-};
-// console.log(ratifiedVars);
-},
-
-// get the CSS file (same domain for now)
-getLink:function getLink(url,counter,success){
-var request=new XMLHttpRequest();
-request.open('GET',url,true);
-request.overrideMimeType('text/css;');
-request.onload=function(){
-if(request.status>=200&&request.status<400){
-// Success!
-// console.log(request.responseText);
-if(typeof success==='function'){
-success(counter,request);
-}
-}else{
-// We reached our target server, but it returned an error
-console.warn('an error was returned from:',url);
-}
-};
-
-request.onerror=function(){
-// There was a connection error of some sort
-console.warn('we could not get anything from:',url);
-};
-
-request.send();
-}};
-
-
-cssVarPoly.init();
 'use strict';var _typeof=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};/*! Magnific Popup - v1.0.0 - 2015-01-03
 * http://dimsemenov.com/plugins/magnific-popup/
 * Copyright (c) 2015 Dmitry Semenov; */
@@ -2482,6 +2315,991 @@ jQuery('#meerkat-wrap').replaceWith(jQuery('#meerkat-container').contents().hide
 * Copyright (c) 2015 https://github.com/scottjehl/picturefill/blob/master/Authors.txt; Licensed MIT */
 window.matchMedia||(window.matchMedia=function(){"use strict";var a=window.styleMedia||window.media;if(!a){var b=document.createElement("style"),c=document.getElementsByTagName("script")[0],d=null;b.type="text/css",b.id="matchmediajs-test",c.parentNode.insertBefore(b,c),d="getComputedStyle"in window&&window.getComputedStyle(b,null)||b.currentStyle,a={matchMedium:function matchMedium(a){var c="@media "+a+"{ #matchmediajs-test { width: 1px; } }";return b.styleSheet?b.styleSheet.cssText=c:b.textContent=c,"1px"===d.width;}};}return function(b){return{matches:a.matchMedium(b||"all"),media:b||"all"};};}()),function(a,b,c){"use strict";function d(b){"object"==(typeof module==="undefined"?"undefined":_typeof(module))&&"object"==_typeof(module.exports)?module.exports=b:"function"==typeof define&&define.amd&&define("picturefill",function(){return b;}),"object"==(typeof a==="undefined"?"undefined":_typeof(a))&&(a.picturefill=b);}function e(a){var b,c,d,e,f,i=a||{};b=i.elements||g.getAllElements();for(var j=0,k=b.length;k>j;j++){if(c=b[j],d=c.parentNode,e=void 0,f=void 0,"IMG"===c.nodeName.toUpperCase()&&(c[g.ns]||(c[g.ns]={}),i.reevaluate||!c[g.ns].evaluated)){if(d&&"PICTURE"===d.nodeName.toUpperCase()){if(g.removeVideoShim(d),e=g.getMatch(c,d),e===!1)continue;}else e=void 0;(d&&"PICTURE"===d.nodeName.toUpperCase()||!g.sizesSupported&&c.srcset&&h.test(c.srcset))&&g.dodgeSrcset(c),e?(f=g.processSourceSet(e),g.applyBestCandidate(f,c)):(f=g.processSourceSet(c),(void 0===c.srcset||c[g.ns].srcset)&&g.applyBestCandidate(f,c)),c[g.ns].evaluated=!0;}}}function f(){function c(){clearTimeout(d),d=setTimeout(h,60);}g.initTypeDetects(),e();var d,f=setInterval(function(){return e(),/^loaded|^i|^c/.test(b.readyState)?void clearInterval(f):void 0;},250),h=function h(){e({reevaluate:!0});};a.addEventListener?a.addEventListener("resize",c,!1):a.attachEvent&&a.attachEvent("onresize",c);}if(a.HTMLPictureElement)return void d(function(){});b.createElement("picture");var g=a.picturefill||{},h=/\s+\+?\d+(e\d+)?w/;g.ns="picturefill",function(){g.srcsetSupported="srcset"in c,g.sizesSupported="sizes"in c,g.curSrcSupported="currentSrc"in c;}(),g.trim=function(a){return a.trim?a.trim():a.replace(/^\s+|\s+$/g,"");},g.makeUrl=function(){var a=b.createElement("a");return function(b){return a.href=b,a.href;};}(),g.restrictsMixedContent=function(){return"https:"===a.location.protocol;},g.matchesMedia=function(b){return a.matchMedia&&a.matchMedia(b).matches;},g.getDpr=function(){return a.devicePixelRatio||1;},g.getWidthFromLength=function(a){var c;if(!a||a.indexOf("%")>-1!=!1||!(parseFloat(a)>0||a.indexOf("calc(")>-1))return!1;a=a.replace("vw","%"),g.lengthEl||(g.lengthEl=b.createElement("div"),g.lengthEl.style.cssText="border:0;display:block;font-size:1em;left:0;margin:0;padding:0;position:absolute;visibility:hidden",g.lengthEl.className="helper-from-picturefill-js"),g.lengthEl.style.width="0px";try{g.lengthEl.style.width=a;}catch(d){}return b.body.appendChild(g.lengthEl),c=g.lengthEl.offsetWidth,0>=c&&(c=!1),b.body.removeChild(g.lengthEl),c;},g.detectTypeSupport=function(b,c){var d=new a.Image();return d.onerror=function(){g.types[b]=!1,e();},d.onload=function(){g.types[b]=1===d.width,e();},d.src=c,"pending";},g.types=g.types||{},g.initTypeDetects=function(){g.types["image/jpeg"]=!0,g.types["image/gif"]=!0,g.types["image/png"]=!0,g.types["image/svg+xml"]=b.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Image","1.1"),g.types["image/webp"]=g.detectTypeSupport("image/webp","data:image/webp;base64,UklGRh4AAABXRUJQVlA4TBEAAAAvAAAAAAfQ//73v/+BiOh/AAA=");},g.verifyTypeSupport=function(a){var b=a.getAttribute("type");if(null===b||""===b)return!0;var c=g.types[b];return"string"==typeof c&&"pending"!==c?(g.types[b]=g.detectTypeSupport(b,c),"pending"):"function"==typeof c?(c(),"pending"):c;},g.parseSize=function(a){var b=/(\([^)]+\))?\s*(.+)/g.exec(a);return{media:b&&b[1],length:b&&b[2]};},g.findWidthFromSourceSize=function(c){for(var d,e=g.trim(c).split(/\s*,\s*/),f=0,h=e.length;h>f;f++){var i=e[f],j=g.parseSize(i),k=j.length,l=j.media;if(k&&(!l||g.matchesMedia(l))&&(d=g.getWidthFromLength(k)))break;}return d||Math.max(a.innerWidth||0,b.documentElement.clientWidth);},g.parseSrcset=function(a){for(var b=[];""!==a;){a=a.replace(/^\s+/g,"");var c,d=a.search(/\s/g),e=null;if(-1!==d){c=a.slice(0,d);var f=c.slice(-1);if((","===f||""===c)&&(c=c.replace(/,+$/,""),e=""),a=a.slice(d+1),null===e){var g=a.indexOf(",");-1!==g?(e=a.slice(0,g),a=a.slice(g+1)):(e=a,a="");}}else c=a,a="";(c||e)&&b.push({url:c,descriptor:e});}return b;},g.parseDescriptor=function(a,b){var c,d=b||"100vw",e=a&&a.replace(/(^\s+|\s+$)/g,""),f=g.findWidthFromSourceSize(d);if(e)for(var h=e.split(" "),i=h.length-1;i>=0;i--){var j=h[i],k=j&&j.slice(j.length-1);if("h"!==k&&"w"!==k||g.sizesSupported){if("x"===k){var l=j&&parseFloat(j,10);c=l&&!isNaN(l)?l:1;}}else c=parseFloat(parseInt(j,10)/f);}return c||1;},g.getCandidatesFromSourceSet=function(a,b){for(var c=g.parseSrcset(a),d=[],e=0,f=c.length;f>e;e++){var h=c[e];d.push({url:h.url,resolution:g.parseDescriptor(h.descriptor,b)});}return d;},g.dodgeSrcset=function(a){a.srcset&&(a[g.ns].srcset=a.srcset,a.srcset="",a.setAttribute("data-pfsrcset",a[g.ns].srcset));},g.processSourceSet=function(a){var b=a.getAttribute("srcset"),c=a.getAttribute("sizes"),d=[];return"IMG"===a.nodeName.toUpperCase()&&a[g.ns]&&a[g.ns].srcset&&(b=a[g.ns].srcset),b&&(d=g.getCandidatesFromSourceSet(b,c)),d;},g.backfaceVisibilityFix=function(a){var b=a.style||{},c="webkitBackfaceVisibility"in b,d=b.zoom;c&&(b.zoom=".999",c=a.offsetWidth,b.zoom=d);},g.setIntrinsicSize=function(){var c={},d=function d(a,b,c){b&&a.setAttribute("width",parseInt(b/c,10));};return function(e,f){var h;e[g.ns]&&!a.pfStopIntrinsicSize&&(void 0===e[g.ns].dims&&(e[g.ns].dims=e.getAttribute("width")||e.getAttribute("height")),e[g.ns].dims||(f.url in c?d(e,c[f.url],f.resolution):(h=b.createElement("img"),h.onload=function(){if(c[f.url]=h.width,!c[f.url])try{b.body.appendChild(h),c[f.url]=h.width||h.offsetWidth,b.body.removeChild(h);}catch(a){}e.src===f.url&&d(e,c[f.url],f.resolution),e=null,h.onload=null,h=null;},h.src=f.url)));};}(),g.applyBestCandidate=function(a,b){var c,d,e;a.sort(g.ascendingSort),d=a.length,e=a[d-1];for(var f=0;d>f;f++){if(c=a[f],c.resolution>=g.getDpr()){e=c;break;}}e&&(e.url=g.makeUrl(e.url),b.src!==e.url&&(g.restrictsMixedContent()&&"http:"===e.url.substr(0,"http:".length).toLowerCase()?void 0!==window.console&&console.warn("Blocked mixed content image "+e.url):(b.src=e.url,g.curSrcSupported||(b.currentSrc=b.src),g.backfaceVisibilityFix(b))),g.setIntrinsicSize(b,e));},g.ascendingSort=function(a,b){return a.resolution-b.resolution;},g.removeVideoShim=function(a){var b=a.getElementsByTagName("video");if(b.length){for(var c=b[0],d=c.getElementsByTagName("source");d.length;){a.insertBefore(d[0],c);}c.parentNode.removeChild(c);}},g.getAllElements=function(){for(var a=[],c=b.getElementsByTagName("img"),d=0,e=c.length;e>d;d++){var f=c[d];("PICTURE"===f.parentNode.nodeName.toUpperCase()||null!==f.getAttribute("srcset")||f[g.ns]&&null!==f[g.ns].srcset)&&a.push(f);}return a;},g.getMatch=function(a,b){for(var c,d=b.childNodes,e=0,f=d.length;f>e;e++){var h=d[e];if(1===h.nodeType){if(h===a)return c;if("SOURCE"===h.nodeName.toUpperCase()){null!==h.getAttribute("src")&&void 0!==(typeof console==="undefined"?"undefined":_typeof(console))&&console.warn("The `src` attribute is invalid on `picture` `source` element; instead, use `srcset`.");var i=h.getAttribute("media");if(h.getAttribute("srcset")&&(!i||g.matchesMedia(i))){var j=g.verifyTypeSupport(h);if(j===!0){c=h;break;}if("pending"===j)return!1;}}}}return c;},f(),e._=g,d(e);}(window,window.document,new window.Image());
 "use strict";var _typeof2=typeof Symbol==="function"&&typeof Symbol.iterator==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj;};(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f;}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e);},l,l.exports,e,t,n,r);}return n[o].exports;}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++){s(r[o]);}return s;})({1:[function(require,module,exports){
+/*!
+ * css-vars-ponyfill
+ * v1.2.2
+ * https://github.com/jhildenbiddle/css-vars-ponyfill
+ * (c) 2018 John Hildenbiddle <http://hildenbiddle.com>
+ * MIT license
+ */
+(function(global,factory){
+(typeof exports==="undefined"?"undefined":_typeof2(exports))==="object"&&typeof module!=="undefined"?module.exports=factory():typeof define==="function"&&define.amd?define(factory):global.cssVars=factory();
+})(this,function(){
+"use strict";
+/*!
+ * get-css-data
+ * v1.1.1
+ * https://github.com/jhildenbiddle/get-css-data
+ * (c) 2018 John Hildenbiddle <http://hildenbiddle.com>
+ * MIT license
+ */function getUrls(urls){
+var options=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};
+var settings={
+mimeType:options.mimeType||null,
+onComplete:options.onComplete||Function.prototype,
+onError:options.onError||Function.prototype,
+onSuccess:options.onSuccess||Function.prototype};
+
+var urlArray=Array.isArray(urls)?urls:[urls];
+var urlQueue=Array.apply(null,Array(urlArray.length)).map(function(x){
+return null;
+});
+function onError(xhr,urlIndex){
+settings.onError(xhr,urlArray[urlIndex],urlIndex);
+}
+function onSuccess(responseText,urlIndex){
+urlQueue[urlIndex]=responseText;
+settings.onSuccess(responseText,urlArray[urlIndex],urlIndex);
+if(urlQueue.indexOf(null)===-1){
+settings.onComplete(urlQueue);
+}
+}
+urlArray.forEach(function(url,i){
+var parser=document.createElement("a");
+parser.setAttribute("href",url);
+parser.href=parser.href;
+var isCrossDomain=parser.host!==location.host;
+var isSameProtocol=parser.protocol===location.protocol;
+if(isCrossDomain&&typeof XDomainRequest!=="undefined"){
+if(isSameProtocol){
+var xdr=new XDomainRequest();
+xdr.open("GET",url);
+xdr.timeout=0;
+xdr.onprogress=Function.prototype;
+xdr.ontimeout=Function.prototype;
+xdr.onload=function(){
+onSuccess(xdr.responseText,i);
+};
+xdr.onerror=function(err){
+onError(xdr,i);
+};
+setTimeout(function(){
+xdr.send();
+},0);
+}else{
+console.log("Internet Explorer 9 Cross-Origin (CORS) requests must use the same protocol");
+onError(null,i);
+}
+}else{
+var xhr=new XMLHttpRequest();
+xhr.open("GET",url);
+if(settings.mimeType&&xhr.overrideMimeType){
+xhr.overrideMimeType(settings.mimeType);
+}
+xhr.onreadystatechange=function(){
+if(xhr.readyState===4){
+if(xhr.status===200){
+onSuccess(xhr.responseText,i);
+}else{
+onError(xhr,i);
+}
+}
+};
+xhr.send();
+}
+});
+}
+/**
+ * Gets CSS data from <style> and <link> nodes (including @imports), then
+ * returns data in order processed by DOM. Allows specifying nodes to
+ * include/exclude and filtering CSS data using RegEx.
+ *
+ * @preserve
+ * @param {object} [options={}] - The options object
+ * @param {string} options.include - CSS selector matching <link> and <style>
+ * nodes to include
+ * @param {string} options.exclude - CSS selector matching <link> and <style>
+ * nodes to exclude
+ * @param {object} options.filter - Regular expression used to filter node CSS
+ * data. Each block of CSS data is tested against the filter, and only matching
+ * data is included.
+ * @param {function} options.onComplete - Callback after all nodes have been
+ * processed. Passes 1) concatenated CSS text, 2) an array of CSS text in DOM
+ * order, and 3) an array of nodes in DOM order as arguments.
+ * @param {function} options.onError - Callback on each error. Passes 1) the XHR
+ * object for inspection, 2) soure node reference, and 3) the source URL that
+ * failed (either a <link> href or an @import) as arguments
+ * @param {function} options.onSuccess - Callback on each CSS node read. Passes
+ * 1) CSS text, 2) source node reference, and 3) the source URL (either a <link>
+ *    href or an import) as arguments.
+ * @example
+ *
+ *   getCssData({
+ *     include: 'style,link[rel="stylesheet"]', // default
+ *     exclude: '[href="skip.css"]',
+ *     filter : /red/,
+ *     onComplete(cssText, cssArray) {
+ *       // ...
+ *     },
+ *     onError(xhr, node, url) {
+ *       // ...
+ *     },
+ *     onSuccess(cssText, node, url) {
+ *       // ...
+ *     }
+ *   });
+ */function getCssData(options){
+var regex={
+cssComments:/\/\*[\s\S]+?\*\//g,
+cssImports:/(?:@import\s*)(?:url\(\s*)?(?:['"])([^'"]*)(?:['"])(?:\s*\))?(?:[^;]*;)/g};
+
+var settings={
+include:options.include||'style,link[rel="stylesheet"]',
+exclude:options.exclude||null,
+filter:options.filter||null,
+onComplete:options.onComplete||Function.prototype,
+onError:options.onError||Function.prototype,
+onSuccess:options.onSuccess||Function.prototype};
+
+var sourceNodes=Array.apply(null,document.querySelectorAll(settings.include)).filter(function(node){
+return!matchesSelector(node,settings.exclude);
+});
+var cssArray=Array.apply(null,Array(sourceNodes.length)).map(function(x){
+return null;
+});
+function handleComplete(){
+var isComplete=cssArray.indexOf(null)===-1;
+if(isComplete){
+var cssText=cssArray.join("");
+settings.onComplete(cssText,cssArray,sourceNodes);
+}
+}
+function handleError(xhr,node,url,cssIndex){
+var cssText=arguments.length>4&&arguments[4]!==undefined?arguments[4]:"";
+cssArray[cssIndex]=cssText;
+settings.onError(xhr,node,url);
+handleComplete();
+}
+function handleSuccess(cssText,cssIndex,node,sourceUrl,importUrl){
+if(!settings.filter||settings.filter.test(cssText)){
+var returnVal=settings.onSuccess(cssText,node,importUrl||sourceUrl);
+cssText=returnVal===false?"":returnVal||cssText;
+var importRules=cssText.replace(regex.cssComments,"").match(regex.cssImports);
+if(importRules){
+var importUrls=importRules.map(function(decl){
+return decl.replace(regex.cssImports,"$1");
+});
+importUrls=importUrls.map(function(url){
+return getFullUrl(url,sourceUrl);
+});
+getUrls(importUrls,{
+onError:function onError(xhr,url,urlIndex){
+handleError(xhr,node,url,cssIndex,cssText);
+},
+onSuccess:function onSuccess(importText,url,urlIndex){
+var importDecl=importRules[urlIndex];
+var importUrl=importUrls[urlIndex];
+var newCssText=cssText.replace(importDecl,importText);
+handleSuccess(newCssText,cssIndex,node,url,importUrl);
+}});
+
+}else{
+cssArray[cssIndex]=cssText;
+handleComplete();
+}
+}else{
+cssArray[cssIndex]="";
+handleComplete();
+}
+}
+if(sourceNodes.length){
+sourceNodes.forEach(function(node,i){
+var linkHref=node.getAttribute("href");
+var linkRel=node.getAttribute("rel");
+var isLink=node.nodeName==="LINK"&&linkHref&&linkRel&&linkRel.toLowerCase()==="stylesheet";
+var isStyle=node.nodeName==="STYLE";
+if(isLink){
+getUrls(linkHref,{
+mimeType:"text/css",
+onError:function onError(xhr,url,urlIndex){
+handleError(xhr,node,url,i);
+},
+onSuccess:function onSuccess(cssText,url,urlIndex){
+var sourceUrl=getFullUrl(linkHref,location.href);
+handleSuccess(cssText,i,node,sourceUrl);
+}});
+
+}else if(isStyle){
+handleSuccess(node.textContent,i,node,location.href);
+}else{
+cssArray[i]="";
+handleComplete();
+}
+});
+}else{
+settings.onComplete("",[]);
+}
+}
+function getFullUrl(url){
+var base=arguments.length>1&&arguments[1]!==undefined?arguments[1]:location.href;
+var d=document.implementation.createHTMLDocument("");
+var b=d.createElement("base");
+var a=d.createElement("a");
+d.head.appendChild(b);
+d.body.appendChild(a);
+b.href=base;
+a.href=url;
+return a.href;
+}
+function matchesSelector(elm,selector){
+var matches=elm.matches||elm.matchesSelector||elm.webkitMatchesSelector||elm.mozMatchesSelector||elm.msMatchesSelector||elm.oMatchesSelector;
+return matches.call(elm,selector);
+}
+function mergeDeep(){
+var isObject=function isObject(obj){
+return obj instanceof Object&&obj.constructor===Object;
+};
+for(var _len=arguments.length,objects=Array(_len),_key=0;_key<_len;_key++){
+objects[_key]=arguments[_key];
+}
+return objects.reduce(function(prev,obj){
+Object.keys(obj).forEach(function(key){
+var pVal=prev[key];
+var oVal=obj[key];
+if(isObject(pVal)&&isObject(oVal)){
+prev[key]=mergeDeep(pVal,oVal);
+}else{
+prev[key]=oVal;
+}
+});
+return prev;
+},{});
+}
+var balancedMatch=balanced;
+function balanced(a,b,str){
+if(a instanceof RegExp)a=maybeMatch(a,str);
+if(b instanceof RegExp)b=maybeMatch(b,str);
+var r=range(a,b,str);
+return r&&{
+start:r[0],
+end:r[1],
+pre:str.slice(0,r[0]),
+body:str.slice(r[0]+a.length,r[1]),
+post:str.slice(r[1]+b.length)};
+
+}
+function maybeMatch(reg,str){
+var m=str.match(reg);
+return m?m[0]:null;
+}
+balanced.range=range;
+function range(a,b,str){
+var begs,beg,left,right,result;
+var ai=str.indexOf(a);
+var bi=str.indexOf(b,ai+1);
+var i=ai;
+if(ai>=0&&bi>0){
+begs=[];
+left=str.length;
+while(i>=0&&!result){
+if(i==ai){
+begs.push(i);
+ai=str.indexOf(a,i+1);
+}else if(begs.length==1){
+result=[begs.pop(),bi];
+}else{
+beg=begs.pop();
+if(beg<left){
+left=beg;
+right=bi;
+}
+bi=str.indexOf(b,i+1);
+}
+i=ai<bi&&ai>=0?ai:bi;
+}
+if(begs.length){
+result=[left,right];
+}
+}
+return result;
+}
+function cssParse(css){
+var errors=[];
+function error(msg){
+throw new Error("CSS parse error: "+msg);
+}
+function match(re){
+var m=re.exec(css);
+if(m){
+css=css.slice(m[0].length);
+return m;
+}
+}
+function whitespace(){
+match(/^\s*/);
+}
+function open(){
+return match(/^{\s*/);
+}
+function close(){
+return match(/^}/);
+}
+function comment(){
+whitespace();
+if(css[0]!=="/"||css[1]!=="*"){
+return;
+}
+var i=2;
+while(css[i]&&(css[i]!=="*"||css[i+1]!=="/")){
+i++;
+}
+if(!css[i]){
+return error("end of comment is missing");
+}
+var str=css.slice(2,i);
+css=css.slice(i+2);
+return{
+type:"comment",
+comment:str};
+
+}
+function comments(){
+var cmnts=[];
+var c=void 0;
+while(c=comment()){
+cmnts.push(c);
+}
+return cmnts;
+}
+function selector(){
+whitespace();
+while(css[0]==="}"){
+error("extra closing bracket");
+}
+var m=match(/^(("(?:\\"|[^"])*"|'(?:\\'|[^'])*'|[^{])+)/);
+if(m){
+return m[0].trim().replace(/\/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*\/+/g,"").replace(/"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/g,function(m){
+return m.replace(/,/g,"‌");
+}).split(/\s*(?![^(]*\)),\s*/).map(function(s){
+return s.replace(/\u200C/g,",");
+});
+}
+}
+function declaration(){
+match(/^([;\s]*)+/);
+var comment_regexp=/\/\*[^*]*\*+([^/*][^*]*\*+)*\//g;
+var prop=match(/^(\*?[-#/*\\\w]+(\[[0-9a-z_-]+\])?)\s*/);
+if(!prop){
+return;
+}
+prop=prop[0].trim();
+if(!match(/^:\s*/)){
+return error("property missing ':'");
+}
+var val=match(/^((?:\/\*.*?\*\/|'(?:\\'|.)*?'|"(?:\\"|.)*?"|\((\s*'(?:\\'|.)*?'|"(?:\\"|.)*?"|[^)]*?)\s*\)|[^};])+)/);
+var ret={
+type:"declaration",
+property:prop.replace(comment_regexp,""),
+value:val?val[0].replace(comment_regexp,"").trim():""};
+
+match(/^[;\s]*/);
+return ret;
+}
+function declarations(){
+if(!open()){
+return error("missing '{'");
+}
+var d=void 0,decls=comments();
+while(d=declaration()){
+decls.push(d);
+decls=decls.concat(comments());
+}
+if(!close()){
+return error("missing '}'");
+}
+return decls;
+}
+function keyframe(){
+whitespace();
+var vals=[];
+var m=void 0;
+while(m=match(/^((\d+\.\d+|\.\d+|\d+)%?|[a-z]+)\s*/)){
+vals.push(m[1]);
+match(/^,\s*/);
+}
+if(vals.length){
+return{
+type:"keyframe",
+values:vals,
+declarations:declarations()};
+
+}
+}
+function at_keyframes(){
+var m=match(/^@([-\w]+)?keyframes\s*/);
+if(!m){
+return;
+}
+var vendor=m[1];
+m=match(/^([-\w]+)\s*/);
+if(!m){
+return error("@keyframes missing name");
+}
+var name=m[1];
+if(!open()){
+return error("@keyframes missing '{'");
+}
+var frame=void 0,frames=comments();
+while(frame=keyframe()){
+frames.push(frame);
+frames=frames.concat(comments());
+}
+if(!close()){
+return error("@keyframes missing '}'");
+}
+return{
+type:"keyframes",
+name:name,
+vendor:vendor,
+keyframes:frames};
+
+}
+function at_page(){
+var m=match(/^@page */);
+if(m){
+var sel=selector()||[];
+return{
+type:"page",
+selectors:sel,
+declarations:declarations()};
+
+}
+}
+function at_fontface(){
+var m=match(/^@font-face\s*/);
+if(m){
+return{
+type:"font-face",
+declarations:declarations()};
+
+}
+}
+function at_supports(){
+var m=match(/^@supports *([^{]+)/);
+if(m){
+return{
+type:"supports",
+supports:m[1].trim(),
+rules:rules()};
+
+}
+}
+function at_host(){
+var m=match(/^@host\s*/);
+if(m){
+return{
+type:"host",
+rules:rules()};
+
+}
+}
+function at_media(){
+var m=match(/^@media *([^{]+)/);
+if(m){
+return{
+type:"media",
+media:m[1].trim(),
+rules:rules()};
+
+}
+}
+function at_custom_m(){
+var m=match(/^@custom-media\s+(--[^\s]+)\s*([^{;]+);/);
+if(m){
+return{
+type:"custom-media",
+name:m[1].trim(),
+media:m[2].trim()};
+
+}
+}
+function at_document(){
+var m=match(/^@([-\w]+)?document *([^{]+)/);
+if(m){
+return{
+type:"document",
+document:m[2].trim(),
+vendor:m[1]?m[1].trim():null,
+rules:rules()};
+
+}
+}
+function at_x(){
+var m=match(/^@(import|charset|namespace)\s*([^;]+);/);
+if(m){
+return{
+type:m[1],
+name:m[2].trim()};
+
+}
+}
+function at_rule(){
+whitespace();
+if(css[0]==="@"){
+return at_keyframes()||at_supports()||at_host()||at_media()||at_custom_m()||at_page()||at_document()||at_fontface()||at_x();
+}
+}
+function rule(){
+var sel=selector()||[];
+if(!sel.length){
+error("selector missing");
+}
+var decls=declarations();
+return{
+type:"rule",
+selectors:sel,
+declarations:decls};
+
+}
+function rules(core){
+if(!core&&!open()){
+return error("missing '{'");
+}
+var node=void 0,rules=comments();
+while(css.length&&(core||css[0]!=="}")&&(node=at_rule()||rule())){
+rules.push(node);
+rules=rules.concat(comments());
+}
+if(!core&&!close()){
+return error("missing '}'");
+}
+return rules;
+}
+return{
+type:"stylesheet",
+stylesheet:{
+rules:rules(true),
+errors:errors}};
+
+
+}
+function stringifyCss(tree){
+var delim=arguments.length>1&&arguments[1]!==undefined?arguments[1]:"";
+var cb=arguments[2];
+var renderMethods={
+charset:function charset(node){
+return"@charset "+node.name+";";
+},
+comment:function comment(node){
+return"";
+},
+"custom-media":function customMedia(node){
+return"@custom-media "+node.name+" "+node.media+";";
+},
+declaration:function declaration(node){
+return node.property+":"+node.value+";";
+},
+document:function document(node){
+return"@"+(node.vendor||"")+"document "+node.document+"{"+visit(node.rules)+"}";
+},
+"font-face":function fontFace(node){
+return"@font-face"+"{"+visit(node.declarations)+"}";
+},
+host:function host(node){
+return"@host"+"{"+visit(node.rules)+"}";
+},
+import:function _import(node){
+return"@import "+node.name+";";
+},
+keyframe:function keyframe(node){
+return node.values.join(",")+"{"+visit(node.declarations)+"}";
+},
+keyframes:function keyframes(node){
+return"@"+(node.vendor||"")+"keyframes "+node.name+"{"+visit(node.keyframes)+"}";
+},
+media:function media(node){
+return"@media "+node.media+"{"+visit(node.rules)+"}";
+},
+namespace:function namespace(node){
+return"@namespace "+node.name+";";
+},
+page:function page(node){
+return"@page "+(node.selectors.length?node.selectors.join(", "):"")+"{"+visit(node.declarations)+"}";
+},
+rule:function rule(node){
+var decls=node.declarations;
+if(decls.length){
+return node.selectors.join(",")+"{"+visit(decls)+"}";
+}
+},
+supports:function supports(node){
+return"@supports "+node.supports+"{"+visit(node.rules)+"}";
+}};
+
+function visit(nodes){
+var buf="";
+for(var i=0;i<nodes.length;i++){
+var n=nodes[i];
+if(cb){
+cb(n);
+}
+var txt=renderMethods[n.type](n);
+if(txt){
+buf+=txt;
+if(txt.length&&n.selectors){
+buf+=delim;
+}
+}
+}
+return buf;
+}
+return visit(tree.stylesheet.rules);
+}
+function walkCss(node,fn){
+node.rules.forEach(function(rule){
+if(rule.rules){
+walkCss(rule,fn);
+return;
+}
+if(rule.keyframes){
+rule.keyframes.forEach(function(keyframe){
+if(keyframe.type==="keyframe"){
+fn(keyframe.declarations,rule);
+}
+});
+return;
+}
+if(!rule.declarations){
+return;
+}
+fn(rule.declarations,node);
+});
+}
+var persistStore={};
+var VAR_PROP_IDENTIFIER="--";
+var VAR_FUNC_IDENTIFIER="var";
+function transformVars(cssText){
+var options=arguments.length>1&&arguments[1]!==undefined?arguments[1]:{};
+var defaults={
+onlyVars:true,
+persist:false,
+preserve:false,
+variables:{},
+onWarning:function onWarning(){}};
+
+var map={};
+var settings=mergeDeep(defaults,options);
+var varSource=settings.persist?persistStore:settings.variables;
+var cssTree=cssParse(cssText);
+if(settings.onlyVars){
+cssTree.stylesheet.rules=filterVars(cssTree.stylesheet.rules);
+}
+cssTree.stylesheet.rules.forEach(function(rule){
+var varNameIndices=[];
+if(rule.type!=="rule"){
+return;
+}
+if(rule.selectors.length!==1||rule.selectors[0]!==":root"){
+return;
+}
+rule.declarations.forEach(function(decl,i){
+var prop=decl.property;
+var value=decl.value;
+if(prop&&prop.indexOf(VAR_PROP_IDENTIFIER)===0){
+map[prop]=value;
+varNameIndices.push(i);
+}
+});
+if(!settings.preserve){
+for(var i=varNameIndices.length-1;i>=0;i--){
+rule.declarations.splice(varNameIndices[i],1);
+}
+}
+});
+Object.keys(settings.variables).forEach(function(key){
+var prop="--"+key.replace(/^-+/,"");
+var value=settings.variables[key];
+if(key!==prop){
+settings.variables[prop]=value;
+delete settings.variables[key];
+}
+if(settings.persist){
+persistStore[prop]=value;
+}
+});
+if(Object.keys(varSource).length){
+var newRule={
+declarations:[],
+selectors:[":root"],
+type:"rule"};
+
+Object.keys(varSource).forEach(function(key){
+map[key]=varSource[key];
+newRule.declarations.push({
+type:"declaration",
+property:key,
+value:varSource[key]});
+
+if(settings.persist){
+persistStore[key]=varSource[key];
+}
+});
+if(settings.preserve){
+cssTree.stylesheet.rules.push(newRule);
+}
+}
+walkCss(cssTree.stylesheet,function(declarations,node){
+var decl=void 0;
+var resolvedValue=void 0;
+var value=void 0;
+for(var i=0;i<declarations.length;i++){
+decl=declarations[i];
+value=decl.value;
+if(decl.type!=="declaration"){
+continue;
+}
+if(!value||value.indexOf(VAR_FUNC_IDENTIFIER+"(")===-1){
+continue;
+}
+resolvedValue=resolveValue(value,map,settings);
+if(resolvedValue!=="undefined"){
+if(!settings.preserve){
+decl.value=resolvedValue;
+}else{
+declarations.splice(i,0,{
+type:decl.type,
+property:decl.property,
+value:resolvedValue});
+
+i++;
+}
+}
+}
+});
+return stringifyCss(cssTree);
+}
+function filterVars(rules){
+return rules.filter(function(rule){
+if(rule.declarations){
+var declArray=rule.declarations.filter(function(d){
+var hasVarProp=d.property&&d.property.indexOf(VAR_PROP_IDENTIFIER)===0;
+var hasVarVal=d.value&&d.value.indexOf(VAR_FUNC_IDENTIFIER+"(")>-1;
+return hasVarProp||hasVarVal;
+});
+if(rule.type!=="font-face"){
+rule.declarations=declArray;
+}
+return Boolean(declArray.length);
+}else if(rule.keyframes){
+return Boolean(rule.keyframes.filter(function(k){
+return Boolean(k.declarations.filter(function(d){
+var hasVarProp=d.property&&d.property.indexOf(VAR_PROP_IDENTIFIER)===0;
+var hasVarVal=d.value&&d.value.indexOf(VAR_FUNC_IDENTIFIER+"(")>-1;
+return hasVarProp||hasVarVal;
+}).length);
+}).length);
+}else if(rule.rules){
+rule.rules=filterVars(rule.rules).filter(function(r){
+return r.declarations&&r.declarations.length;
+});
+return Boolean(rule.rules.length);
+}
+return true;
+});
+}
+function resolveValue(value,map,settings){
+var RE_VAR=/([\w-]+)(?:\s*,\s*)?(.*)?/;
+var balancedParens=balancedMatch("(",")",value);
+var varStartIndex=value.indexOf("var(");
+var varRef=balancedMatch("(",")",value.substring(varStartIndex)).body;
+var warningIntro="CSS transform warning:";
+if(!balancedParens){
+settings.onWarning(warningIntro+' missing closing ")" in the value "'+value+'"');
+}
+if(varRef===""){
+settings.onWarning(warningIntro+" var() must contain a non-whitespace string");
+}
+var varFunc=VAR_FUNC_IDENTIFIER+"("+varRef+")";
+var varResult=varRef.replace(RE_VAR,function(_,name,fallback){
+var replacement=map[name];
+if(!replacement&&!fallback){
+settings.onWarning(warningIntro+' variable "'+name+'" is undefined');
+}
+if(!replacement&&fallback){
+return fallback;
+}
+return replacement;
+});
+value=value.split(varFunc).join(varResult);
+if(value.indexOf(VAR_FUNC_IDENTIFIER+"(")!==-1){
+value=resolveValue(value,map,settings);
+}
+return value;
+}
+var name="css-vars-ponyfill";
+var defaults={
+include:"style,link[rel=stylesheet]",
+exclude:"",
+onlyLegacy:true,
+onlyVars:true,
+preserve:false,
+silent:false,
+updateDOM:true,
+variables:{},
+onSuccess:function onSuccess(){},
+onError:function onError(){},
+onWarning:function onWarning(){},
+onComplete:function onComplete(){}};
+
+var reCssVars=/(?:(?::root\s*{\s*[^;]*;*\s*)|(?:var\(\s*))(--[^:)]+)(?:\s*[:)])/;
+/**
+ * Description
+ *
+ * @preserve
+ * @param {object}   [options] Options object
+ * @param {string}   [options.include="style,link[rel=stylesheet]"] CSS selector
+ *                   matching <link re="stylesheet"> and <style> nodes to
+ *                   process
+ * @param {string}   [options.exclude=""] CSS selector matching <link
+ *                   rel="stylehseet"> and <style> nodes to exclude from those
+ *                   matches by options.include
+ * @param {boolean}  [options.onlyLegacy=true] Determines if the ponyfill will
+ *                   only generate legacy-compatible CSS in browsers that lack
+ *                   native support (i.e., legacy browsers)
+ * @param {boolean}  [options.onlyVars=true] Determines if CSS rulesets and
+ *                   declarations without a custom property value should be
+ *                   removed from the ponyfill-generated CSS
+ * @param {boolean}  [options.preserve=false] Determines if the original CSS
+ *                   custom property declaration will be retained in the
+ *                   ponyfill-generated CSS.
+ * @param {boolean}  [options.silent=false] Determines if warning and error
+ *                   messages will be displayed on the console
+ * @param {boolean}  [options.updateDOM=true] Determines if the ponyfill will
+ *                   update the DOM after processing CSS custom properties
+ * @param {object}   [options.variables={}] A map of custom property name/value
+ *                   pairs. Property names can omit or include the leading
+ *                   double-hyphen (—), and values specified will override
+ *                   previous values.
+ * @param {function} [options.onSuccess] Callback after all CSS has been
+ *                   processed and legacy-compatible CSS has been generated, but
+ *                   before the legacy CSS has been appended to the DOM. Allows
+ *                   modifying the CSS data by returning any string value (or
+ *                   false to skip) before options.onComplete is triggered.
+ *                   Passes 1) a CSS string with CSS variable values resolved as
+ *                   an argument.
+ * @param {function} [options.onError] Callback after a CSS parsing error has
+ *                   occurred or an XHR request has failed. Passes 1) an error
+ *                   message, and 2) source node reference, 3) xhr, and 4 url as
+ *                   arguments.
+ * @param {function} [options.onWarning] Callback after each CSS parsing warning
+ *                   has occurred. Passes 1) a warning message as an argument.
+ * @param {function} [options.onComplete] Callback after all CSS has been
+ *                   processed, legacy-compatible CSS has been generated, and
+ *                   (optionally) the DOM has been updated. Passes 1) a CSS
+ *                   string with CSS variable values resolved, and 2) a
+ *                   reference to the appended <style> node.
+ *
+ * @example
+ *
+ *   cssVars({
+ *     include   : 'style,link[rel="stylesheet"]', // default
+ *     exclude   : '',
+ *     onlyLegacy: true,  // default
+ *     onlyVars  : true,  // default
+ *     preserve  : false, // default
+ *     silent    : false, // default
+ *     updateDOM : true,  // default
+ *     variables : {
+ *       // ...
+ *     },
+ *     onError(message, node) {
+ *       // ...
+ *     },
+ *     onWarning(message) {
+ *       // ...
+ *     },
+ *     onSuccess(cssText) {
+ *       // ...
+ *     },
+ *     onComplete(cssText, styleNode) {
+ *       // ...
+ *     }
+ *   });
+ */function cssVars(){
+var options=arguments.length>0&&arguments[0]!==undefined?arguments[0]:{};
+var settings=mergeDeep(defaults,options);
+function handleError(message,sourceNode,xhr,url){
+if(!settings.silent){
+console.error(message+"\n",sourceNode);
+}
+settings.onError(message,sourceNode,xhr,url);
+}
+function handleWarning(message){
+if(!settings.silent){
+console.warn(message);
+}
+settings.onWarning(message);
+}
+if(document.readyState!=="loading"){
+var hasNativeSupport=window.CSS&&window.CSS.supports&&window.CSS.supports("(--a: 0)");
+if(!hasNativeSupport||!settings.onlyLegacy){
+var styleNodeId=name;
+getCssData({
+include:settings.include,
+exclude:"#"+styleNodeId+(settings.exclude?","+settings.exclude:""),
+filter:settings.onlyVars?reCssVars:null,
+onComplete:function onComplete(cssText,cssArray,nodeArray){
+var styleNode=null;
+try{
+cssText=transformVars(cssText,{
+onlyVars:settings.onlyVars,
+persist:settings.updateDOM,
+preserve:settings.preserve,
+variables:settings.variables,
+onWarning:handleWarning});
+
+var returnVal=settings.onSuccess(cssText);
+cssText=returnVal===false?"":returnVal||cssText;
+if(settings.updateDOM){
+var insertBeforeNode=document.querySelector("head link[rel=stylesheet],head style, head :last-child");
+styleNode=document.querySelector("#"+styleNodeId)||document.createElement("style");
+styleNode.setAttribute("id",styleNodeId);
+if(styleNode.textContent!==cssText){
+styleNode.textContent=cssText;
+}
+document.head.insertBefore(styleNode,insertBeforeNode);
+}
+}catch(err){
+var errorThrown=false;
+cssArray.forEach(function(cssText,i){
+try{
+cssText=transformVars(cssText,settings);
+}catch(err){
+var errorNode=nodeArray[i-0];
+errorThrown=true;
+handleError(err.message,errorNode);
+}
+});
+if(!errorThrown){
+handleError(err.message||err);
+}
+}
+settings.onComplete(cssText,styleNode);
+},
+onError:function onError(xhr,node,url){
+var errorMsg='CSS XHR error: "'+xhr.responseURL+'" '+xhr.status+(xhr.statusText?" ("+xhr.statusText+")":"");
+handleError(errorMsg,node,xhr,url);
+}});
+
+}else if(hasNativeSupport&&settings.updateDOM){
+Object.keys(settings.variables).forEach(function(key){
+var prop="--"+key.replace(/^-+/,"");
+var value=settings.variables[key];
+document.documentElement.style.setProperty(prop,value);
+});
+}
+}else{
+document.addEventListener("DOMContentLoaded",function init(evt){
+cssVars(options);
+document.removeEventListener("DOMContentLoaded",init);
+});
+}
+}
+return cssVars;
+});
+
+
+},{}],2:[function(require,module,exports){
 'use strict';var _typeof=typeof Symbol==="function"&&_typeof2(Symbol.iterator)==="symbol"?function(obj){return typeof obj==="undefined"?"undefined":_typeof2(obj);}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj==="undefined"?"undefined":_typeof2(obj);};!function($){
 
 "use strict";
@@ -2861,7 +3679,7 @@ return str.replace(/([a-z])([A-Z])/g,'$1-$2').toLowerCase();
 
 }(jQuery);
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 'use strict';var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}
 
 !function($){
@@ -3381,7 +4199,7 @@ Foundation.plugin(Drilldown,'Drilldown');
 
 }(jQuery);
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 'use strict';var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}
 
 !function($){
@@ -3825,7 +4643,7 @@ Foundation.plugin(DropdownMenu,'DropdownMenu');
 
 }(jQuery);
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict';var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}
 
 !function($){
@@ -4256,7 +5074,7 @@ trapFocus:false
 
 }(jQuery);
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 'use strict';var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}
 
 !function($){
@@ -4405,7 +5223,7 @@ Foundation.plugin(ResponsiveMenu,'ResponsiveMenu');
 
 }(jQuery);
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 !function($){
@@ -4602,7 +5420,7 @@ top:$anchorDims.offset.top+$anchorDims.height+vOffset};}
 
 }(jQuery);
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /*******************************************
  *                                         *
  * This util was created by Marius Olbertz *
@@ -4756,7 +5574,7 @@ Foundation.Keyboard=Keyboard;
 
 }(jQuery);
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';var _typeof=typeof Symbol==="function"&&_typeof2(Symbol.iterator)==="symbol"?function(obj){return typeof obj==="undefined"?"undefined":_typeof2(obj);}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj==="undefined"?"undefined":_typeof2(obj);};
 
 !function($){
@@ -4988,7 +5806,7 @@ Foundation.MediaQuery=MediaQuery;
 
 }(jQuery);
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 'use strict';
 
 !function($){
@@ -5095,7 +5913,7 @@ Foundation.Motion=Motion;
 
 }(jQuery);
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 !function($){
@@ -5178,7 +5996,7 @@ Foundation.Nest=Nest;
 
 }(jQuery);
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 !function($){
@@ -5268,7 +6086,7 @@ Foundation.onImagesLoaded=onImagesLoaded;
 
 }(jQuery);
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';//**************************************************
 //**Work inspired by multiple jquery swipe plugins**
 //**Done by Yohai Ararat ***************************
@@ -5622,7 +6440,7 @@ first.target.dispatchEvent(simulatedEvent);
 })( jQuery, this );
 */
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';var _typeof=typeof Symbol==="function"&&_typeof2(Symbol.iterator)==="symbol"?function(obj){return typeof obj==="undefined"?"undefined":_typeof2(obj);}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj==="undefined"?"undefined":_typeof2(obj);};
 
 !function($){
@@ -5881,7 +6699,7 @@ Foundation.IHearYou=checkListeners;
 //   }
 // }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function(global){
 /* eslint-env browser */
 'use strict';
@@ -5903,11 +6721,20 @@ require('foundation-sites/js/foundation.dropdownMenu.js');
 require('foundation-sites/js/foundation.responsiveMenu.js');
 require('foundation-sites/js/foundation.offcanvas.js');
 
+var _cssVarsPonyfill=require('css-vars-ponyfill');var _cssVarsPonyfill2=_interopRequireDefault(_cssVarsPonyfill);
+
 var _jquery=typeof window!=="undefined"?window['jQuery']:typeof global!=="undefined"?global['jQuery']:null;var _jquery2=_interopRequireDefault(_jquery);
 var _socialShare=require('modules/socialShare.js');var _socialShare2=_interopRequireDefault(_socialShare);
 var _carousel=require('modules/carousel.js');var _carousel2=_interopRequireDefault(_carousel);
-var _accordion=require('modules/accordion.js');var _accordion2=_interopRequireDefault(_accordion);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}// Foundation Plugins. Add or remove as needed for your site
+var _accordion=require('modules/accordion.js');var _accordion2=_interopRequireDefault(_accordion);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+
+(0,_cssVarsPonyfill2.default)({
+onComplete:function onComplete(){
+console.log((0,_jquery2.default)('#css-vars-ponyfill'));
+(0,_jquery2.default)('#css-vars-ponyfill').appendTo('head');
+}});// Foundation Plugins. Add or remove as needed for your site
 // Foundation Utilities
+
 (function($){
 // Initialize Foundation
 $(document).foundation();
@@ -5942,7 +6769,7 @@ opacity:0.9});
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{"foundation-sites/js/foundation.core.js":1,"foundation-sites/js/foundation.drilldown.js":2,"foundation-sites/js/foundation.dropdownMenu.js":3,"foundation-sites/js/foundation.offcanvas.js":4,"foundation-sites/js/foundation.responsiveMenu.js":5,"foundation-sites/js/foundation.util.box.js":6,"foundation-sites/js/foundation.util.keyboard.js":7,"foundation-sites/js/foundation.util.mediaQuery.js":8,"foundation-sites/js/foundation.util.motion.js":9,"foundation-sites/js/foundation.util.nest.js":10,"foundation-sites/js/foundation.util.timerAndImageLoader.js":11,"foundation-sites/js/foundation.util.touch.js":12,"foundation-sites/js/foundation.util.triggers.js":13,"modules/accordion.js":15,"modules/carousel.js":16,"modules/socialShare.js":17}],15:[function(require,module,exports){
+},{"css-vars-ponyfill":1,"foundation-sites/js/foundation.core.js":2,"foundation-sites/js/foundation.drilldown.js":3,"foundation-sites/js/foundation.dropdownMenu.js":4,"foundation-sites/js/foundation.offcanvas.js":5,"foundation-sites/js/foundation.responsiveMenu.js":6,"foundation-sites/js/foundation.util.box.js":7,"foundation-sites/js/foundation.util.keyboard.js":8,"foundation-sites/js/foundation.util.mediaQuery.js":9,"foundation-sites/js/foundation.util.motion.js":10,"foundation-sites/js/foundation.util.nest.js":11,"foundation-sites/js/foundation.util.timerAndImageLoader.js":12,"foundation-sites/js/foundation.util.touch.js":13,"foundation-sites/js/foundation.util.triggers.js":14,"modules/accordion.js":16,"modules/carousel.js":17,"modules/socialShare.js":18}],16:[function(require,module,exports){
 (function(global){
 /* eslint-env browser */
 'use strict';Object.defineProperty(exports,"__esModule",{value:true});
@@ -6001,7 +6828,7 @@ accordion;
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 (function(global){
 /* eslint-env browser */
 'use strict';Object.defineProperty(exports,"__esModule",{value:true});
@@ -6040,7 +6867,7 @@ carousel;
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{"vendor/jquery.slick.js":18}],17:[function(require,module,exports){
+},{"vendor/jquery.slick.js":19}],18:[function(require,module,exports){
 (function(global){
 /* eslint-env browser */
 'use strict';Object.defineProperty(exports,"__esModule",{value:true});
@@ -6151,7 +6978,7 @@ socialShare;
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function(global){
 'use strict';var _typeof=typeof Symbol==="function"&&_typeof2(Symbol.iterator)==="symbol"?function(obj){return typeof obj==="undefined"?"undefined":_typeof2(obj);}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol&&obj!==Symbol.prototype?"symbol":typeof obj==="undefined"?"undefined":_typeof2(obj);};/*
                                                                                                                                                                                                                                                                                             _ _      _       _
@@ -8461,4 +9288,4 @@ return _;
 
 }).call(this,typeof global!=="undefined"?global:typeof self!=="undefined"?self:typeof window!=="undefined"?window:{});
 
-},{}]},{},[14]);
+},{}]},{},[15]);
