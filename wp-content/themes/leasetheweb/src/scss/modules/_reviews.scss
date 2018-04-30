@@ -55,14 +55,14 @@
 
   @include primary-font();
 
-  margin-bottom: rem-calc(20);
+  font-style: italic;
+  margin-bottom: rem-calc(18);
 }
 
 .review__attribution {
   @include primary-font-bold();
 
   font-size: rem-calc(18);
-  font-style: italic;
   line-height: 1.4;
   margin: 0;
 }

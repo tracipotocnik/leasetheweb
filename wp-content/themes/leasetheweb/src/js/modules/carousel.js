@@ -6,24 +6,17 @@ import 'vendor/jquery.slick.js';
 
 const carousel = function() {
   $('.js-carousel').slick({
-    slidesToShow: 3,
+    slidesToShow: 2,
     slidesToScroll: 1,
     arrows: true,
-    dots: false,
+    dots: true,
     focusOnSelect: false,
     infinite: true,
     responsive: [
       {
-        breakpoint: 950,
-        settings: {
-          slidesToShow: 2,
-        },
-      },
-      {
-        breakpoint: 700,
+        breakpoint: 800,
         settings: {
           arrows: false,
-          dots: true,
           slidesToShow: 1,
         },
       },

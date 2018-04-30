@@ -1,0 +1,24 @@
+// Rotator
+
+.rotator {
+  margin: rem-calc(0 10 50);
+
+  @include breakpoint(xlarge) {
+    margin-left: rem-calc(-45);
+    margin-right: rem-calc(-45);
+  }
+
+  .slick-track {
+    margin: 0 auto;
+  }
+}
+
+.rotator__slide-content {
+  @include breakpoint(medium) {
+    padding: 0 rem-calc(30);
+  }
+
+  @include breakpoint(xlarge) {
+    padding: 0 rem-calc(45);
+  }
+}

@@ -6730,7 +6730,6 @@ var _accordion=require('modules/accordion.js');var _accordion2=_interopRequireDe
 
 (0,_cssVarsPonyfill2.default)({
 onComplete:function onComplete(){
-console.log((0,_jquery2.default)('#css-vars-ponyfill'));
 (0,_jquery2.default)('#css-vars-ponyfill').appendTo('head');
 }});// Foundation Plugins. Add or remove as needed for your site
 // Foundation Utilities
@@ -6838,24 +6837,17 @@ require('vendor/jquery.slick.js');function _interopRequireDefault(obj){return ob
 
 var carousel=function carousel(){
 (0,_jquery2.default)('.js-carousel').slick({
-slidesToShow:3,
+slidesToShow:2,
 slidesToScroll:1,
 arrows:true,
-dots:false,
+dots:true,
 focusOnSelect:false,
 infinite:true,
 responsive:[
 {
-breakpoint:950,
-settings:{
-slidesToShow:2}},
-
-
-{
-breakpoint:700,
+breakpoint:800,
 settings:{
 arrows:false,
-dots:true,
 slidesToShow:1}}]});
 
 

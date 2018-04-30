@@ -10,37 +10,39 @@
   {% endif %}">
   <div class="row">
     <div class="small-12 columns">
-      <div class="three-up-rotator js-carousel">
+      <div class="rotator js-carousel">
         {% for block in module.reviews %}
           {% if block.review_quote %}
-            <div class="three-up-rotator__slide">
-              <div class="review">
-                <div class="review__stars review__stars--{{ block.review_star_count }}">
-                  <svg class="icon icon-star">
-                    <title>Star</title>
-                    <use xlink:href="#star"></use>
-                  </svg>
-                  <svg class="icon icon-star">
-                    <title>Star</title>
-                    <use xlink:href="#star"></use>
-                  </svg>
-                  <svg class="icon icon-star">
-                    <title>Star</title>
-                    <use xlink:href="#star"></use>
-                  </svg>
-                  <svg class="icon icon-star">
-                    <title>Star</title>
-                    <use xlink:href="#star"></use>
-                  </svg>
-                  <svg class="icon icon-star">
-                    <title>Star</title>
-                    <use xlink:href="#star"></use>
-                  </svg>
+            <div class="rotator__slide">
+              <div class="rotator__slide-content">
+                <div class="review">
+                  <div class="review__stars review__stars--{{ block.review_star_count }}">
+                    <svg class="icon icon-star">
+                      <title>Star</title>
+                      <use xlink:href="#star"></use>
+                    </svg>
+                    <svg class="icon icon-star">
+                      <title>Star</title>
+                      <use xlink:href="#star"></use>
+                    </svg>
+                    <svg class="icon icon-star">
+                      <title>Star</title>
+                      <use xlink:href="#star"></use>
+                    </svg>
+                    <svg class="icon icon-star">
+                      <title>Star</title>
+                      <use xlink:href="#star"></use>
+                    </svg>
+                    <svg class="icon icon-star">
+                      <title>Star</title>
+                      <use xlink:href="#star"></use>
+                    </svg>
+                  </div>
+                  <p class="review__quote">{{ block.review_quote }}</p>
+                  {% if block.review_attribution %}
+                    <p class="review__attribution">&ndash; {{ block.review_attribution }}</p>
+                  {% endif %}
                 </div>
-                <p class="review__quote">{{ block.review_quote }}</p>
-                {% if block.review_attribution %}
-                  <p class="review__attribution">&ndash; {{ block.review_attribution }}</p>
-                {% endif %}
               </div>
             </div>
           {% endif %}
