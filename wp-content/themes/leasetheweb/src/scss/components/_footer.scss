@@ -139,18 +139,25 @@
     }
   }
 
-  @include breakpoint(medium) {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  &--attribution {
+    @include breakpoint(medium) {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
   }
 }
 
 .footer__attribution {
+  display: none;
   margin: 0 0 rem-calc(3);
 
   @include breakpoint(medium) {
     margin: 0;
+  }
+
+  .footer__bottom--attribution & {
+    display: block;
   }
 }
 
