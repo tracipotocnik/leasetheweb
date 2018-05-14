@@ -128,6 +128,30 @@
   font-size: rem-calc(14);
   padding: rem-calc(13 0 35);
   text-align: center;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover,
+    &:focus {
+      color: var(--link-hover-color);
+    }
+  }
+
+  @include breakpoint(medium) {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+}
+
+.footer__attribution {
+  margin: 0 0 rem-calc(3);
+
+  @include breakpoint(medium) {
+    margin: 0;
+  }
 }
 
 .footer__copyright {
