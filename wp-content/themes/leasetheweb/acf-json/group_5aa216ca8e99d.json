@@ -51,6 +51,31 @@
             "mime_types": ""
         },
         {
+            "key": "field_5af8fd770c127",
+            "label": "Footer Attribution",
+            "name": "footer_attribution",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "off": "Turn footer attribution off"
+            },
+            "allow_custom": 0,
+            "save_custom": 0,
+            "default_value": [
+
+            ],
+            "layout": "vertical",
+            "toggle": 0,
+            "return_format": "value"
+        },
+        {
             "key": "field_5aa5fb8f1a251",
             "label": "Facebook URL",
             "name": "facebook_url",
@@ -249,25 +274,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_5acad77c5e816",
-            "label": "",
-            "name": "",
-            "type": "text",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
         }
     ],
     "location": [
@@ -287,5 +293,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1523242979
+    "modified": 1526267335
 }
