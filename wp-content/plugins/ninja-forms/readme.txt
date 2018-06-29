@@ -3,7 +3,7 @@ Contributors: wpninjasllc, kstover, jameslaws, kbjohnson90, klhall1987, krmoorho
 Tags: form, forms, contact form, custom form, form builder, form creator, form manager, form creation, contact forms, custom forms, forms builder, forms creator, forms manager, forms creation, form administration,
 Requires at least: 4.7
 Tested up to: 4.9
-Stable tag: 3.2.21
+Stable tag: 3.3.7
 License: GPLv2 or later
 
 Drag and drop fields in an intuitive UI to create contact forms, email subscription forms, order forms, payment forms, send emails and more!
@@ -111,22 +111,153 @@ For help and video tutorials, please visit our website: [Ninja Forms Documentati
 
 == Upgrade Notice ==
 
-= 3.2.21 (6 April 2018) =
+= 3.3.7 (21 June 2018) =
 
 *Bugs:*
 
-* Resolved an issue that was causing the save progress table settings to not display properly in the form builder.
-* Resolved a long-standing bug that rarely caused form submissions to fail.
-* Resolved a bug that was sometimes causing form submission to fail.
-* Resolved an issue with the automatic update process.
+* Resolved an issue that sometimes caused the form builder to crash when deleting a field.
+* Submissions removed by the expired submissions feature should now be moved to the trash instead of completely removed.
+
+== Changelog ==
+
+= 3.3.7 (21 June 2018) =
+
+*Bugs:*
+
+* Submissions removed by the expired submissions feature should now be moved to the trash instead of completely removed.
+
+= 3.3.6 (20 June 2018) =
+
+*Bugs:*
+
+* Resolved an issue that sometimes caused the form builder to crash when deleting a field.
+
+= 3.3.5 (18 June 2018) =
+
+*Bugs:*
+
+* Made some performance updates to several of our popup modals.
+* The agency remove marketing hook should now properly hide the new services tab.
 
 *Changes:*
 
-* Added Akismet Anti-Spam integration.
-* Updated form deletion process to warn admins that all submissions for that form will also be deleted.
-* Users below PHP version 5.6 will now be seeing a notice, informing them of the outdated version.
+* Fields now display admin labels (if they exist) instead of labels in the store submission action settings.
+* Added a tooltip to the value section of list fields, giving details about allowed characters.
+* List field merge tags can now be configured to show labels instead of values by appending ":label" to the merge tag.
+* The store submissions action can now be configured to remove submissions that exceed a defined timeframe.
+* Added a confirm modal to field deletion to prevent accidental removal of data.
 
-== Changelog ==
+= 3.3.4 (11 June 2018) =
+
+*Bugs:*
+
+* Resolved an issue that was preventing placeholder text from appearing in paragraph text fields.
+
+*Chnages:*
+
+* Unlocked the services tab.
+* (Beta) Ninja Forms Add-on Manager is now available.
+* Ninja Mail - Transactional Email is now available.
+
+= 3.3.3 (5 June 2018) =
+
+*Bugs:*
+
+* Resolved an issue that sometimes caused our opt-in modal to become undismissable.
+
+= 3.3.2 (4 June 2018) =
+
+*Bugs:*
+
+* Fields that do not actually save data should no longer appear in the include/exclude fields list for the store submission action.
+* Improved performance of our Add Form modal in the post editor.
+* Resolved an issue that sometimes caused the Submissions page to display as a white screen.
+
+*Changes:*
+
+* (GDPR) Fields excluded by the store submission action will now show their values as (redacted) in the edit submission screen, rather than displaying nothing.
+* (GDPR) The delete data request action now includes a setting to specify anonimization of Ninja Forms data, rather than full deletion.
+* (GDPR) Fields now have a setting to specify if they are personally identifiable data.
+* Registered a cleanup process to take care of some outdated and unnecessary data we have been storing in various data records.
+* Added several ARIA attributes to the fields that were missing them.
+* The Delete All Data button now cleans up several additional options that we'd recently added.
+* The list of actions in the form builder has been updated, and non-enabled actions now include a short blurb describing their usage.
+
+= 3.3.1 (22 May 2018) =
+
+*Bugs:*
+
+* Removed a fatal error caused by having a WordPress version below 4.9.6.
+* Export personal data requests created by anonymous uers through Ninja Forms should no longer error out in the admin.
+* Updated a setting in our submissions to prevent them from being shown in archives created by WordPress.
+
+= 3.3.0 (22 May 2018) =
+
+*Bugs:*
+
+* Resolved a bug that was sometimes causing clicks to not register in the admin.
+
+*Changes:*
+
+* Individual fields can now be excluded from the store submission action.
+* (GDPR) The delete data request action can now be added to a form, allowing your users to request deletion of their Ninja Forms submissions.
+* (GDPR) The export data request action can now be added to a form, allowing your users to request a record of their Ninja Forms submissions.
+* (GDPR) Added templates for data removal and data export requests.
+* (GDPR) Added a suggested privacy policy content block for the use of Ninja Forms.
+* (GDPR) We've updated our Ninja Forms opt-in/opt-out behavior for anonymous usage statistics.
+* (Developers) We've added a layout of our database structure to our public repository.
+
+= 3.2.27 (11 May 2018) =
+
+*Bugs:*
+
+* Date fields should no longer fail validation if their format is set to the default setting.
+
+= 3.2.26 (10 May 2018) =
+
+*Bugs:*
+
+* Resolved an issue that was sometimes causing date fields to always fail validation.
+
+= 3.2.25 (8 May 2018) =
+
+*Bugs:*
+
+* Date fields should now properly recognize date format for validation purposes.
+* Resolved an issue that sometimes caused collect payment actions to fail.
+* Removed the random error text that sometimes appeared on form export.
+* Resolved an issue that sometimes caused the contents of plain text emails to not display properly in the form builder.
+
+= 3.2.24 (30 April 2018) =
+
+*Bugs:*
+
+* Hidden fields should no longer be hidden in the form builder.
+
+= 3.2.23 (26 April 2018) =
+
+*Bugs:*
+
+* Resolved an issue that was causing an error in the console while using Safari.
+* Fixed a bug that sometimes caused fields to not display properly when their labels contained non-ASCII characters.
+* Resolved an issue that caused an error message to appear in the dashboard on older PHP versions.
+
+*Changes:*
+
+* New form templates are here!
+
+= 3.2.22 (23 April 2018) =
+
+*Bugs:*
+
+* List field values will no longer disallow spaces as valid input.
+* Options can now be properly added to duplicated list fields.
+* Resolved an issue that caused the save table settings in the form builder to display no text in Firefox.
+* Fixed a spacing issue for field labels set to be hidden in our opinionated styles.
+
+*Changes:*
+
+* List fields will now output labels instead of values in the {fields_table} and {all_fields_table} merge tags.
 
 = 3.2.21 (6 April 2018) =
 

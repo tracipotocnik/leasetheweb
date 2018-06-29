@@ -632,6 +632,9 @@ class WPSEO_Frontend {
 	 * Output Webmaster Tools authentication strings.
 	 */
 	public function webmaster_tools_authentication() {
+		// Baidu.
+		$this->webmaster_tools_helper( 'baiduverify', 'baidu-site-verification' );
+
 		// Bing.
 		$this->webmaster_tools_helper( 'msverify', 'msvalidate.01' );
 
@@ -699,7 +702,7 @@ class WPSEO_Frontend {
 		$robots['follow'] = 'follow';
 		$robots['other']  = array();
 
-		if ( is_object( $post ) && is_singular() ) {
+		if ( ( is_object( $post ) && is_singular() ) || ( WPSEO_Utils::is_woocommerce_active() && is_shop() ) ) {
 			$private = 'private' === $post->post_status;
 			$noindex = ! WPSEO_Post_Type::is_post_type_indexable( $post->post_type );
 
@@ -1065,7 +1068,7 @@ class WPSEO_Frontend {
 		}
 
 		$page = max( 1, (int) get_query_var( 'page' ) );
-		$url = get_permalink( get_queried_object_id() );
+		$url  = get_permalink( get_queried_object_id() );
 
 		if ( $page > 1 ) {
 			$this->adjacent_rel_link( 'prev', $url, ( $page - 1 ), 'page' );
@@ -1186,16 +1189,24 @@ class WPSEO_Frontend {
 			$this->generate_metadesc();
 		}
 
-		if ( $echo !== false ) {
-			if ( is_string( $this->metadesc ) && $this->metadesc !== '' ) {
-				echo '<meta name="description" content="', esc_attr( wp_strip_all_tags( stripslashes( $this->metadesc ) ) ), '"/>', "\n";
-			}
-			elseif ( current_user_can( 'wpseo_manage_options' ) && is_singular() ) {
-				echo '<!-- ', esc_html__( 'Admin only notice: this page doesn\'t show a meta description because it doesn\'t have one, either write it for this page specifically or go into the SEO -> Search Appearance menu and set up a template.', 'wordpress-seo' ), ' -->', "\n";
-			}
-		}
-		else {
+		if ( $echo === false ) {
 			return $this->metadesc;
+		}
+
+		if ( is_string( $this->metadesc ) && $this->metadesc !== '' ) {
+			echo '<meta name="description" content="', esc_attr( wp_strip_all_tags( stripslashes( $this->metadesc ) ) ), '"/>', "\n";
+			return '';
+		}
+
+		if ( current_user_can( 'wpseo_manage_options' ) && is_singular() ) {
+			echo '<!-- ';
+			printf(
+				/* Translators: %1$s resolves to the SEO menu item, %2$s resolves to the Search Appearance submenu item. */
+				esc_html__( 'Admin only notice: this page does not show a meta description because it does not have one, either write it for this page specifically or go into the [%1$s - %2$s] menu and set up a template.', 'wordpress-seo' ),
+				__( 'SEO', 'wordpress-seo' ),
+				__( 'Search Appearance', 'wordpress-seo' )
+			);
+			echo ' -->' . "\n";
 		}
 	}
 
@@ -1226,13 +1237,16 @@ class WPSEO_Frontend {
 		}
 		elseif ( $this->frontend_page_type->is_simple_page() ) {
 			$post      = get_post( $this->frontend_page_type->get_simple_page_id() );
-			$post_type = $post->post_type;
+			$post_type = isset( $post->post_type ) ? $post->post_type : '';
 
 			if ( ( $metadesc === '' && $post_type !== '' ) && WPSEO_Options::get( 'metadesc-' . $post_type, '' ) !== '' ) {
 				$template = WPSEO_Options::get( 'metadesc-' . $post_type );
 				$term     = $post;
 			}
-			$metadesc_override = $this->get_seo_meta_value( 'metadesc', $post->ID );
+
+			if ( is_object( $post ) ) {
+				$metadesc_override = $this->get_seo_meta_value( 'metadesc', $post->ID );
+			}
 		}
 		else {
 			if ( is_search() ) {
@@ -1325,6 +1339,7 @@ class WPSEO_Frontend {
 
 			$redir = $this->get_seo_meta_value( 'redirect', $post->ID );
 			if ( $redir !== '' ) {
+				header( 'X-Redirect-By: Yoast SEO' );
 				wp_redirect( $redir, 301 );
 				exit;
 			}
@@ -1404,15 +1419,37 @@ class WPSEO_Frontend {
 			return false;
 		}
 
-		$url = wp_get_attachment_url( get_queried_object_id() );
+		/**
+		 * Allow the developer to change the target redirection URL for attachments.
+		 *
+		 * @api   string $attachment_url The attachment URL for the queried object.
+		 * @api   object $queried_object The queried object.
+		 *
+		 * @since 7.5.3
+		 */
+		$url = apply_filters( 'wpseo_attachment_redirect_url', wp_get_attachment_url( get_queried_object_id() ), get_queried_object() );
+
 
 		if ( ! empty( $url ) ) {
-			$this->redirect( $url, 301 );
+			$this->do_attachment_redirect( $url );
 
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Performs the redirect from the attachment page to the image file itself.
+	 *
+	 * @param string $attachment_url The attachment image url.
+	 *
+	 * @return void
+	 */
+	public function do_attachment_redirect( $attachment_url ) {
+		header( 'X-Redirect-By: Yoast SEO' );
+		wp_redirect( $attachment_url, 301 );
+		exit;
 	}
 
 	/**
@@ -1653,6 +1690,7 @@ class WPSEO_Frontend {
 	 * @param int    $status   Status code to use.
 	 */
 	public function redirect( $location, $status = 302 ) {
+		header( 'X-Redirect-By: Yoast SEO' );
 		wp_safe_redirect( $location, $status );
 		exit;
 	}

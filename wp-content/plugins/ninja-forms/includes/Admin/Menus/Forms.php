@@ -111,6 +111,12 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
 //                'add_new_text' => __( 'Add New Form', 'ninja-forms' )
 //            ) );
 
+            $use_services = true; // Feature Flag.
+            $use_services = apply_filters( 'ninja_forms_use_services', $use_services ); // The WordPress Way.
+            if ( apply_filters( 'ninja_forms_disable_marketing', false ) ) $use_services = false;
+            $use_services = $use_services && ( version_compare( PHP_VERSION, '5.6', '>=' ) ); // PHP Version Check.
+
+
             /*
              * DASHBOARD
              */
@@ -118,19 +124,30 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             ?>
             <script>
                 var nfDashItems = <?php echo( json_encode( array_values( $dash_items ) ) ); ?>;
+                var useServices = <?php echo ( $use_services ) ? 'true' : 'false'; ?>;
+                var serviceSuccess = '<?php echo ( isset( $_GET[ 'success' ] ) ) ? $_GET[ 'success' ] : ''; ?>';
             </script>
             <?php
 
             wp_enqueue_script( 'backbone-radio', Ninja_Forms::$url . 'assets/js/lib/backbone.radio.min.js', array( 'jquery', 'backbone' ) );
             wp_enqueue_script( 'backbone-marionette-3', Ninja_Forms::$url . 'assets/js/lib/backbone.marionette3.min.js', array( 'jquery', 'backbone' ) );
             wp_enqueue_script( 'nf-jbox', Ninja_Forms::$url . 'assets/js/lib/jBox.min.js', array( 'jquery' ) );
+            wp_enqueue_script( 'nf-ninjamodal', Ninja_Forms::$url . 'assets/js/lib/ninjaModal.js', array( 'jquery' ) );
             wp_enqueue_script( 'nf-moment', Ninja_Forms::$url . 'assets/js/lib/moment-with-locales.min.js', array( 'jquery', 'nf-dashboard' ) );
             wp_enqueue_script( 'nf-dashboard', Ninja_Forms::$url . 'assets/js/min/dashboard.min.js', array( 'backbone-radio', 'backbone-marionette-3' ) );
 
+            $current_user = wp_get_current_user();
             wp_localize_script( 'nf-dashboard', 'nfi18n', Ninja_Forms::config( 'i18nDashboard' ) );
+            wp_localize_script( 'nf-dashboard', 'nfPromotions', array_values( Ninja_Forms::config( 'DashboardPromotions' ) ) );
             wp_localize_script( 'nf-dashboard', 'nfAdmin', array(
                 'ajaxNonce'         => wp_create_nonce( 'ninja_forms_dashboard_nonce' ),
-                'formTelemetry'     => ( get_option( 'nf_form_tel_sent' ) ) ? 0 : 1
+                'formTelemetry'     => ( get_option( 'nf_form_tel_sent' ) ) ? 0 : 1,
+                'showOptin'         => ( get_option( 'ninja_forms_do_not_allow_tracking' ) ||
+                                         get_option( 'ninja_forms_allow_tracking' ) ) ? 0 : 1,
+                'currentUserEmail'  => $current_user->user_email,
+                'doingCleanup'      => ( ! get_option( 'ninja_forms_data_is_clean' ) &&
+                                        isset( $_REQUEST[ 'action' ] ) &&
+                                        'cleanup' == $_REQUEST[ 'action' ] ) ? 1 : 0,
             ) );
 
             wp_enqueue_style( 'nf-builder', Ninja_Forms::$url . 'assets/css/builder.css' );
@@ -492,6 +509,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
             $nicename = ( isset( $action[ 'nicename' ] ) ) ? $action[ 'nicename' ] : '';
             $image = ( isset( $action[ 'image' ] ) ) ? $action[ 'image' ] : '';
             $link = ( isset( $action[ 'link' ] ) ) ? $action[ 'link' ] : '';
+            $modal_content = ( isset( $action[ 'modal_content' ] ) ) ? $action[ 'modal_content' ] : '';
 
             if ( $u_id ) {
                 $last_slash = strripos( $link, '/' );
@@ -508,6 +526,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
                 'nicename' => $nicename,
                 'image' => $image,
                 'link' => $link,
+                'modal_content' => $modal_content,
                 'settingGroups' => array(),
                 'settingDefaults' => array()
             );
@@ -572,7 +591,7 @@ final class NF_Admin_Menus_Forms extends NF_Abstracts_Menu
         foreach( Ninja_Forms()->merge_tags as $key => $group ){
             /*
              * If the merge tag group doesn't have a title, don't localise it.
-             * 
+             *
              * This convention is used to allow merge tags to continue to function,
              * even though they can't be added to new forms.
              */
