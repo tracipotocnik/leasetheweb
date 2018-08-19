@@ -1,7 +1,7 @@
 {% extends "base.twig" %}
 
 {% block content %}
-  {% for module in post.get_field('flexible_content') %}
+  {% for module in post.get_field('flexible_content') if module.module_enabled %}
     {% include ['modules/'~module.acf_fc_layout~'.twig'] ignore missing %}
   {% endfor %}
 {% endblock %}
