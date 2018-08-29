@@ -105,3 +105,20 @@
     margin: 0;
   }
 }
+
+.accordion-list__buttons {
+  margin: rem-calc(20 -3 0);
+
+  .button {
+    margin: rem-calc(10 3 0);
+
+    .module--primary &,
+    .module--secondary & {
+      @extend .button--inverse;
+
+      + .button {
+        @extend .button--inverse-outline;
+      }
+    }
+  }
+}

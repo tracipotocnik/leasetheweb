@@ -24,6 +24,21 @@
   &:focus {
     background: var(--primary-hover-color);
   }
+
+  .icon {
+    height: rem-calc(18);
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.button__text {
+  .button--has-icon & {
+    padding-left: 28px;
+    position: relative;
+  }
 }
 
 .button--outline {

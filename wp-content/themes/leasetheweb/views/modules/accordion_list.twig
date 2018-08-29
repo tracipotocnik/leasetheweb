@@ -37,6 +37,29 @@
             {% if block.accordion_list_item_body %}
               <div class="accordion-list__item-body">
                 {{ block.accordion_list_item_body }}
+
+                {% if block.accordion_list_button %}
+                  <div class="accordion-list__buttons">
+                    {% for button in block.accordion_list_button %}
+                      <a
+                        class="button
+                        {% if loop.last %}button--outline{% endif %}
+                        {% if button.button_icon != 'none' %}button--has-icon{% endif %}"
+                        href="{{ button.button_url }}"
+                        {% if button.new_tab %}target="_blank"{% endif %}>
+                        <span class="button__text">
+                          {% if button.button_icon != 'none' %}
+                            <svg class="icon">
+                              <title>{{ button.button_icon }}</title>
+                              <use xlink:href="#{{ button.button_icon }}"></use>
+                            </svg>
+                          {% endif %}
+                          {{ button.button_text }}
+                        </span>
+                      </a>
+                    {% endfor %}
+                  </div>
+                {% endif %}
               </div>
             {% endif %}
           </div>
