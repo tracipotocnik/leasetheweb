@@ -1,28 +1,34 @@
 === Advanced Custom Fields: Table Field ===
-Contributors: Johann Heyne
+Contributors: jonua
 Tags: acf table
 Requires at least: 4.9
-Tested up to: 4.9.6
-Stable tag: trunk
+Tested up to: 4.9.8
+Stable tag: 1.2.6
+Requires PHP: 7.0.0
 License: GPLv2 or later
 
-A Table Field Add-on for the Advanced Custom Fields Plugin
+A Table Field Add-on for the Advanced Custom Fields Plugin.
 
 == Description ==
 
-The Table field plugin enables easily editing a table.
-The plugin is compatible with ACF4 and ACF5.
+The Table Field Plugin enhances the functionality of the ["Advanced Custom Fields" plugin](https://de.wordpress.org/plugins/advanced-custom-fields/) with easy-to-edit tables.
+
+This plugin requires the ["Advanced Custom Fields" plugin](https://de.wordpress.org/plugins/advanced-custom-fields/) or the [Pro version](https://www.advancedcustomfields.com/pro/)!
+
 The table field works also with the repeater and flexible field types.
 
-* table header (option)
-* add and remove table columns and rows
-* change order of columns and rows by dragging
-* to move to the next cells editor press key: tab
-* to move to the previous cells editor press key: shift + tab
+= Features =
+* Table Header (Option)
+* Add and remove table columns and rows
+* Change order of columns and rows by dragging
+* To move to the next cells editor press key: tab
+* To move to the previous cells editor press key: shift + tab
 
-=== Output Table HTML ===
+== Frequently Asked Questions ==
 
-To render the table fields data as an html table in one of your template files you can start with the following basic code example:
+= How to output the table html? =
+
+To render the table fields data as an html table in one of your template files (page.php, single.php) you can start with the following basic code example:
 
 `
 $table = get_field( 'your_table_field_name' );
@@ -70,11 +76,12 @@ if ( $table ) {
 	echo '</table>';
 }
 `
-=== Line Breaks ===
+
+= How to handle line breaks? =
 
 This is about displaying line breaks in the admin tables and getting line breaks as `<br>` when outputting the tables HTML.
 
-= Converting Line Breaks for HTML Output =
+**Converting Line Breaks for HTML Output**
 
 To convert line breaks to `<br>` in tables HTML output the PHP function `nl2br()` can be used:
 
@@ -96,7 +103,7 @@ with…
 echo nl2br( $td['c'] );
 `
 
-= Displaying Line Breaks in Editing Tables =
+**Displaying Line Breaks in Editing Tables**
 
 To display natural line breaks in the editing tables in the admin area, add the following styles to the admin area.
 
@@ -122,6 +129,84 @@ function acf_table_styles() {
 }
 `
 
+= How to use the table field in Elementor Page Builder? =
+
+In general, its up to Elementor to support ACF field types on the Elementor widgets. All supported ACF fields by Elementor [you can find here](https://docs.elementor.com/article/381-elementor-integration-with-acf). But because the table field is not a native ACF field, the support for this field may never happen.
+
+For now the way to go is using the Elementors shortcode Widget. Before you can use a shortcode to display a table fields table, you have to setup a shortcode in functions.php. The following code does this. You can modify the table html output for your needs.
+
+`function shortcode_acf_tablefield( $atts ) {
+
+    $a = shortcode_atts( array(
+        'field-name' => false,
+        'post-id' => false,
+    ), $atts );
+
+    $table = get_field( $a['field-name'], $a['post-id'] );
+
+    $return = '';
+
+    if ( $table ) {
+
+        $return .= '<table border="0">';
+
+            if ( $table['header'] ) {
+
+                $return .= '<thead>';
+
+                    $return .= '<tr>';
+
+                        foreach ( $table['header'] as $th ) {
+
+                            $return .= '<th>';
+                                $return .= $th['c'];
+                            $return .= '</th>';
+                        }
+
+                    $return .= '</tr>';
+
+                $return .= '</thead>';
+            }
+
+            $return .= '<tbody>';
+
+                foreach ( $table['body'] as $tr ) {
+
+                    $return .= '<tr>';
+
+                        foreach ( $tr as $td ) {
+
+                            $return .= '<td>';
+                                $return .= $td['c'];
+                            $return .= '</td>';
+                        }
+
+                    $return .= '</tr>';
+                }
+
+            $return .= '</tbody>';
+
+        $return .= '</table>';
+    }
+
+    return $return;
+}
+
+add_shortcode( 'table', 'shortcode_acf_tablefield' );`
+
+
+Then use the shortcode in a Elementors shortcode widget like this, to **insert a table from the current page or post**…
+
+`[table field-name="your table field name"]`
+
+You also can **insert a table from another page or post**…
+
+`[table field-name="your table field name" post-id="123"]`
+
+Or you can **insert a table from a ACF option page**…
+
+`[table field-name="your table field name" post-id="option"]`
+
 == Installation ==
 
 This software can be used as both a WP plugin and a theme include.
@@ -141,7 +226,33 @@ However, only when activated as a plugin will updates be available.
 2. Grab the rows and columns in the grey area and drag them.
 
 
+== Translations ==
+
+* English - default, always included
+* German: Deutsch - immer dabei!
+* Danish: Dansk - altid der!
+* Polish: Polski - zawsze tam jest!
+
+*Note:* Please [contribute your language](https://translate.wordpress.org/projects/wp-plugins/advanced-custom-fields-table-field) to the plugin to make it even more useful.
+
+
+== Upgrade Notice ==
+
+= 1.2.6 =
+Fixes an PHP error and improves JavaScript code.
+
+
 == Changelog ==
+
+= 1.2.6 =
+* Replaces jQuery.noConflict methode
+* Prevents PHP error if table fields value is from a previous fieldtype
+
+= 1.2.5 =
+* Adds danish translation, thanks to Jeppe Skovsgaard
+
+= 1.2.4 =
+* Fixes backslashes on using update_field();
 
 = 1.2.3 =
 * Adds support for the ACF update_field() function. If you get the table fields data array by get_field(), you can change the table data array and using update_field() to save the changes to the field.

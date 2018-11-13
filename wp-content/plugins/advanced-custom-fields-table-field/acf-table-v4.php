@@ -36,7 +36,7 @@
 			// settings
 			$this->settings = array(
 				'dir_url' => plugins_url( '', __FILE__ ) . '/',
-				'version' => '1.0.5',
+				'version' => '1.2.6',
 			);
 
 			// PREVENTS SAVING INVALID TABLE FIELD JSON DATA {
@@ -128,16 +128,11 @@
 		{
 			// Note: This function can be removed if not used
 
-			// register acf scripts
-			wp_register_script('acf-input-table', $this->settings['dir_url'] . 'js/input-v4.js', array('acf-input'), $this->settings['version'] );
-			wp_register_style('acf-input-table', $this->settings['dir_url'] . 'css/input.css', array('acf-input'), $this->settings['version'] );
-
-			// scripts
-			wp_enqueue_script(array(
-				'acf-input-table',
-			));
+			/// scripts
+			wp_enqueue_script( 'acf-input-table', $this->settings['dir_url'] . 'js/input-v4.js', array( 'jquery', 'acf-input' ), $this->settings['version'], true );
 
 			// styles
+			wp_register_style( 'acf-input-table', $this->settings['dir_url'] . 'css/input.css', array( 'acf-input' ), $this->settings['version'] );
 			wp_enqueue_style(array(
 				'acf-input-table',
 			));
@@ -165,6 +160,11 @@
 
 			// key is needed in the field names to correctly save the data
 			$key = $field['name'];
+
+			if ( empty( $field['use_header'] ) ) {
+
+				$field['use_header'] = 0;
+			}
 
 			// Create Field Options HTML
 
@@ -291,7 +291,7 @@
 					$data['b'] = $value['body'];
 				}
 
-				$value = json_encode( $data );
+				$value = wp_slash( json_encode( $data ) );
 			}
 
 			return $value;

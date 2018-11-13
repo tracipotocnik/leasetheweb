@@ -21,7 +21,7 @@ class acf_field_table extends acf_field {
 		*  settings (array) Array of settings
 		*/
 		$this->settings = array(
-			'version' => '1.0.5',
+			'version' => '1.2.6',
 			'dir_url' => plugins_url( '', __FILE__ ) . '/',
 		);
 
@@ -152,18 +152,10 @@ class acf_field_table extends acf_field {
 		*  This will show what data is available
 		*/
 
-		//echo '<pre>';
-		//	print_r( $field );
-		//echo '</pre>';
+		if ( empty( $field['use_header'] ) ) {
 
-		/*
-		*  Create a simple text input using the 'font_size' setting.
-		*/
-		/*
-		?>
-		<input type="text" name="<?php echo esc_attr($field['name']) ?>" value="<?php echo esc_attr($field['value']) ?>" style="font-size:<?php echo $field['font_size'] ?>px;" />
-		<?php
-		*/
+			$field['use_header'] = 0;
+		}
 
 		$data_field['use_header'] = $field['use_header'];
 
@@ -173,16 +165,16 @@ class acf_field_table extends acf_field {
 
 			// OPTION HEADER {
 
-			if ( $data_field['use_header'] === 0 ) {
+				if ( $data_field['use_header'] === 0 ) {
 
-				$e .= '<div class="acf-table-optionbox">';
-					$e .= '<label>' . __( 'use table header', 'acf-table' ) . ' </label>';
-					$e .= '<select class="acf-table-optionbox-field acf-table-fc-opt-use-header" name="acf-table-opt-use-header">';
-						$e .= '<option value="0">' . __( 'No', 'acf-table' ) . '</option>';
-						$e .= '<option value="1">' . __( 'Yes', 'acf-table' ) . '</option>';
-					$e .= '</select>';
-				$e .= '</div>';
-			}
+					$e .= '<div class="acf-table-optionbox">';
+						$e .= '<label>' . __( 'use table header', 'acf-table' ) . ' </label>';
+						$e .= '<select class="acf-table-optionbox-field acf-table-fc-opt-use-header" name="acf-table-opt-use-header">';
+							$e .= '<option value="0">' . __( 'No', 'acf-table' ) . '</option>';
+							$e .= '<option value="1">' . __( 'Yes', 'acf-table' ) . '</option>';
+						$e .= '</select>';
+					$e .= '</div>';
+				}
 
 			// }
 
@@ -213,12 +205,11 @@ class acf_field_table extends acf_field {
 	function input_admin_enqueue_scripts() {
 
 		// register & include JS
-		wp_register_script( 'acf-input-table', $this->settings['dir_url'] . 'js/input-v5.js', array('acf-input'), $this->settings['version'] );
-		wp_enqueue_script('acf-input-table');
+		wp_enqueue_script( 'acf-input-table', $this->settings['dir_url'] . 'js/input-v5.js', array( 'jquery', 'acf-input' ), $this->settings['version'], true );
 
 		// register & include CSS
-		wp_register_style( 'acf-input-table', $this->settings['dir_url'] . 'css/input.css', array('acf-input'), $this->settings['version'] );
-		wp_enqueue_style('acf-input-table');
+		wp_register_style( 'acf-input-table', $this->settings['dir_url'] . 'css/input.css', array( 'acf-input' ), $this->settings['version'] );
+		wp_enqueue_style( 'acf-input-table' );
 
 	}
 
@@ -397,11 +388,10 @@ class acf_field_table extends acf_field {
 				$data['b'] = $value['body'];
 			}
 
-			$value = json_encode( $data );
+			$value = wp_slash( json_encode( $data ) );
 		}
 
 		return $value;
-
 	}
 
 	/*
