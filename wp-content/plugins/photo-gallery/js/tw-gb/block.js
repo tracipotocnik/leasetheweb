@@ -1,12 +1,18 @@
 /**
  * 10Web plugins Gutenberg integration
- * version 2.0.0
+ * version 2.0.3
  */
 ( function ( blocks, element ) {
   registerAllPluginBlocks();
 
   function registerAllPluginBlocks() {
-    var twPluginsData = window['tw_gb'];
+    var twPluginsData = JSON.parse(tw_obj_translate.blocks);
+    for ( var pluginId in window['tw_gb'] ) {
+      if ( !window['tw_gb'].hasOwnProperty( pluginId ) ) {
+        continue;
+      }
+      twPluginsData[pluginId] = window['tw_gb'][pluginId];
+    }
     if ( !twPluginsData ) {
       return;
     }
@@ -92,6 +98,15 @@
             }
           };
           props.setAttributes( { popupOpened: true } );
+          if (!shortcode_id && undefined != shortcode) {
+            var shortcode_extract = shortcode.split(' ');
+            for (i = 0; i < shortcode_extract.length; i++) {
+              var attributes = shortcode_extract[i].split('=');
+              if ('id'== attributes[0]) {
+                shortcode_id = attributes[1].replace(/"/g, "");
+              }
+            }
+          }
           var elem = el( 'form', { className: 'tw-container' }, el( 'div', { className: 'tw-container-wrap' + (pluginData.containerClass ? ' ' + pluginData.containerClass : '') }, el( 'span', {
             className: "media-modal-close",
             onClick: close
@@ -105,7 +120,7 @@
           var shortcodeList = JSON.parse( pluginData.data );
           shortcodeList.inputs.forEach( function ( inputItem ) {
             if ( inputItem.type === 'select' ) {
-              children.push( el( 'option', { value: '', dataId: 0 }, tw_obj.empty_item ) );
+              children.push( el( 'option', { value: '', dataId: 0 }, tw_obj_translate.empty_item ) );
               if ( inputItem.options.length ) {
                 inputItem.options.forEach( function ( optionItem ) {
                   var shortcode = '[' + shortcodeList.shortcode_prefix + ' ' + inputItem.shortcode_attibute_name + '="' + optionItem.id + '"]';
@@ -142,7 +157,7 @@
             onClick: function () {
               props.setAttributes( { popupOpened: true } );
             }.bind( this )
-          }, tw_obj.nothing_selected );
+          }, tw_obj_translate.nothing_selected );
         }
 
         function showShortcode() {

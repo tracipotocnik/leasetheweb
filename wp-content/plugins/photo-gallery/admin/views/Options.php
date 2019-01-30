@@ -200,6 +200,16 @@ class OptionsView_bwg extends AdminView_bwg {
               </div>
               <div class="wd-box-content wd-width-100">
                 <div class="wd-group">
+                  <label class="wd-label"><?php _e('Discourage search engines', BWG()->prefix); ?></label>
+                  <div class="bwg-flex">
+                    <input type="radio" name="noindex_custom_post" id="noindex_custom_post_1" value="1" <?php if ($row->noindex_custom_post) echo 'checked="checked"'; ?> /><label for="noindex_custom_post_1" class="wd-radio-label"><?php _e('Yes', BWG()->prefix); ?></label>
+                    <input type="radio" name="noindex_custom_post" id="noindex_custom_post_0" value="0" <?php if (!$row->noindex_custom_post) echo 'checked="checked"'; ?> /><label for="noindex_custom_post_0" class="wd-radio-label"><?php _e('No', BWG()->prefix); ?></label>
+                  </div>
+                  <p class="description"><?php _e('Do not allow search engines to index custom posts.', BWG()->prefix); ?></p>
+                </div>
+              </div>
+              <div class="wd-box-content wd-width-100">
+                <div class="wd-group">
                   <label class="wd-label"><?php _e('Show comments for custom posts', BWG()->prefix); ?></label>
                   <div class="bwg-flex">
                     <input type="radio" name="show_hide_post_meta" id="show_hide_post_meta_1" value="1" <?php if ($row->show_hide_post_meta) echo 'checked="checked"'; ?> /><label for="show_hide_post_meta_1" class="wd-radio-label"><?php _e('Yes', BWG()->prefix); ?></label>
@@ -218,10 +228,10 @@ class OptionsView_bwg extends AdminView_bwg {
                     <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="save_ip" id="save_ip_0" value="0" <?php if (!$row->save_ip) echo 'checked="checked"'; ?> /><label for="save_ip_0" class="wd-radio-label"><?php _e('No', BWG()->prefix); ?></label>
                   </div>
                   <p class="description"><?php _e('Disable saving user IP address when rating the images.', BWG()->prefix); ?></p>
-				  <?php if ( !BWG()->is_pro ) { ?><p class="description spider_free_version"><?php echo BWG()->free_msg; ?></p><?php } ?>
-				</div>
+                  <?php if ( !BWG()->is_pro ) { ?><p class="description spider_free_version"><?php echo BWG()->free_msg; ?></p><?php } ?>
+                </div>
               </div>
-			  <div class="wd-box-content wd-width-100">
+              <div class="wd-box-content wd-width-100">
                 <div class="wd-group">
                   <label class="wd-label"><?php _e('Right-click protection', BWG()->prefix); ?></label>
                   <div class="bwg-flex">
@@ -291,6 +301,12 @@ class OptionsView_bwg extends AdminView_bwg {
                   </div>
                   <p class="description"><?php _e('Generate or edit a shortcode.', BWG()->prefix); ?></p>
                 </div>
+				<div class="wd-group">
+					<label class="wd-label"><?php _e('Developer mode', BWG()->prefix); ?></label>
+					<input type="radio" name="developer_mode" id="developer_mode_1" value="1" <?php if ($row->developer_mode) echo 'checked="checked"'; ?> /><label for="developer_mode_1" class="wd-radio-label"><?php _e('Yes', BWG()->prefix); ?></label>
+                    <input type="radio" name="developer_mode" id="developer_mode_0" value="0" <?php if (!$row->developer_mode) echo 'checked="checked"'; ?> /><label for="developer_mode_0" class="wd-radio-label"><?php _e('No', BWG()->prefix); ?></label>
+					<p class="description"><?php _e('', BWG()->prefix); ?></p>
+				</div>
               </div>
               <?php
               if ( !BWG()->is_demo ) {
@@ -984,12 +1000,16 @@ class OptionsView_bwg extends AdminView_bwg {
         bwg_enable_disable(<?php echo $row->album_view_type == 'mosaic' ? "'', 'tr_album_resizable_mosaic', 'album_view_type_2'" : "'none', 'tr_album_resizable_mosaic', 'album_view_type_" . $row->album_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->album_view_type == 'mosaic' ? "'', 'tr_album_mosaic_total_width', 'album_view_type_2'" : "'none', 'tr_album_mosaic_total_width', 'album_view_type_" . $row->album_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->album_view_type == 'mosaic' ? "'none', 'for_album_image_title_show_hover_0', 'album_view_type_2'" : "'', 'for_album_image_title_show_hover_0', 'album_view_type_" . $row->album_view_type . "'"; ?>);
+        bwg_enable_disable(<?php echo $row->album_view_type == 'mosaic' ? "'none', 'album_image_title_show_hover_0', 'album_view_type_2'" : "'', 'album_image_title_show_hover_0', 'album_view_type_" . $row->album_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->album_view_type == 'mosaic' ? "'none', 'for_album_ecommerce_icon_show_hover_0', 'album_view_type_2'" : "'', 'for_album_ecommerce_icon_show_hover_0', 'album_view_type_" . $row->album_view_type . "'"; ?>);
+        bwg_enable_disable(<?php echo $row->album_view_type == 'mosaic' ? "'none', 'album_ecommerce_icon_show_hover_0', 'album_view_type_2'" : "'', 'album_ecommerce_icon_show_hover_0', 'album_view_type_" . $row->album_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->album_extended_view_type == 'mosaic' ? "'', 'tr_album_extended_mosaic', 'album_extended_view_type_2'" : "'none', 'tr_album_extended_mosaic', 'album_extended_view_type_" . $row->album_extended_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->album_extended_view_type == 'mosaic' ? "'', 'tr_album_extended_resizable_mosaic', 'album_extended_view_type_2'" : "'none', 'tr_album_extended_resizable_mosaic', 'album_extended_view_type_" . $row->album_extended_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->album_extended_view_type == 'mosaic' ? "'', 'tr_album_extended_mosaic_total_width', 'album_extended_view_type_2'" : "'none', 'tr_album_extended_mosaic_total_width', 'album_extended_view_type_" . $row->album_extended_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->album_extended_view_type == 'mosaic' ? "'none', 'for_album_extended_image_title_show_hover_0', 'album_extended_view_type_2'" : "'', 'for_album_extended_image_title_show_hover_0', 'album_extended_view_type_" . $row->album_extended_view_type . "'"; ?>);
+        bwg_enable_disable(<?php echo $row->album_extended_view_type == 'mosaic' ? "'none', 'album_extended_image_title_show_hover_0', 'album_extended_view_type_2'" : "'', 'album_extended_image_title_show_hover_0', 'album_extended_view_type_" . $row->album_extended_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->album_extended_view_type == 'mosaic' ? "'none', 'for_album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_2'" : "'', 'for_album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_" . $row->album_extended_view_type . "'"; ?>);
+        bwg_enable_disable(<?php echo $row->album_extended_view_type == 'mosaic' ? "'none', 'album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_2'" : "'', 'album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_" . $row->album_extended_view_type . "'"; ?>);
         bwg_enable_disable(<?php echo $row->masonry == 'horizontal' ? "'none', 'bwg-vertical-block-masonry', 'masonry_1'" : "'', 'bwg-vertical-block-masonry', 'masonry_0'"; ?>);
         preview_watermark();
         preview_built_in_watermark();
@@ -2617,9 +2637,9 @@ class OptionsView_bwg extends AdminView_bwg {
             <div class="wd-group">
               <label class="wd-label"><?php _e('Gallery view type', BWG()->prefix); ?></label>
               <div class="bwg-flex">
-                <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_view_type" id="album_view_type_1" value="thumbnail" <?php if ($row->album_view_type == "thumbnail") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('none', 'tr_album_mosaic', 'album_view_type_1'); bwg_enable_disable('none', 'tr_album_resizable_mosaic', 'album_view_type_1'); bwg_enable_disable('none', 'tr_album_mosaic_total_width', 'album_view_type_1');bwg_enable_disable('', 'for_album_image_title_show_hover_0', 'album_view_type_1');bwg_enable_disable('', 'for_album_ecommerce_icon_show_hover_0', 'album_view_type_1');" /><label for="album_view_type_1" class="wd-radio-label"><?php _e('Thumbnail', BWG()->prefix); ?></label>
-                <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_view_type" id="album_view_type_0" value="masonry" <?php if ($row->album_view_type == "masonry") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('none', 'tr_album_mosaic', 'album_view_type_0'); bwg_enable_disable('none', 'tr_album_resizable_mosaic', 'album_view_type_0'); bwg_enable_disable('none', 'tr_album_mosaic_total_width', 'album_view_type_0');bwg_enable_disable('', 'for_album_image_title_show_hover_0', 'album_view_type_0');bwg_enable_disable('', 'for_album_ecommerce_icon_show_hover_0', 'album_view_type_0');" /><label for="album_view_type_0" class="wd-radio-label"><?php _e('Masonry', BWG()->prefix); ?></label>
-                <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_view_type" id="album_view_type_2" value="mosaic" <?php if ($row->album_view_type == "mosaic") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('', 'tr_album_mosaic', 'album_view_type_2'); bwg_enable_disable('', 'tr_album_resizable_mosaic', 'album_view_type_2'); bwg_enable_disable('', 'tr_album_mosaic_total_width', 'album_view_type_2');bwg_enable_disable('none', 'for_album_image_title_show_hover_0', 'album_view_type_2');bwg_enable_disable('none', 'for_album_ecommerce_icon_show_hover_0', 'album_view_type_2');" /><label for="album_view_type_2" class="wd-radio-label"><?php _e('Mosaic', BWG()->prefix); ?></label>
+                <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_view_type" id="album_view_type_1" value="thumbnail" <?php if ($row->album_view_type == "thumbnail") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('none', 'tr_album_mosaic', 'album_view_type_1'); bwg_enable_disable('none', 'tr_album_resizable_mosaic', 'album_view_type_1'); bwg_enable_disable('none', 'tr_album_mosaic_total_width', 'album_view_type_1');bwg_enable_disable('', 'for_album_image_title_show_hover_0', 'album_view_type_1');bwg_enable_disable('', 'album_image_title_show_hover_0', 'album_view_type_1');bwg_enable_disable('', 'for_album_ecommerce_icon_show_hover_0', 'album_view_type_1');" /><label for="album_view_type_1" class="wd-radio-label"><?php _e('Thumbnail', BWG()->prefix); ?></label>
+                <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_view_type" id="album_view_type_0" value="masonry" <?php if ($row->album_view_type == "masonry") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('none', 'tr_album_mosaic', 'album_view_type_0'); bwg_enable_disable('none', 'tr_album_resizable_mosaic', 'album_view_type_0'); bwg_enable_disable('none', 'tr_album_mosaic_total_width', 'album_view_type_0');bwg_enable_disable('', 'for_album_image_title_show_hover_0', 'album_view_type_0');bwg_enable_disable('', 'album_image_title_show_hover_0', 'album_view_type_0');bwg_enable_disable('', 'for_album_ecommerce_icon_show_hover_0', 'album_view_type_0');" /><label for="album_view_type_0" class="wd-radio-label"><?php _e('Masonry', BWG()->prefix); ?></label>
+                <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_view_type" id="album_view_type_2" value="mosaic" <?php if ($row->album_view_type == "mosaic") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('', 'tr_album_mosaic', 'album_view_type_2'); bwg_enable_disable('', 'tr_album_resizable_mosaic', 'album_view_type_2'); bwg_enable_disable('', 'tr_album_mosaic_total_width', 'album_view_type_2');bwg_enable_disable('none', 'for_album_image_title_show_hover_0', 'album_view_type_2');bwg_enable_disable('none', 'album_image_title_show_hover_0', 'album_view_type_2');bwg_enable_disable('none', 'for_album_ecommerce_icon_show_hover_0', 'album_view_type_2');" /><label for="album_view_type_2" class="wd-radio-label"><?php _e('Mosaic', BWG()->prefix); ?></label>
               </div>
               <p class="description"><?php _e('Choose the display type for gallery groups, Thumbnails, Masonry or Mosaic.', BWG()->prefix); ?></p>
               <?php if ( !BWG()->is_pro ) { ?><p class="description spider_free_version"><?php echo BWG()->free_msg; ?></p><?php } ?>
@@ -2661,9 +2681,12 @@ class OptionsView_bwg extends AdminView_bwg {
             <div class="wd-group">
               <label class="wd-label"><?php _e('Show image title', BWG()->prefix); ?></label>
               <div class="bwg-flex">
-                <label for="album_image_title_show_hover_1" class="wd-radio-label"><input type="radio" name="album_image_title_show_hover" id="album_image_title_show_hover_1" value="hover" <?php if ($row->album_image_title_show_hover == "hover") echo 'checked="checked"'; ?> /><?php _e('Show on hover', BWG()->prefix); ?></label>
-                <label id="for_album_image_title_show_hover_0" for="album_image_title_show_hover_0" class="wd-radio-label"><input type="radio" name="album_image_title_show_hover" id="album_image_title_show_hover_0" value="show" <?php if ($row->album_image_title_show_hover == "show") echo 'checked="checked"'; ?> /><?php _e('Always show', BWG()->prefix); ?></label>
-                <label for="album_image_title_show_hover_2" class="wd-radio-label"><input type="radio" name="album_image_title_show_hover" id="album_image_title_show_hover_2" value="none" <?php if ($row->album_image_title_show_hover == "none") echo 'checked="checked"'; ?> /><?php _e("Don't show", BWG()->prefix); ?></label>
+                <input type="radio" name="album_image_title_show_hover" id="album_image_title_show_hover_1" value="hover" <?php if ($row->album_image_title_show_hover == "hover") echo 'checked="checked"'; ?> />
+                <label for="album_image_title_show_hover_1" class="wd-radio-label"><?php _e('Show on hover', BWG()->prefix); ?></label>
+                <input type="radio" name="album_image_title_show_hover" id="album_image_title_show_hover_0" value="show" <?php if ($row->album_image_title_show_hover == "show") echo 'checked="checked"'; ?> />
+                <label id="for_album_image_title_show_hover_0" for="album_image_title_show_hover_0" class="wd-radio-label"><?php _e('Always show', BWG()->prefix); ?></label>
+                <input type="radio" name="album_image_title_show_hover" id="album_image_title_show_hover_2" value="none" <?php if ($row->album_image_title_show_hover == "none") echo 'checked="checked"'; ?> />
+                <label for="album_image_title_show_hover_2" class="wd-radio-label"><?php _e("Don't show", BWG()->prefix); ?></label>
               </div>
               <p class="description"><?php _e('Choose to show/hide titles of images, or display them on hover.', BWG()->prefix); ?></p>
             </div>
@@ -2934,6 +2957,17 @@ class OptionsView_bwg extends AdminView_bwg {
                 <p class="description"><?php _e('Set the height of blocks in Extended gallery groups.', BWG()->prefix); ?></p>
               </div>
             </div>
+			      <div class="wd-box-content wd-width-100">
+              <div class="wd-group">
+                <label class="wd-label" for="extended_album_column_number"><?php _e('Number of columns', BWG()->prefix); ?></label>
+                <div class="bwg-flex">
+                  <input type="radio" name="extended_album_column_number" id="extended_album_column_number_1" value="1" <?php if ($row->extended_album_column_number == 1) echo 'checked="checked"'; ?> /><label for="extended_album_column_number_1" class="wd-radio-label"><?php _e('1 column', BWG()->prefix); ?></label>
+				          <input type="radio" name="extended_album_column_number" id="extended_album_column_number_2" value="2" <?php if ($row->extended_album_column_number == 2) echo 'checked="checked"'; ?> /><label for="extended_album_column_number_2" class="wd-radio-label"><?php _e('2 column', BWG()->prefix); ?></label>
+                  <input type="radio" name="extended_album_column_number" id="extended_album_column_number_3" value="3" <?php if ($row->extended_album_column_number == 3) echo 'checked="checked"'; ?> /><label for="extended_album_column_number_3" class="wd-radio-label"><?php _e('3 column', BWG()->prefix); ?></label>
+                </div>
+                <p class="description"><?php _e('Set the maximum number of columns.', BWG()->prefix); ?></p>
+              </div>
+            </div>
             <div class="wd-box-content wd-width-100">
               <div class="wd-group">
                 <label class="wd-label" for="album_extended_thumb_width"><?php _e('Gallery group thumbnail dimensions', BWG()->prefix); ?></label>
@@ -3104,9 +3138,9 @@ class OptionsView_bwg extends AdminView_bwg {
               <div class="wd-group">
                 <label class="wd-label"><?php _e('Gallery view type', BWG()->prefix); ?></label>
                 <div class="bwg-flex">
-                  <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_extended_view_type" id="album_extended_view_type_1" value="thumbnail" <?php if ($row->album_extended_view_type == "thumbnail") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('none', 'tr_album_extended_mosaic', 'album_extended_view_type_1'); bwg_enable_disable('none', 'tr_album_extended_resizable_mosaic', 'album_extended_view_type_1'); bwg_enable_disable('none', 'tr_album_extended_mosaic_total_width', 'album_extended_view_type_1');bwg_enable_disable('', 'for_album_extended_image_title_show_hover_0', 'album_extended_view_type_1');bwg_enable_disable('', 'for_album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_1');" /><label for="album_extended_view_type_1" class="wd-radio-label"><?php _e('Thumbnail', BWG()->prefix); ?></label>
-                  <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_extended_view_type" id="album_extended_view_type_0" value="masonry" <?php if ($row->album_extended_view_type == "masonry") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('none', 'tr_album_extended_mosaic', 'album_extended_view_type_0'); bwg_enable_disable('none', 'tr_album_extended_resizable_mosaic', 'album_extended_view_type_0'); bwg_enable_disable('none', 'tr_album_extended_mosaic_total_width', 'album_extended_view_type_0');bwg_enable_disable('', 'for_album_extended_image_title_show_hover_0', 'album_extended_view_type_0');bwg_enable_disable('', 'for_album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_0');" /><label for="album_extended_view_type_0" class="wd-radio-label"><?php _e('Masonry', BWG()->prefix); ?></label>
-                  <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_extended_view_type" id="album_extended_view_type_2" value="mosaic" <?php if ($row->album_extended_view_type == "mosaic") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('', 'tr_album_extended_mosaic', 'album_extended_view_type_2'); bwg_enable_disable('', 'tr_album_extended_resizable_mosaic', 'album_extended_view_type_2'); bwg_enable_disable('', 'tr_album_extended_mosaic_total_width', 'album_extended_view_type_2');bwg_enable_disable('none', 'for_album_extended_image_title_show_hover_0', 'album_extended_view_type_2');bwg_enable_disable('none', 'for_album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_2');" /><label for="album_extended_view_type_2" class="wd-radio-label"><?php _e('Mosaic', BWG()->prefix); ?></label>
+                  <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_extended_view_type" id="album_extended_view_type_1" value="thumbnail" <?php if ($row->album_extended_view_type == "thumbnail") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('none', 'tr_album_extended_mosaic', 'album_extended_view_type_1'); bwg_enable_disable('none', 'tr_album_extended_resizable_mosaic', 'album_extended_view_type_1'); bwg_enable_disable('none', 'tr_album_extended_mosaic_total_width', 'album_extended_view_type_1');bwg_enable_disable('', 'for_album_extended_image_title_show_hover_0', 'album_extended_view_type_1');bwg_enable_disable('', 'album_extended_image_title_show_hover_0', 'album_extended_view_type_1');bwg_enable_disable('', 'for_album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_1');" /><label for="album_extended_view_type_1" class="wd-radio-label"><?php _e('Thumbnail', BWG()->prefix); ?></label>
+                  <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_extended_view_type" id="album_extended_view_type_0" value="masonry" <?php if ($row->album_extended_view_type == "masonry") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('none', 'tr_album_extended_mosaic', 'album_extended_view_type_0'); bwg_enable_disable('none', 'tr_album_extended_resizable_mosaic', 'album_extended_view_type_0'); bwg_enable_disable('none', 'tr_album_extended_mosaic_total_width', 'album_extended_view_type_0');bwg_enable_disable('', 'for_album_extended_image_title_show_hover_0', 'album_extended_view_type_0');bwg_enable_disable('', 'album_extended_image_title_show_hover_0', 'album_extended_view_type_0');bwg_enable_disable('', 'for_album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_0');" /><label for="album_extended_view_type_0" class="wd-radio-label"><?php _e('Masonry', BWG()->prefix); ?></label>
+                  <input <?php echo BWG()->is_pro ? '' : 'disabled="disabled"'; ?> type="radio" name="album_extended_view_type" id="album_extended_view_type_2" value="mosaic" <?php if ($row->album_extended_view_type == "mosaic") echo 'checked="checked"'; ?> onClick="bwg_enable_disable('', 'tr_album_extended_mosaic', 'album_extended_view_type_2'); bwg_enable_disable('', 'tr_album_extended_resizable_mosaic', 'album_extended_view_type_2'); bwg_enable_disable('', 'tr_album_extended_mosaic_total_width', 'album_extended_view_type_2');bwg_enable_disable('none', 'for_album_extended_image_title_show_hover_0', 'album_extended_view_type_2');bwg_enable_disable('none', 'album_extended_image_title_show_hover_0', 'album_extended_view_type_2');bwg_enable_disable('none', 'for_album_extended_ecommerce_icon_show_hover_0', 'album_extended_view_type_2');" /><label for="album_extended_view_type_2" class="wd-radio-label"><?php _e('Mosaic', BWG()->prefix); ?></label>
                 </div>
                 <p class="description"><?php _e('Choose the display type for gallery groups, Thumbnails, Masonry or Mosaic.', BWG()->prefix); ?></p>
                 <?php if ( !BWG()->is_pro ) { ?><p class="description spider_free_version"><?php echo BWG()->free_msg; ?></p><?php } ?>
@@ -3148,9 +3182,12 @@ class OptionsView_bwg extends AdminView_bwg {
               <div class="wd-group">
                 <label class="wd-label"><?php _e('Show image title', BWG()->prefix); ?></label>
                 <div class="bwg-flex">
-                  <label for="album_extended_image_title_show_hover_1" class="wd-radio-label"><input type="radio" name="album_extended_image_title_show_hover" id="album_extended_image_title_show_hover_1" value="hover" <?php if ($row->album_extended_image_title_show_hover == "hover") echo 'checked="checked"'; ?> /><?php _e('Show on hover', BWG()->prefix); ?></label>
-                  <label id="for_album_extended_image_title_show_hover_0" for="album_extended_image_title_show_hover_0" class="wd-radio-label"><input type="radio" name="album_extended_image_title_show_hover" id="album_extended_image_title_show_hover_0" value="show" <?php if ($row->album_extended_image_title_show_hover == "show") echo 'checked="checked"'; ?> /><?php _e('Always show', BWG()->prefix); ?></label>
-                  <label for="album_extended_image_title_show_hover_2" class="wd-radio-label"><input type="radio" name="album_extended_image_title_show_hover" id="album_extended_image_title_show_hover_2" value="none" <?php if ($row->album_extended_image_title_show_hover == "none") echo 'checked="checked"'; ?> /><?php _e("Don't show", BWG()->prefix); ?></label>
+                  <input type="radio" name="album_extended_image_title_show_hover" id="album_extended_image_title_show_hover_1" value="hover" <?php if ($row->album_extended_image_title_show_hover == "hover") echo 'checked="checked"'; ?> />
+                  <label for="album_extended_image_title_show_hover_1" class="wd-radio-label"><?php _e('Show on hover', BWG()->prefix); ?></label>
+                  <input type="radio" name="album_extended_image_title_show_hover" id="album_extended_image_title_show_hover_0" value="show" <?php if ($row->album_extended_image_title_show_hover == "show") echo 'checked="checked"'; ?> />
+                  <label id="for_album_extended_image_title_show_hover_0" for="album_extended_image_title_show_hover_0" class="wd-radio-label"><?php _e('Always show', BWG()->prefix); ?></label>
+                  <input type="radio" name="album_extended_image_title_show_hover" id="album_extended_image_title_show_hover_2" value="none" <?php if ($row->album_extended_image_title_show_hover == "none") echo 'checked="checked"'; ?> />
+                  <label for="album_extended_image_title_show_hover_2" class="wd-radio-label"><?php _e("Don't show", BWG()->prefix); ?></label>
                 </div>
                 <p class="description"><?php _e('Choose to show/hide titles of images, or display them on hover.', BWG()->prefix); ?></p>
               </div>

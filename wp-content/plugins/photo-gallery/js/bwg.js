@@ -125,7 +125,7 @@ jQuery(document).ready(function () {
     });
   });
 
-  /* bwg_tb_window function changes the size of PopUp (width, height) */
+  /* Change the popup dimensions. */
   bwg_tb_window();
 
   /* Hide loading */
@@ -395,6 +395,9 @@ function spider_ajax_save(form_id, tr_group) {
       jQuery( "tbody" ).on( "click", ".toggle-row", function() {
         jQuery( this ).closest( "tr" ).toggleClass( "is-expanded" );
       });
+
+      /* Change the popup dimensions. */
+      bwg_tb_window("#images_table");
     }
   });
 
@@ -767,7 +770,7 @@ function bwg_add_tag(image_id, tagIds, titles) {
             tag_ids = tag_ids + tagIds[i] + ',';
             var html = jQuery("#" + image_id + "_tag_temptagid").clone().html();
             /* Remove white spaces from keywords to set as id and remove prefix.*/
-            var id = tagIds[i].replace(/\s+/g, '_').replace('bwg_', '').replace(/&amp;/g, "").replace(/&/g, "");
+            var id = tagIds[i].replace(/\s+/g, '_').replace('bwg_', '').replace(/&amp;/g, "").replace(/&/g, "").replace(/'/g, "39").replace(/"/g, "34");
             html = html.replace(/temptagid/g, id)
                        .replace(/temptagname/g, titles[i]);
             jQuery("#tags_div_" + image_id).append("<div class='tag_div' id='" + image_id + "_tag_" + id + "'>");
@@ -1501,7 +1504,6 @@ function input_pagination(e, that) {
 function wd_bulk_action(that) {
   var form = jQuery(that).parents("form");
   var action = jQuery("select[name='" + ( form.attr("id") == "bwg_gallery" ? 'image_' : '' ) + "bulk_action']").val();
-
   if (action != -1) {
     if (!jQuery("input[name^='check']").is(':checked')) {
       alert(bwg.select_at_least_one_item);
@@ -1518,6 +1520,18 @@ function wd_bulk_action(that) {
     }
     else if (action == 'image_edit') {
       jQuery(".opacity_image_desc").show();
+      return false;
+    }
+    else if (action == 'image_edit_alt') {
+      jQuery(".opacity_image_alt").show();
+      return false;
+    }
+    else if (action == 'image_edit_redirect') {
+      jQuery(".opacity_image_redirect").show();
+      return false;
+    }
+    else if (action == 'image_edit_description') {
+      jQuery(".opacity_image_description").show();
       return false;
     }
     else if (action == 'image_add_tag') {
@@ -1630,7 +1644,7 @@ function bwg_add_image(files) {
         .replace(/tempfb_post_url/g, (is_facebook_post ? files[i]['fb_post_url'] : 0));
     if ( is_embed ) {
       html = html.replace(/tempalt/g, files[i]['name']);
-      jQuery(".wd-image-actions").addClass("wd-hide");
+      html = html.replace(/wd-image-actions/g, 'wd-image-actions wd-hide');
     }
     else {
       html = html.replace(/tempalt/g, files[i]['alt']);
@@ -1651,8 +1665,10 @@ function bwg_add_image(files) {
     jQuery("#tbody_arr").prepend("<tr id='tr_" + bwg_j + "'>");
     jQuery("#tr_" + bwg_j).html(html);
 
-    jQuery("#ids_string").val(jQuery("#ids_string").val() + bwg_j + ',');
+    /* Change the popup dimensions. */
+    bwg_tb_window("#tr_" + bwg_j);
 
+    jQuery("#ids_string").val(jQuery("#ids_string").val() + bwg_j + ',');
     if ( jQuery("#tbody_arr").data("meta") == 1 && files[i]['tags'] ) {
       /* If tags added to image from image file meta keywords.*/
       var tagsTitles = jQuery.parseJSON(files[i]['tags']);
@@ -1701,9 +1717,9 @@ function wd_pagination() {
   });
 }
 
-function bwg_tb_window(id) {
-  if (typeof id === 'undefined') {
-    var id = '';
+function bwg_tb_window(cont_id) {
+  if (typeof cont_id === 'undefined') {
+    var cont_id = '';
   }
   var thickDims, tbWidth, tbHeight;
   thickDims = function () {
@@ -1723,17 +1739,17 @@ function bwg_tb_window(id) {
   jQuery(window).resize(function () {
     thickDims()
   });
-  jQuery('a.thickbox-preview' + id).click(function () {
+  jQuery(cont_id + ' a.thickbox-preview').click(function () {
     tb_click.call(this);
     var alink = jQuery(this).parents('.available-theme').find('.activatelink'), link = '', href = jQuery(this).attr('href'), url, text;
-    if (tbWidth = href.match(/&width=[0-9]+/)) {
+    if (tbWidth = href.match(/&bwg_width=[0-9]+/)) {
       tbWidth = parseInt(tbWidth[0].replace(/[^0-9]+/g, ''), 10);
     }
     else {
       tbWidth = jQuery(window).width() - 120;
     }
 
-    if (tbHeight = href.match(/&height=[0-9]+/)) {
+    if (tbHeight = href.match(/&bwg_height=[0-9]+/)) {
       tbHeight = parseInt(tbHeight[0].replace(/[^0-9]+/g, ''), 10);
     }
     else {

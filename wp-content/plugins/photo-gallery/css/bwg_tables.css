@@ -637,6 +637,10 @@
   margin-top: -45px;
 }
 
+.bwg_image_desc .description {
+  margin-left:90px;
+}
+
 .bwg_add_embed {
   margin-left: -340px;
   height: 370px;
@@ -650,7 +654,7 @@
 
 .bwg_image_desc {
   margin-left: -240px;
-  height: 150px;
+  height: 100px;
 }
 
 #bulk_embed table {
@@ -1012,8 +1016,16 @@ th.sorted a span {
   margin: 1px;
 }
 
-#add_desc {
+#add_desc, add_alt, add_red_url {
   padding: 20px;
+}
+
+#add_desc.bwg_image_desc {
+  height: 150px;
+}
+
+#desc {
+  height: 80px;
 }
 
 .edit_cont_buttons {
@@ -2147,3 +2159,4 @@ li.tabs {
 #wd_tenweb_notice_cont {
   display: inline-block!important;
 }
+

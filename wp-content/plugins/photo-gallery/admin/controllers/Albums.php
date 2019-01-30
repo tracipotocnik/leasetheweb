@@ -200,8 +200,8 @@ class AlbumsController_bwg {
 
     $params['add_preview_image_action'] = add_query_arg(array(
       'action' => 'addImages',
-      'width' => '800',
-      'height' => '550',
+      'bwg_width' => '800',
+      'bwg_height' => '550',
       'extensions' => 'jpg,jpeg,png,gif',
       'callback' => 'bwg_add_preview_image',
       BWG()->nonce => wp_create_nonce('addImages'),

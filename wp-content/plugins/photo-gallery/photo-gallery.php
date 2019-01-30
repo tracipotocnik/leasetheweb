@@ -3,9 +3,9 @@
  * Plugin Name: Photo Gallery
  * Plugin URI: https://10web.io/plugins/wordpress-photo-gallery/
  * Description: This plugin is a fully responsive gallery plugin with advanced functionality.  It allows having different image galleries for your posts and pages. You can create unlimited number of galleries, combine them into albums, and provide descriptions and tags.
- * Version: 1.5.10
+ * Version: 1.5.15
  * Author: Photo Gallery Team
- * Author URI: https://10web.io/pricing/
+ * Author URI: https://10web.io/plugins/wordpress-photo-gallery/
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
  */
 
@@ -81,8 +81,8 @@ final class BWG {
     $this->plugin_dir = WP_PLUGIN_DIR . "/" . plugin_basename(dirname(__FILE__));
     $this->plugin_url = plugins_url(plugin_basename(dirname(__FILE__)));
     $this->main_file = plugin_basename(__FILE__);
-    $this->plugin_version = '1.5.10';
-    $this->db_version = '1.5.10';
+    $this->plugin_version = '1.5.15';
+    $this->db_version = '1.5.15';
     $this->prefix = 'bwg';
     $this->nicename = __('Photo Gallery', $this->prefix);
 
@@ -90,12 +90,19 @@ final class BWG {
 
     require_once($this->plugin_dir . '/framework/BWGOptions.php');
     $this->options = new WD_BWG_Options();
+    require_once($this->plugin_dir . '/framework/WD_BWG_Theme.php');
+
+    $this->is_demo = get_site_option('tenweb_admin_demo');
 
     $this->upload_dir = $this->options->upload_dir;
     $this->upload_url = $this->options->upload_url;
 
+    if ( $this->is_demo ) {
+      $this->upload_dir = preg_replace('/uploads(.+)photo-gallery/', 'uploads/photo-gallery', $this->upload_dir);
+      $this->upload_url = preg_replace('/uploads(.+)photo-gallery/', 'uploads/photo-gallery', $this->upload_url);
+    }
+
     $this->free_msg = __('This option is disabled in free version.', $this->prefix);
-    $this->is_demo = get_site_option('tenweb_admin_demo');
   }
 
   /**
@@ -204,6 +211,7 @@ final class BWG {
 
     // Enqueue block editor assets for Gutenberg.
     add_filter('tw_get_block_editor_assets', array($this, 'register_block_editor_assets'));
+    add_filter('tw_get_plugin_blocks', array($this, 'register_plugin_block'));
     add_action('enqueue_block_editor_assets', array($this, 'enqueue_block_editor_assets'));
 
     add_action('admin_notices', array($this, 'admin_notices'));
@@ -216,8 +224,34 @@ final class BWG {
 
 	  // Register widget for Elementor builder.
     add_action('elementor/widgets/widgets_registered', array($this, 'register_elementor_widgets'));
-    // Register 10Web category for Elementor widget if 10Web builder doesn't installed.
+
+    //fires after elementor editor styles and scripts are enqueued.
+    add_action('elementor/editor/after_enqueue_styles', array($this, 'enqueue_editor_styles'), 11);
+
+    // Register 10Web category for Elementor widget if 10Web builder isn't installed.
     add_action('elementor/elements/categories_registered', array($this, 'register_widget_category'), 1, 1);
+
+    // Add noindex/nofollow to custom posts to not allow search engines to index custom posts.
+    add_action('wp_head', array($this, 'robots'), 9, 1);
+  }
+
+  /**
+   * Add noindex/nofollow to custom posts to not allow search engines to index custom posts.
+   */
+  public function robots() {
+    if ( isset($this->options->noindex_custom_post) && $this->options->noindex_custom_post ) {
+      global $wp;
+      $current_relative_url = trailingslashit(add_query_arg($_SERVER['QUERY_STRING'], '', trailingslashit($wp->request)));
+      if ( strpos($current_relative_url, 'bwg_gallery') !== FALSE
+      || strpos($current_relative_url, 'bwg_album') !== FALSE
+      || strpos($current_relative_url, 'bwg_tag') !== FALSE ) {
+        echo '<meta name="robots" content="noindex,nofollow" />' . "\n";
+      }
+    }
+  }
+
+  public function enqueue_editor_styles() {
+    wp_enqueue_style('twbb-editor-styles', $this->plugin_url . '/css/bwg_elementor_icon/bwg_elementor_icon.css', array(), '1.0.0');
   }
 
   /**
@@ -235,14 +269,14 @@ final class BWG {
    * @param $elements_manager
    */
   public function register_widget_category( $elements_manager ) {
-    $elements_manager->add_category('tenweb-widgets', array(
-      'title' => __('10WEB', 'tenweb-builder'),
+    $elements_manager->add_category('tenweb-plugins-widgets', array(
+      'title' => __('10WEB Plugins', 'tenweb-plugins-widgets'),
       'icon' => 'fa fa-plug',
     ));
   }
 
   public function register_block_editor_assets($assets) {
-    $version = '2.0.0';
+    $version = '2.0.3';
     $js_path = $this->plugin_url . '/js/tw-gb/block.js';
     $css_path = $this->plugin_url . '/css/tw-gb/block.css';
     if (!isset($assets['version']) || version_compare($assets['version'], $version) === -1) {
@@ -263,35 +297,18 @@ final class BWG {
     wp_add_privacy_policy_content(BWG()->nicename, wp_kses_post(wpautop($content, FALSE)));
   }
 
+  public function register_plugin_block($blocks) {
+    $blocks['tw/' . $this->prefix] = array(
+      'title' => $this->nicename,
+      'titleSelect' => sprintf(__('Select %s', $this->prefix), $this->nicename),
+      'iconUrl' => $this->plugin_url . '/images/tw-gb/photo-gallery.svg',
+      'iconSvg' => array('width' => 20, 'height' => 20, 'src' => $this->plugin_url . '/images/tw-gb/icon.svg'),
+      'isPopup' => true,
+      'data' => array('shortcodeUrl' => add_query_arg(array('action' => 'shortcode_bwg'), admin_url('admin-ajax.php'))),
+    );
+    return $blocks;
+  }
   public function enqueue_block_editor_assets() {
-    $key = 'tw/' . $this->prefix;
-    $plugin_name = $this->nicename;
-    $icon_url = $this->plugin_url . '/images/tw-gb/photo-gallery.svg';
-    $icon_svg = $this->plugin_url . '/images/tw-gb/icon.svg';
-    $url = add_query_arg(array('action' => 'shortcode_bwg'), admin_url('admin-ajax.php'));
-    ?>
-    <script>
-      if ( !window['tw_gb'] ) {
-        window['tw_gb'] = {};
-      }
-      if ( !window['tw_gb']['<?php echo $key; ?>'] ) {
-        window['tw_gb']['<?php echo $key; ?>'] = {
-          title: '<?php echo $plugin_name; ?>',
-          titleSelect: '<?php echo sprintf(__('Select %s', $this->prefix), $plugin_name); ?>',
-          iconUrl: '<?php echo $icon_url; ?>',
-          iconSvg: {
-            width: '20',
-            height: '20',
-            src: '<?php echo $icon_svg; ?>'
-          },
-          isPopup: true,
-          data: {
-            shortcodeUrl: '<?php echo $url; ?>'
-          }
-        }
-      }
-    </script>
-    <?php
     // Remove previously registered or enqueued versions
     $wp_scripts = wp_scripts();
     foreach ($wp_scripts->registered as $key => $value) {
@@ -301,13 +318,16 @@ final class BWG {
         wp_deregister_style( $key );
       }
     }
+    // Get plugin blocks from all 10Web plugins.
+    $blocks = apply_filters('tw_get_plugin_blocks', array());
     // Get the last version from all 10Web plugins.
     $assets = apply_filters('tw_get_block_editor_assets', array());
     // Not performing unregister or unenqueue as in old versions all are with prefixes.
     wp_enqueue_script('tw-gb-block', $assets['js_path'], array( 'wp-blocks', 'wp-element' ), $assets['version']);
-    wp_localize_script('tw-gb-block', 'tw_obj', array(
+    wp_localize_script('tw-gb-block', 'tw_obj_translate', array(
       'nothing_selected' => __('Nothing selected.', $this->prefix),
       'empty_item' => __('- Select -', $this->prefix),
+      'blocks' => json_encode($blocks)
     ));
     wp_enqueue_style('tw-gb-block', $assets['css_path'], array( 'wp-edit-blocks' ), $assets['version']);
   }
@@ -1236,13 +1256,12 @@ final class BWG {
   public function register_frontend_scripts() {
     $version = BWG()->plugin_version;
     $required_styles = array(
+	  $this->prefix . '_fonts',
       $this->prefix . '_sumoselect',
-      $this->prefix . '_font-awesome',
-      $this->prefix . '_mCustomScrollbar',
+      $this->prefix . '_mCustomScrollbar'
     );
-	  $required_scripts = array(
-      'jquery',
-    );
+  	$required_scripts = array('jquery');
+  	$in_footer = BWG()->options->use_inline_stiles_and_scripts || WDWLibrary::elementor_is_active() ? true : false;
 	  // Google fonts.
     if (BWG()->options->enable_google_fonts) {
       require_once(BWG()->plugin_dir . '/framework/WDWLibrary.php');
@@ -1253,55 +1272,62 @@ final class BWG {
       }
     }
 
-    wp_register_script($this->prefix . '_sumoselect', BWG()->front_url . '/js/jquery.sumoselect.min.js', $required_scripts, '3.0.3', true);
+    wp_register_script($this->prefix . '_sumoselect', BWG()->front_url . '/js/jquery.sumoselect.min.js', $required_scripts, '3.0.3', $in_footer);
     wp_register_style($this->prefix . '_sumoselect', BWG()->front_url . '/css/sumoselect.min.css', array(), '3.0.3');
 
     // Styles/Scripts for popup.
-    wp_register_style($this->prefix . '_font-awesome', BWG()->front_url . '/css/font-awesome/font-awesome.min.css', array(), '4.6.3');
-    wp_register_script($this->prefix . '_jquery_mobile', BWG()->front_url . '/js/jquery.mobile.min.js', $required_scripts, $version, true);
-    wp_register_script($this->prefix . '_mCustomScrollbar', BWG()->front_url . '/js/jquery.mCustomScrollbar.concat.min.js', $required_scripts, $version, true);
+    wp_register_style($this->prefix . '_fonts', BWG()->front_url . '/css/bwg-fonts/fonts.css', array(), '0.0.1');
+    wp_register_script($this->prefix . '_jquery_mobile', BWG()->front_url . '/js/jquery.mobile.min.js', $required_scripts, $version, $in_footer);
+    wp_register_script($this->prefix . '_mCustomScrollbar', BWG()->front_url . '/js/jquery.mCustomScrollbar.concat.min.js', $required_scripts, $version, $in_footer);
     wp_register_style($this->prefix . '_mCustomScrollbar', BWG()->front_url . '/css/jquery.mCustomScrollbar.min.css', array(), $version);
 
-    wp_register_script($this->prefix . '_jquery-fullscreen', BWG()->front_url . '/js/jquery.fullscreen-0.4.1.min.js', $required_scripts, '0.4.1', true);
-    wp_register_script($this->prefix . '_gallery_box', BWG()->front_url . '/js/bwg_gallery_box.js', $required_scripts, $version, true);
-    wp_register_script($this->prefix . '_embed', BWG()->front_url . '/js/bwg_embed.js', $required_scripts, $version, true);
+    wp_register_script($this->prefix . '_jquery-fullscreen', BWG()->front_url . '/js/jquery.fullscreen-0.4.1.min.js', $required_scripts, '0.4.1', $in_footer);
+    wp_register_script($this->prefix . '_gallery_box', BWG()->front_url . '/js/bwg_gallery_box.js', $required_scripts, $version, $in_footer);
+    wp_register_script($this->prefix . '_embed', BWG()->front_url . '/js/bwg_embed.js', $required_scripts, $version, $in_footer);
+
     array_push($required_scripts,
-        $this->prefix . '_sumoselect',
-        $this->prefix . '_jquery_mobile',
-        $this->prefix . '_mCustomScrollbar',
-        $this->prefix . '_jquery-fullscreen',
-        $this->prefix . '_gallery_box',
-        $this->prefix . '_embed'
-		);
+      $this->prefix . '_sumoselect',
+      $this->prefix . '_jquery_mobile',
+      $this->prefix . '_mCustomScrollbar',
+      $this->prefix . '_jquery-fullscreen',
+      $this->prefix . '_gallery_box',
+      $this->prefix . '_embed'
+    );
 
-	  if ( $this->is_pro ) {
-      wp_register_script($this->prefix . '_raty', BWG()->front_url . '/js/jquery.raty.min.js', $required_scripts, '2.5.2', true);
-      wp_register_script($this->prefix . '_featureCarousel', BWG()->plugin_url . '/js/jquery.featureCarousel.min.js', $required_scripts, $version, true);
+    if ( $this->is_pro ) {
+      wp_register_script($this->prefix . '_raty', BWG()->front_url . '/js/jquery.raty.min.js', $required_scripts, '2.5.2', $in_footer);
+      wp_register_script($this->prefix . '_featureCarousel', BWG()->plugin_url . '/js/jquery.featureCarousel.min.js', $required_scripts, $version, $in_footer);
       // 3D Tag Cloud.
-      wp_register_script($this->prefix . '_3DEngine', BWG()->front_url . '/js/3DEngine/3DEngine.min.js', $required_scripts, '1.0.0', true);
-	  
-	    array_push($required_scripts,
-        $this->prefix . '_raty',
-        $this->prefix . '_featureCarousel',
-        $this->prefix . '_3DEngine');
-    }
+      wp_register_script($this->prefix . '_3DEngine', BWG()->front_url . '/js/3DEngine/3DEngine.min.js', $required_scripts, '1.0.0', $in_footer);
 
-    wp_register_style($this->prefix . '_frontend', BWG()->front_url . '/css/bwg_frontend.css', $required_styles, $version);
-    wp_register_script($this->prefix . '_frontend', BWG()->front_url . '/js/bwg_frontend.js', $required_scripts, $version, true);
+      array_push($required_scripts,
+      $this->prefix . '_raty',
+      $this->prefix . '_featureCarousel',
+      $this->prefix . '_3DEngine'
+      );
+    }
+	
+    $style_file  = BWG()->front_url . '/css/bwg_frontend.css';
+    $script_file = BWG()->front_url . '/js/bwg_frontend.js';
+    if ( ! BWG()->options->developer_mode ) {
+      $required_styles = array( $this->prefix . '_fonts' );
+      $required_scripts = array( 'jquery' );
+      $style_file  = BWG()->front_url . '/css/styles.min.css';
+      $script_file = BWG()->front_url . '/js/scripts.min.js';
+    }
+	
+    wp_register_style($this->prefix . '_frontend', $style_file, $required_styles, $version);
+    wp_register_script($this->prefix . '_frontend', $script_file, $required_scripts, $version, $in_footer);
 	
     if ( !BWG()->options->use_inline_stiles_and_scripts || WDWLibrary::elementor_is_active() ) {
       wp_enqueue_style($this->prefix . '_frontend');
       wp_enqueue_script($this->prefix . '_frontend');
     }
 
-    wp_localize_script($this->prefix . '_gallery_box', 'bwg_objectL10n', array(
-      'bwg_field_required'  => __('field is required.', $this->prefix),
+    wp_localize_script($this->prefix . '_frontend', 'bwg_objectsL10n', array(
+	    'bwg_field_required'  => __('field is required.', $this->prefix),
       'bwg_mail_validation' => __('This is not a valid email address.', $this->prefix),
       'bwg_search_result' => __('There are no images matching your search.', $this->prefix),
-      'is_pro' => $this->is_pro,
-    ));
-
-    wp_localize_script($this->prefix . '_frontend', 'bwg_objectsL10n', array(
       'bwg_select_tag'  => __('Select Tag', $this->prefix),
       'bwg_order_by'  => __('Order By', $this->prefix),
       'bwg_search' => __('Search', $this->prefix),
@@ -1309,10 +1335,10 @@ final class BWG {
       'bwg_hide_ecommerce' =>  __('Hide Ecommerce', $this->prefix),
       'bwg_show_comments' =>  __('Show Comments', $this->prefix),
       'bwg_hide_comments' =>  __('Hide Comments', $this->prefix),
-      'bwg_how_comments' =>  __('how Comments', $this->prefix),
       'bwg_restore' =>  __('Restore', $this->prefix),
       'bwg_maximize' =>  __('Maximize', $this->prefix),
       'bwg_fullscreen' =>  __('Fullscreen', $this->prefix),
+      'bwg_exit_fullscreen' =>  __('Exit Fullscreen', $this->prefix),
       'bwg_search_tag' =>  __('SEARCH...', $this->prefix),
       'bwg_tag_no_match' => __('No tags found', $this->prefix),
       'bwg_all_tags_selected' => __('All tags selected', $this->prefix),
@@ -1320,6 +1346,15 @@ final class BWG {
       'play' => __('Play', $this->prefix),
       'pause' => __('Pause', $this->prefix),
       'is_pro' => $this->is_pro,
+      'bwg_play' => __('Play', $this->prefix),
+      'bwg_pause' => __('Pause', $this->prefix),
+      'bwg_hide_info' => __('Hide info', $this->prefix),
+      'bwg_show_info' => __('Show info', $this->prefix),
+      'bwg_hide_rating' => __('Hide info', $this->prefix),
+      'bwg_show_rating' => __('Show info', $this->prefix),
+      'ok' => __('Ok', $this->prefix),
+      'cancel' => __('Cancel', $this->prefix),
+      'select_all' => __('Select all', $this->prefix),
     ));
   }
 
@@ -1826,7 +1861,7 @@ final class BWG {
    */
   private function before_shortcode_add_builder_editor() {
     if ( defined('ELEMENTOR_VERSION') ) {
-      add_action('elementor/editor/before_enqueue_scripts', array( $this, 'global_script' ));
+      add_action('elementor/editor/footer', array( $this, 'global_script' ));
     }
     if ( class_exists('FLBuilder') ) {
       add_action('wp_enqueue_scripts', array( $this, 'global_script' ));
@@ -1921,12 +1956,10 @@ function wdpg_tenweb_install_notice() {
             <?php
           }
           ?>
-
         </div>
       </div>
       <button type="button" class="wd_tenweb_notice_dissmiss notice-dismiss" onclick="jQuery('#wd_tenweb_notice_cont').attr('style', 'display: none !important;'); jQuery.post('<?php echo $dismiss_url; ?>');"><span class="screen-reader-text"></span></button>
       <div id="verifyUrl" data-url="<?php echo $verify_url ?>"></div>
-
     </div>
     <script>
       var url = jQuery(".tenweb_activaion").attr("data-install-url");
@@ -1941,8 +1974,10 @@ function wdpg_tenweb_install_notice() {
           method: "POST",
           url: url,
         }).done(function() {
-          jQuery.ajax({ // Check if plugin installed
+		  // Check if plugin installed
+          jQuery.ajax({
             type: 'POST',
+			dataType: 'json',
             url: jQuery("#verifyUrl").attr('data-url'),
             error: function()
             {
@@ -1951,11 +1986,11 @@ function wdpg_tenweb_install_notice() {
             },
             success: function(response)
             {
-              var plStatus = JSON.parse(response);
-              if(plStatus.status_install != 1) {
+              if ( response.status_install == 1 ) {
                 jQuery('#install_now').addClass('hide');
                 jQuery('#activate_now').removeClass('hide');
-                activate_tenweb_plugin();
+
+				activate_tenweb_plugin();
               }
               else {
                 jQuery("#loading").removeClass('is-active');
@@ -1964,12 +1999,10 @@ function wdpg_tenweb_install_notice() {
             }
           });
         })
-              .fail(function() {
-                //window.location = window.location.href;
-                jQuery("#loading").removeClass('is-active');
-                jQuery(".error_install").removeClass('hide');
-              });
-
+		.fail(function() {
+			jQuery("#loading").removeClass('is-active');
+			jQuery(".error_install").removeClass('hide');
+		});
       }
 
       function activate_tenweb_plugin() {
@@ -1980,8 +2013,10 @@ function wdpg_tenweb_install_notice() {
         }).done(function() {
           jQuery("#loading").removeClass('is-active');
           var data_tenweb_url = '';
-          jQuery.ajax({ // Check if plugin installed
+		  // Check if plugin installed
+          jQuery.ajax({
             type: 'POST',
+			dataType: 'json',
             url: jQuery("#verifyUrl").attr('data-url'),
             error: function()
             {
@@ -1990,8 +2025,7 @@ function wdpg_tenweb_install_notice() {
             },
             success: function(response)
             {
-              var plStatus = JSON.parse(response);
-              if(plStatus.status_active == 1) {
+              if ( response.status_active == 0 ) {
                 jQuery('#install_now').addClass('hide');
                 data_tenweb_url = jQuery('#activate_now').attr('data-tenweb-url');
                 jQuery.post('<?php echo $dismiss_url; ?>');
@@ -2003,24 +2037,22 @@ function wdpg_tenweb_install_notice() {
             },
             complete : function() {
               if ( data_tenweb_url != '' ) {
-                window.location.href = data_tenweb_url;
+               window.location.href = data_tenweb_url;
               }
             }
           });
-
         })
-              .fail(function() {
-                //window.location = window.location.href;
-                jQuery("#loading").removeClass('is-active');
-              });
+		.fail(function() {
+			jQuery("#loading").removeClass('is-active');
+		});
       }
 
       jQuery("#install_now").on("click",function(){
         install_tenweb_plugin();
-      })
+      });
       jQuery("#activate_now").on("click",function(){
-        activate_tenweb_plugin()
-      })
+        activate_tenweb_plugin();
+	  });
     </script>
     <style>
       #wd_tenweb_notice_cont {
@@ -2079,13 +2111,12 @@ function wdpg_tenweb_install_notice() {
 
       .tenweb_description h1 {
         font-size: 24px;
-        font-weight: bold;
+        font-weight: 500;
         width: 100%;
       }
       .tenweb_description p {
         font-size: 13px;
       }
-
 
       .tenweb_plugins_icons{
         position: relative;
@@ -2120,7 +2151,7 @@ function wdpg_tenweb_install_notice() {
       .tenweb_plugins_icons_item span {
         line-height: 25px;
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 500;
       }
 
       .tenweb_action .tenweb_activaion {
@@ -2133,7 +2164,7 @@ function wdpg_tenweb_install_notice() {
         height: 30px;
         line-height: 30px;
         margin: 0px;
-        font-weight: bold;
+        font-weight: 500;
       }
 
       .tenweb_action .tenweb_activaion:hover {
@@ -2177,39 +2208,135 @@ function wdpg_tenweb_install_notice() {
         padding: 0px;
       }
 
-      @media only screen and (max-width: 1100px) {
-
-        #wd_tenweb_notice_cont #wd_tenweb_logo_notice {
-          height: 25px;
+      @media only screen and (min-width: 1920px) {
+        .tenweb_logo {
+          width: calc(15% - 10px);
         }
 
-        .tenweb_action p {
-          padding: 0px;
-          font-size: 12px;
+        body #wd_tenweb_logo_notice {
+          height: 50px;
+        }
+
+        .tenweb_description {
+          width: calc(37% - 20px);
+        }
+
+        .tenweb_description p {
+          font-size: 18px;
+        }
+
+        .tenweb_plugins_icons {
+          width: calc(35% - 20px);
         }
 
         .tenweb_plugins_icons_item span {
-          font-size: 12px;
+          font-size: 16px;
         }
 
-        .tenweb_plugins_icons #tenweb_plugins_icons_cont {
-          display: flex;
-          height: 120px;
-          justify-content: center;
-          align-items: center;
-          flex-wrap: wrap;
+        .tenweb_action {
+          width: calc(11% - 10px);
         }
 
-        .tenweb_plugins_icons_item {
-          margin-bottom: 0px;
+        .tenweb_action .tenweb_activaion {
+          height: 35px;
+          line-height: 35px;
+          font-size: 16px;
+          font-weight: 500;
         }
 
-        #wd_tenweb_notice_cont .spinner {
-          right: 0px;
+        .tenweb_action p {
+          font-size: 15px;
+          font-weight: 500;
         }
       }
 
-      @media only screen and (max-width: 840px) {
+      @media only screen and (min-width: 1440px) and (max-width: 1919px){
+        .tenweb_logo {
+          width: calc(15% - 10px);
+        }
+
+        body #wd_tenweb_logo_notice {
+          height: 40px;
+        }
+
+        .tenweb_description {
+          width: calc(30% - 20px);
+        }
+
+        .tenweb_description p {
+          font-size: 16px;
+        }
+
+        .tenweb_plugins_icons {
+          width: calc(41% - 20px);
+        }
+
+        .tenweb_plugins_icons_item span {
+          font-size: 15px;
+        }
+
+        .tenweb_action {
+          width: calc(12% - 10px);
+        }
+
+        .tenweb_action .tenweb_activaion {
+          height: 35px;
+          line-height: 35px;
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        .tenweb_action p {
+          font-size: 15px;
+          font-weight: 500;
+          line-height: 19px;
+        }
+      }
+
+      @media only screen and (max-width: 1439px) and (min-width: 1025px) {
+        .tenweb_logo {
+          width: calc(13% - 10px);
+        }
+
+        body #wd_tenweb_logo_notice {
+          height: 30px;
+        }
+
+        .tenweb_description {
+          width: calc(34% - 20px);
+        }
+
+        .tenweb_description p {
+          font-size: 15px;
+        }
+
+        .tenweb_plugins_icons {
+          width: calc(40% - 20px);
+        }
+
+        .tenweb_plugins_icons_item span {
+          font-size: 15px;
+        }
+
+        .tenweb_action {
+          width: calc(12% - 10px);
+        }
+
+        .tenweb_action .tenweb_activaion {
+          height: 35px;
+          line-height: 35px;
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        .tenweb_action p {
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 19px;
+        }
+      }
+
+      @media only screen and (max-width: 1024px) {
         #wd_tenweb_notice_cont {
           width: calc(100% - 20px);
           height: auto;
@@ -2225,7 +2352,7 @@ function wdpg_tenweb_install_notice() {
         }
 
         .tenweb_plugins_icons_item span {
-          font-size: 13px;
+          font-size: 14px;
         }
 
         .tenweb_logo img {
@@ -2255,13 +2382,13 @@ function wdpg_tenweb_install_notice() {
 
         .tenweb_description h1 {
           font-size: 18px;
-          font-weight: bold;
+          font-weight: 500;
           padding-top: 0;
           margin-left: 10px;
         }
 
         .tenweb_action p {
-          font-size: 13px;
+          font-size: 14px;
         }
 
         .tenweb_description p {
@@ -2379,17 +2506,29 @@ if ( !function_exists('wd_tenwebps_install_notice_status') ) {
   add_action('wp_ajax_wd_tenweb_dismiss', 'wd_tenwebps_install_notice_status');
 }
 
-
-//Check status 10web manager install
-function check_tenweb_status(){
+// Check status 10web manager install
+function check_tenweb_status() {
   $status_install = 0;
   $status_active = 0;
   $plugin_dir = ABSPATH . 'wp-content/plugins/10web-manager/';
-  if ( !is_dir($plugin_dir)){
+  if ( is_dir($plugin_dir) ) {
     $status_install = 1;
-  }else if(is_plugin_active( '10web-manager/10web-manager.php' )) {
+  } else if ( is_plugin_active( '10web-manager/10web-manager.php' ) ) {
     $status_active = 1;
   }
+
+  if ( is_dir($plugin_dir) ) {
+	$old_opt_array = array();
+	$new_opt_array = array('photo-gallery' => 101); // core_id
+	$key = 'tenweb_manager_installed';
+	$option = get_option($key);
+	if ( !empty($option) ) {
+		$old_opt_array = (array) json_decode($option);
+	}
+	$array_installed = array_merge( $new_opt_array, $old_opt_array );
+	update_option( $key, json_encode($array_installed) );
+  }
+
   $jsondata = array('status_install' => $status_install, 'status_active' => $status_active);
   echo json_encode($jsondata); exit;
 }

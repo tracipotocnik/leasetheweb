@@ -52,6 +52,7 @@ class BWGModelGalleryBox {
     }
 
     $filter_search_name_temp = WDWLibrary::get('filter_search_name', '');
+    $filter_search_name = '';
     if ( $filter_search_name_temp == '' ) {  /* for thumbnail view */
       $filter_search_name_temp = WDWLibrary::get('filter_search_name_' . $bwg);
       if ( $filter_search_name_temp != '' ) {

@@ -182,9 +182,7 @@ class OptionsController_bwg {
         $row->$name = esc_html(stripslashes($_POST[$name]));
       }
     }
-
     $save = update_option('wd_bwg_options', json_encode($row), 'no');
-
     if (isset($_POST['recreate']) && $_POST['recreate'] == "resize_image_thumb") {
       $this->resize_image_thumb();
       echo WDWLibrary::message_id(0, __('All thumbnails are successfully recreated.', BWG()->prefix));
@@ -237,18 +235,24 @@ class OptionsController_bwg {
 		$this->model->update_options_by_key( $update_options );
     }
 
-	$error = false;
-	list($width_watermark, $height_watermark, $type_watermark) = getimagesize( $update_options['built_in_watermark_url'] );
-	if ( $update_options['built_in_watermark_type'] == 'image' && ( empty($width_watermark) OR empty($height_watermark) OR empty($type_watermark)) ) {
-		$error = true;
-		$message = WDWLibrary::message_id(0, __('Watermark could not be set. The image URL is incorrect.', $this->prefix), 'error');
-	}
-	if ( $error === false ) {
-		WDWLibrary::bwg_image_set_watermark( 0, 0, $limitstart );
-		$message = WDWLibrary::message_id(0, __('All images are successfully watermarked.', $this->prefix), 'updated');
-	}
-	$json_data = array('error' => $error, 'message' => $message);
-	echo json_encode($json_data); die();
+	  $error = false;
+    if ( ini_get('allow_url_fopen') == 0 ) {
+      $error = true;
+      $message = WDWLibrary::message_id(0, __('http:// wrapper is disabled in the server configuration by allow_url_fopen=0.', $this->prefix), 'error');
+    }
+    else {
+      list($width_watermark, $height_watermark, $type_watermark) = getimagesize($update_options['built_in_watermark_url']);
+      if ( $update_options['built_in_watermark_type'] == 'image' && (empty($width_watermark) OR empty($height_watermark) OR empty($type_watermark)) ) {
+        $error = TRUE;
+        $message = WDWLibrary::message_id(0, __('Watermark could not be set. The image URL is incorrect.', $this->prefix), 'error');
+      }
+      if ( $error === FALSE ) {
+        WDWLibrary::bwg_image_set_watermark(0, 0, $limitstart);
+        $message = WDWLibrary::message_id(0, __('All images are successfully watermarked.', $this->prefix), 'updated');
+      }
+    }
+    $json_data = array('error' => $error, 'message' => $message);
+    echo json_encode($json_data); die();
   }
 
   public function image_recover_all($params = array()) {

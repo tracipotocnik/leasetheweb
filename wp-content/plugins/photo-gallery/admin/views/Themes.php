@@ -503,7 +503,7 @@ class ThemesView_bwg extends AdminView_bwg {
 										  </td>
 										</tr>
 										<tr>
-										  <td class="spider_label"><label for="thumb_gal_title_align"><?php echo __('Gallery title/description alignment:', BWG()->prefix); ?> </label></td>
+										  <td class="spider_label"><label for="thumb_gal_title_align"><?php echo __('Gallery title alignment:', BWG()->prefix); ?> </label></td>
 										  <td>
 											<select name="thumb_gal_title_align" id="thumb_gal_title_align">
 											  <?php
@@ -825,7 +825,7 @@ class ThemesView_bwg extends AdminView_bwg {
 									  </td>
 									</tr>
 									<tr>
-									  <td class="spider_label"><label for="masonry_thumb_gal_title_align"><?php echo __('Gallery title/description alignment:', BWG()->prefix); ?> </label></td>
+									  <td class="spider_label"><label for="masonry_thumb_gal_title_align"><?php echo __('Gallery title alignment:', BWG()->prefix); ?> </label></td>
 									  <td>
 										<select name="masonry_thumb_gal_title_align" id="masonry_thumb_gal_title_align">
 										  <?php
@@ -1122,7 +1122,7 @@ class ThemesView_bwg extends AdminView_bwg {
 										  </td>
 										</tr>
 										<tr>
-										  <td class="spider_label"><label for="mosaic_thumb_gal_title_align"><?php echo __('Gallery title/description alignment:', BWG()->prefix); ?> </label></td>
+										  <td class="spider_label"><label for="mosaic_thumb_gal_title_align"><?php echo __('Gallery title alignment:', BWG()->prefix); ?> </label></td>
 										  <td>
 											<select name="mosaic_thumb_gal_title_align" id="mosaic_thumb_gal_title_align">
 											  <?php
@@ -1880,7 +1880,7 @@ class ThemesView_bwg extends AdminView_bwg {
 									  </td>
 									</tr>
 									<tr>
-									  <td class="spider_label"><label for="image_browser_gal_title_align"><?php echo __('Gallery title/description alignment:', BWG()->prefix); ?> </label></td>
+									  <td class="spider_label"><label for="image_browser_gal_title_align"><?php echo __('Gallery title alignment:', BWG()->prefix); ?> </label></td>
 									  <td>
 										<select name="image_browser_gal_title_align" id="image_browser_gal_title_align">
 										  <?php
@@ -2255,7 +2255,7 @@ class ThemesView_bwg extends AdminView_bwg {
 									  </td>
 									</tr>
 									<tr>
-									  <td class="spider_label"><label for="album_compact_gal_title_align"><?php echo __('Gallery title/description alignment:', BWG()->prefix); ?> </label></td>
+									  <td class="spider_label"><label for="album_compact_gal_title_align"><?php echo __('Gallery title alignment:', BWG()->prefix); ?> </label></td>
 									  <td>
 										<select name="album_compact_gal_title_align" id="album_compact_gal_title_align">
 										  <?php
@@ -2344,7 +2344,7 @@ class ThemesView_bwg extends AdminView_bwg {
 									  </td>
 									</tr>
 									<tr>
-									  <td class="spider_label"><label for="album_extended_thumb_align0"><?php echo __('Thumbnail alignment:', BWG()->prefix); ?> </label></td>
+									  <td class="spider_label"><label for="album_extended_thumb_align0"><?php echo __('Description alignment:', BWG()->prefix); ?> </label></td>
 									  <td>
 										<select name="album_extended_thumb_align" id="album_extended_thumb_align">
 										  <?php
@@ -2369,7 +2369,7 @@ class ThemesView_bwg extends AdminView_bwg {
 									  <td>
 										<select name="album_extended_thumb_hover_effect" id="album_extended_thumb_hover_effect">
 										  <?php
-										  foreach ($hover_effects as $key => $hover_effect) {
+										  foreach ($thumbnail_hover_effects as $key => $hover_effect) {
 											?>
 											<option value="<?php echo $key; ?>" <?php echo (($row->album_extended_thumb_hover_effect == $key) ? 'selected="selected"' : ''); ?>><?php echo __($hover_effect, BWG()->prefix); ?></option>
 											<?php
@@ -2586,6 +2586,20 @@ class ThemesView_bwg extends AdminView_bwg {
 						<div class="wd-box-content">
 						   <table style="clear:both;">
 							  <tbody>
+                <tr>
+                  <td class="spider_label"><label for="album_extended_title_desc_alignment"><?php _e('Title/description alignment:', BWG()->prefix); ?></label></td>
+                  <td>
+                    <select name="album_extended_title_desc_alignment" id="album_extended_title_desc_alignment">
+                      <?php
+                      foreach ( array('top', 'center', 'bottom') as $val ) {
+                        ?>
+                        <option value="<?php echo $val; ?>" <?php echo (($row->album_extended_title_desc_alignment == $val) ? 'selected="selected"' : ''); ?>><?php echo ucfirst( __($val, BWG()->prefix) ); ?></option>
+                        <?php
+                      }
+                      ?>
+                    </select><div class="spider_description"></div>
+                  </td>
+                </tr>
 								<tr>
 								  <td class="spider_label"><label for="album_extended_text_div_padding"><?php echo __('Text div padding:', BWG()->prefix); ?> </label></td>
 								  <td>
@@ -2875,7 +2889,7 @@ class ThemesView_bwg extends AdminView_bwg {
 								  </td>
 								</tr>
 								 <tr>
-								  <td class="spider_label"><label for="album_extended_gal_title_align"><?php echo __('Gallery title/description alignment:', BWG()->prefix); ?> </label></td>
+								  <td class="spider_label"><label for="album_extended_gal_title_align"><?php echo __('Gallery title alignment:', BWG()->prefix); ?> </label></td>
 								  <td>
 									<select name="album_extended_gal_title_align" id="album_extended_gal_title_align">
 									  <?php
@@ -3223,7 +3237,7 @@ class ThemesView_bwg extends AdminView_bwg {
 									  </td>
 									</tr>
 									<tr>
-									  <td class="spider_label"><label for="album_masonry_gal_title_align"><?php echo __('Gallery title/description alignment:', BWG()->prefix); ?> </label></td>
+									  <td class="spider_label"><label for="album_masonry_gal_title_align"><?php echo __('Gallery title alignment:', BWG()->prefix); ?> </label></td>
 									  <td>
 										<select name="album_masonry_gal_title_align" id="album_masonry_gal_title_align">
 										  <?php
@@ -3528,7 +3542,7 @@ class ThemesView_bwg extends AdminView_bwg {
 									  </td>
 									</tr>
 									<tr>
-									  <td class="spider_label"><label for="blog_style_gal_title_align"><?php echo __('Gallery title/description alignment:', BWG()->prefix); ?> </label></td>
+									  <td class="spider_label"><label for="blog_style_gal_title_align"><?php echo __('Gallery title alignment:', BWG()->prefix); ?> </label></td>
 									  <td>
 										<select name="blog_style_gal_title_align" id="blog_style_gal_title_align">
 										  <?php

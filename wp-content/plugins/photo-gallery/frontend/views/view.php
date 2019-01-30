@@ -131,6 +131,11 @@ class BWGViewSite {
         ?>
       </div>
     </div>
+    <script>
+      jQuery(document).ready(function () {
+        bwg_main_ready();
+      });
+    </script>
     <?php
   }
 
@@ -206,11 +211,6 @@ class BWGViewSite {
       color: #<?php echo $theme_row->back_font_color; ?>;
       cursor: pointer;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_back_<?php echo $bwg; ?> .dashicons-arrow-left-alt {
-      width: <?php echo $theme_row->back_font_size; ?>px;
-      height: <?php echo $theme_row->back_font_size; ?>px;
-      font-size: <?php echo $theme_row->back_font_size; ?>px;
-    }
     <?php
     $inline_style = ob_get_clean();
     if ( BWG()->options->use_inline_stiles_and_scripts && !WDWLibrary::elementor_is_active() && !$params['ajax'] ) {
@@ -220,7 +220,7 @@ class BWGViewSite {
       echo '<style>' . $inline_style . '</style>';
     }
     ?>
-    <div class="bwg_back bwg_back_<?php echo $bwg; ?>" onclick="bwg_ajax('gal_front_form_<?php echo $bwg; ?>', '<?php echo $bwg; ?>', '<?php echo $params['container_id']; ?>', 'back', '', 'album')"><i class="dashicons dashicons-arrow-left-alt"></i> <?php _e('Back', BWG()->prefix); ?></div>
+    <div class="bwg_back bwg_back_<?php echo $bwg; ?>" onclick="bwg_ajax('gal_front_form_<?php echo $bwg; ?>', '<?php echo $bwg; ?>', '<?php echo $params['container_id']; ?>', 'back', '', 'album')"><i class="bwg-icon-arrow-left"></i> <?php _e('Back', BWG()->prefix); ?></div>
     <?php
   }
 
@@ -296,7 +296,7 @@ class BWGViewSite {
         ?>
         <div class="bwg_download_gallery">
           <a href="<?php echo $query_url; ?>">
-            <i title="<?php _e('Download gallery', BWG()->prefix); ?>" class="bwg_ctrl_btn fa fa-download"></i>
+            <i title="<?php _e('Download gallery', BWG()->prefix); ?>" class="bwg-icon-download bwg_ctrl_btn"></i>
           </a>
         </div>
         <?php
@@ -334,16 +334,16 @@ class BWGViewSite {
         <div class="bwg_search_container_2" id="bwg_search_container_2_<?php echo $current_view; ?>">
         <span class="bwg_search_input_container">
           <span class="bwg_search_loupe_container1 hidden">
-          <i title="<?php echo __('SEARCH...', BWG()->prefix); ?>" class="bwg_search fa fa-search" onclick="bwg_ajax('<?php echo $form_id; ?>', '<?php echo $current_view; ?>', '<?php echo $cur_gal_id; ?>', <?php echo $album_gallery_id; ?>, '', '<?php echo $type; ?>', 1)"></i>
+          <i title="<?php echo __('SEARCH...', BWG()->prefix); ?>" class="bwg-icon-search bwg_search" onclick="bwg_ajax('<?php echo $form_id; ?>', '<?php echo $current_view; ?>', '<?php echo $cur_gal_id; ?>', <?php echo $album_gallery_id; ?>, '', '<?php echo $type; ?>', 1)"></i>
         </span>
           <input id="bwg_search_input_<?php echo $current_view; ?>" class="bwg_search_input" type="text" onkeypress="bwg_key_press(this); return bwg_check_search_input_enter(this, event);" name="bwg_search_<?php echo $current_view; ?>" value="<?php echo $bwg_search; ?>" placeholder="<?php echo $placeholder; ?>" />
           <span class="bwg_search_reset_container hidden">
-          <i title="<?php echo __('Reset', BWG()->prefix); ?>" class="bwg_reset fa fa-times" onclick="bwg_clear_search_input('<?php echo $current_view; ?>'); bwg_ajax('<?php echo $form_id; ?>', '<?php echo $current_view; ?>', '<?php echo $cur_gal_id; ?>', <?php echo $album_gallery_id; ?>, '', '<?php echo $type; ?>', 1)"></i>
+          <i title="<?php echo __('Reset', BWG()->prefix); ?>" class="bwg-icon-times bwg_reset" onclick="bwg_clear_search_input('<?php echo $current_view; ?>'); bwg_ajax('<?php echo $form_id; ?>', '<?php echo $current_view; ?>', '<?php echo $cur_gal_id; ?>', <?php echo $album_gallery_id; ?>, '', '<?php echo $type; ?>', 1)"></i>
         </span>
           <input id="bwg_images_count_<?php echo $current_view; ?>" class="bwg_search_input" type="hidden" name="bwg_images_count_<?php echo $current_view; ?>" value="<?php echo $images_count; ?>">
           <span class="search_placeholder_title" onclick="bwg_search_focus(this)">
                 <span class="bwg_search_loupe_container">
-                  <i title="<?php echo __('SEARCH...', BWG()->prefix); ?>" class="bwg_search fa fa-search"></i>
+                  <i title="<?php echo __('SEARCH...', BWG()->prefix); ?>" class="bwg-icon-search bwg_search"></i>
                 </span>
                 <span style="font-size: 12px; font-family: Ubuntu;"><?php echo $placeholder; ?></span>
           </span>

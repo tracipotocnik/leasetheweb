@@ -32,7 +32,7 @@ class BWGViewThumbnails extends BWGViewSite {
          data-gallery-id="<?php echo $params['gallery_id']; ?>"
          data-lightbox-url="<?php echo addslashes(add_query_arg($params['params_array'], admin_url('admin-ajax.php'))); ?>"
          id="bwg_<?php echo $params['gallery_type'].'_'.$bwg ?>"
-         class="bwg-container-<?php echo $bwg; ?> bwg-thumbnails bwg-container bwg-border-box">
+         class="bwg-container-<?php echo $bwg; ?> bwg-thumbnails bwg-standard-thumbnails bwg-container bwg-border-box">
       <?php
       foreach ($image_rows as $image_row) {
         $is_embed = preg_match('/EMBED/',$image_row->filetype) == 1 ? true : false;
@@ -41,11 +41,11 @@ class BWGViewThumbnails extends BWGViewSite {
         $data_image_id = '';
         $href = '';
         $title = '<div class="bwg-title1"><div class="bwg-title2">' . ($image_row->alt ? $image_row->alt : '&nbsp;') . '</div></div>';
-        $play_icon = '<div class="bwg-play-icon1"><i title="' . __('Play', BWG()->prefix) . '" class="fa fa-play bwg-title2 bwg-play-icon2"></i></div>';
+        $play_icon = '<div class="bwg-play-icon1"><i title="' . __('Play', BWG()->prefix) . '" class="bwg-icon-play bwg-title2 bwg-play-icon2"></i></div>';
         $ecommerce_icon = '<div class="bwg-ecommerce1"><div class="bwg-ecommerce2">';
         if ( $image_row->pricelist_id ) {
-          $ecommerce_icon .= '<i title="' . __('Open', BWG()->prefix) . '" class="bwg_ctrl_btn bwg_open fa fa-share-square" ></i>&nbsp;';
-          $ecommerce_icon .= '<i title="' . __('Ecommerce', BWG()->prefix) . '" class="bwg_ctrl_btn bwg_ecommerce fa fa-shopping-cart" ></i>';
+          $ecommerce_icon .= '<i title="' . __('Open', BWG()->prefix) . '" class="bwg-icon-sign-out bwg_ctrl_btn bwg_open"></i>&nbsp;';
+          $ecommerce_icon .= '<i title="' . __('Ecommerce', BWG()->prefix) . '" class="bwg-icon-shopping-cart bwg_ctrl_btn bwg_ecommerce"></i>';
         }
         else {
           $ecommerce_icon .= '&nbsp;';
@@ -103,7 +103,7 @@ class BWGViewThumbnails extends BWGViewSite {
     ob_start();
     $rgb_thumbs_bg_color = WDWLibrary::spider_hex2rgb($theme_row->thumbs_bg_color);
     ?>
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails {
       width: <?php echo ($params['image_column_number'] * $params['thumb_width']) + ($theme_row->container_margin ? $theme_row->thumb_margin : 0); ?>px;
       justify-content: <?php echo $theme_row->thumb_align; ?>;
       <?php
@@ -150,18 +150,18 @@ class BWGViewThumbnails extends BWGViewSite {
       <?php
     }
     ?>
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item {
       justify-content: <?php echo $theme_row->thumb_title_pos == 'top'? 'flex-end' : 'flex-start'; ?>;
       max-width: <?php echo $params['thumb_width']; ?>px;
       <?php if ( !BWG()->options->resizable_thumbnails ) { ?>
       width: <?php echo $params['thumb_width']; ?>px !important;
       <?php } ?>
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item > a {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item > a {
        margin-right: <?php echo $theme_row->thumb_margin; ?>px;
        margin-bottom: <?php echo $theme_row->thumb_margin; ?>px;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item0 {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item0 {
       padding: <?php echo $theme_row->thumb_padding; ?>px;
       background-color: #<?php echo $theme_row->thumb_bg_color; ?>;
       border: <?php echo $theme_row->thumb_border_width; ?>px <?php echo $theme_row->thumb_border_style; ?> #<?php echo $theme_row->thumb_border_color; ?>;
@@ -170,27 +170,27 @@ class BWGViewThumbnails extends BWGViewSite {
       border-radius: <?php echo $theme_row->thumb_border_radius; ?>;
       box-shadow: <?php echo $theme_row->thumb_box_shadow; ?>;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item1 img {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item1 img {
       max-height: none;
       max-width: none;
       padding: 0 !important;
     }
     <?php if ( $theme_row->thumb_hover_effect == 'zoom' ) { ?>
      @media only screen and (min-width: 480px) {
-		#bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item1 img {
+		#bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item1 img {
 			<?php echo ($theme_row->thumb_transition) ? '-webkit-transition: all .3s; transition: all .3s;' : ''; ?>
 		}
-		#bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item1 img:hover {
+		#bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item1 img:hover {
 			-ms-transform: scale(<?php echo $theme_row->thumb_hover_effect_value; ?>);
 			-webkit-transform: scale(<?php echo $theme_row->thumb_hover_effect_value; ?>);
 			transform: scale(<?php echo $theme_row->thumb_hover_effect_value; ?>);
 		}
 		<?php if ( $params['image_title'] == 'hover' ) { ?>
-		.bwg-zoom-effect .bwg-zoom-effect-overlay {
+		.bwg-standard-thumbnails .bwg-zoom-effect .bwg-zoom-effect-overlay {
 			<?php $thumb_bg_color = WDWLibrary::spider_hex2rgb( $theme_row->thumb_bg_color ); ?>
 			background-color:rgba(<?php echo $thumb_bg_color['red'] .','. $thumb_bg_color['green'] . ',' . $thumb_bg_color['blue'] . ', 0.3'; ?>);
 		}
-		.bwg-zoom-effect:hover img {
+		.bwg-standard-thumbnails .bwg-zoom-effect:hover img {
 			-ms-transform: scale(<?php echo $theme_row->thumb_hover_effect_value; ?>);
 			-webkit-transform: scale(<?php echo $theme_row->thumb_hover_effect_value; ?>);
 			transform: scale(<?php echo $theme_row->thumb_hover_effect_value; ?>);
@@ -202,10 +202,10 @@ class BWGViewThumbnails extends BWGViewSite {
     else {
     ?>
     @media only screen and (min-width: 480px) {
-      #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item0 {
+      #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item0 {
         <?php echo ($theme_row->thumb_transition) ? 'transition: all 0.3s ease 0s;-webkit-transition: all 0.3s ease 0s;' : ''; ?>
       }
-      #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item0:hover {
+      #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item0:hover {
         -ms-transform: <?php echo $theme_row->thumb_hover_effect; ?>(<?php echo $theme_row->thumb_hover_effect_value; ?>);
         -webkit-transform: <?php echo $theme_row->thumb_hover_effect; ?>(<?php echo $theme_row->thumb_hover_effect_value; ?>);
         transform: <?php echo $theme_row->thumb_hover_effect; ?>(<?php echo $theme_row->thumb_hover_effect_value; ?>);
@@ -214,13 +214,13 @@ class BWGViewThumbnails extends BWGViewSite {
       <?php
     }
     ?>
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-item1 {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-item1 {
       padding-top: <?php echo $params['thumb_height'] / $params['thumb_width'] * 100; ?>%;
     }
     <?php
 	  /* Show image title on hover.*/
     if ( $params['image_title'] == 'hover' ) { ?>
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-title1 {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-title1 {
       position: absolute;
       top: 0;
       z-index: 100;
@@ -236,8 +236,8 @@ class BWGViewThumbnails extends BWGViewSite {
 	  <?php
     }
     ?>
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-title2,
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-ecommerce2 {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-title2,
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-ecommerce2 {
       color: #<?php echo ( $params['image_title'] == 'hover') ? (isset($theme_row->thumb_title_font_color_hover) ? $theme_row->thumb_title_font_color_hover : $theme_row->thumb_title_font_color) : $theme_row->thumb_title_font_color; ?>;
       font-family: <?php echo $theme_row->thumb_title_font_style; ?>;
       font-size: <?php echo $theme_row->thumb_title_font_size; ?>px;
@@ -246,17 +246,17 @@ class BWGViewThumbnails extends BWGViewSite {
       text-shadow: <?php echo $theme_row->thumb_title_shadow; ?>;
       max-height: 100%;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-play-icon2 {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-play-icon2 {
       font-size: <?php echo 2 * $theme_row->thumb_title_font_size; ?>px;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-ecommerce2 {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-ecommerce2 {
       font-size: <?php echo 1.2 * $theme_row->thumb_title_font_size; ?>px;
       color: #<?php echo ( $params['ecommerce_icon'] == 'hover') ? (isset($theme_row->thumb_title_font_color_hover) ? $theme_row->thumb_title_font_color_hover : $theme_row->thumb_title_font_color) : $theme_row->thumb_title_font_color; ?>;
     }
     <?php
     if ( function_exists('BWGEC') && $params['ecommerce_icon'] == 'hover' ) { /* Show eCommerce icon on hover.*/
       ?>
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-ecommerce1 {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-standard-thumbnails .bwg-ecommerce1 {
       display: flex;
       height: 100%;
       left: -3000px;

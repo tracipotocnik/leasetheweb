@@ -62,117 +62,97 @@ class BWGViewAlbum_extended_preview extends BWGViewSite {
 
     if ( $params['album_view_type'] != 'gallery' ) {
       ?>
-    <div data-bwg="<?php echo $bwg; ?>"
-         id="<?php echo $params['container_id']; ?>"
-         class="bwg-thumbnails bwg-container bwg-container-<?php echo $bwg; ?> bwg-album-thumbnails <?php echo 'bwg_album_extended_thumbnails_' . $bwg; ?>">
-      <?php
-      if ( !$params['album_gallery_rows']['page_nav']['total'] ) {
-        echo WDWLibrary::message(__('Album is empty.', BWG()->prefix), 'wd_error');
-      }
-      foreach ( $params['album_gallery_rows']['rows'] as $row ) {
-        $href = add_query_arg(array(
-                                "type_" . $bwg => $row->def_type,
-                                "album_gallery_id_" . $bwg => (($params['album_gallery_id'] != 0) ? $row->alb_gal_id : $row->id),
-                              ), $_SERVER['REQUEST_URI']);
-
-        /* ToDO: Remove after refactoring.*/
-        $preview_path_url = htmlspecialchars_decode($row->preview_path, ENT_COMPAT | ENT_QUOTES);
-        if ( strpos($preview_path_url, '?bwg') !== FALSE) {
-          $preview_path_url = explode('?bwg', $preview_path_url);
-          $preview_path = $preview_path_url[0];
+      <div data-max-count="<?php echo $params['extended_album_column_number']; ?>"
+           data-thumbnail-width="<?php echo $params['extended_album_thumb_width']; ?>"
+           data-global-spacing="<?php echo $theme_row->album_extended_div_margin; ?>"
+           data-spacing="<?php echo $theme_row->album_extended_div_padding; ?>"
+           data-bwg="<?php echo $bwg; ?>"
+           id="<?php echo $params['container_id']; ?>"
+           class="bwg-album-extended bwg-border-box bwg-thumbnails bwg-container bwg-container-<?php echo $bwg; ?> bwg-album-thumbnails bwg_album_extended_thumbnails_<?php echo $bwg; ?>">
+        <?php
+        if ( !$params['album_gallery_rows']['page_nav']['total'] ) {
+          echo WDWLibrary::message(__('Album is empty.', BWG()->prefix), 'wd_error');
         }
-        else {
-          $preview_path = $preview_path_url;
-        }
-        list($image_thumb_width, $image_thumb_height) = @getimagesize($preview_path);
-        if ( !$image_thumb_width ) {
-          $image_thumb_width = 1;
-        }
-        if ( !$image_thumb_height ) {
-          $image_thumb_height = 1;
-        }
-        $scale = max($params['extended_album_thumb_width'] / $image_thumb_width, $params['extended_album_thumb_height'] / $image_thumb_height);
-        $image_thumb_width *= $scale;
-        $image_thumb_height *= $scale;
-        $thumb_left = ($params['extended_album_thumb_width'] - $image_thumb_width) / 2;
-        $thumb_top = ($params['extended_album_thumb_height'] - $image_thumb_height) / 2;
-        ?>
-        <div class="bwg_album_extended_div_<?php echo $bwg; ?>">
-          <div class="bwg_album_extended_thumb_div_<?php echo $bwg; ?>">
-            <a class="bwg-album bwg_album_<?php echo $bwg; ?>"
-              <?php echo(BWG()->options->enable_seo ? "href='" . esc_url($href) . "'" : ""); ?>
-              style="font-size: 0;"
-              data-bwg="<?php echo $bwg; ?>"
-              data-container_id="<?php echo $params['container_id']; ?>"
-              data-alb_gal_id="<?php echo (($params['album_gallery_id'] != 0) ? $row->alb_gal_id : $row->id); ?>"
-              data-def_type="<?php echo $row->def_type; ?>"
-              data-title="<?php echo htmlspecialchars(addslashes($row->name)); ?>">
-            <span class="bwg_album_thumb_<?php echo $bwg; ?>" style="height:inherit;">
-              <span class="bwg_album_thumb_spun1_<?php echo $bwg; ?>">
-                <span class="bwg_album_thumb_spun2_<?php echo $bwg; ?>">
-                  <img class="skip-lazy bwg_img_clear bwg_img_custom"
-                       style="width:<?php echo $image_thumb_width; ?>px; height:<?php echo $image_thumb_height; ?>px; margin-left: <?php echo $thumb_left; ?>px; margin-top: <?php echo $thumb_top; ?>px;"
-                       src="<?php echo $row->preview_image; ?>"
-                       alt="<?php echo $row->name; ?>" />
-                </span>
-              </span>
-            </span>
-            </a>
-          </div>
-          <div class="bwg_album_extended_text_div_<?php echo $bwg; ?>">
-            <?php
-            if ( $row->name ) {
-              ?>
+        foreach ( $params['album_gallery_rows']['rows'] as $row ) {
+          $href = add_query_arg(array(
+                                  "type_" . $bwg => $row->def_type,
+                                  "album_gallery_id_" . $bwg => (($params['album_gallery_id'] != 0) ? $row->alb_gal_id : $row->id),
+                                ), $_SERVER['REQUEST_URI']);
+          ?>
+          <div class="bwg-extended-item">
+            <div class="bwg-extended-item0">
               <a class="bwg-album bwg_album_<?php echo $bwg; ?>"
-                 <?php echo (BWG()->options->enable_seo ? "href='" . esc_url($href) . "'" : ""); ?>
+                <?php echo(BWG()->options->enable_seo ? "href='" . esc_url($href) . "'" : ""); ?>
                  style="font-size: 0;"
                  data-bwg="<?php echo $bwg; ?>"
                  data-container_id="<?php echo $params['container_id']; ?>"
-                 data-alb_gal_id="<?php echo(($params['album_gallery_id'] != 0) ? $row->alb_gal_id : $row->id); ?>"
+                 data-alb_gal_id="<?php echo (($params['album_gallery_id'] != 0) ? $row->alb_gal_id : $row->id); ?>"
                  data-def_type="<?php echo $row->def_type; ?>"
                  data-title="<?php echo htmlspecialchars(addslashes($row->name)); ?>">
-                <span class="bwg_title_spun_<?php echo $bwg; ?>"><?php echo $row->name; ?></span>
+                <div class="bwg-item0 bwg_album_thumb_<?php echo $bwg; ?>">
+                  <div class="bwg-item1 bwg_album_thumb_spun1_<?php echo $bwg; ?>">
+                    <div class="bwg-item2">
+                      <img class="skip-lazy"
+                           src="<?php echo $row->preview_image; ?>"
+                           alt="<?php echo $row->name; ?>" />
+                    </div>
+                  </div>
+                </div>
               </a>
+            </div>
+            <div class="bwg-extended-item1">
               <?php
-            }
-            if ( $params['extended_album_description_enable'] && $row->description ) {
-              if ( stripos($row->description, '<!--more-->') !== FALSE ) {
-                $description_array = explode('<!--more-->', $row->description);
-                $description_short = $description_array[0];
-                $description_full = $description_array[1];
+              if ( $row->name ) {
                 ?>
-              <span class="bwg_description_spun1_<?php echo $bwg; ?>">
-                <span class="bwg_description_spun2_<?php echo $bwg; ?>">
-                  <span class="bwg_description_short_<?php echo $bwg; ?>">
-                    <?php echo $description_short; ?>
-                  </span>
-                  <span class="bwg_description_full">
-                    <?php echo $description_full; ?>
-                  </span>
-                </span>
-                <span data-more-msg="<?php _e('More', BWG()->prefix); ?>"
-                      data-hide-msg="<?php _e('Hide', BWG()->prefix); ?>"
-                      class="bwg_description_more bwg_description_more_<?php echo $bwg; ?> bwg_more">
-                  <?php _e('More', BWG()->prefix); ?>
-                </span>
-              </span>
+                <a class="bwg-album bwg_album_<?php echo $bwg; ?>"
+                   <?php echo (BWG()->options->enable_seo ? "href='" . esc_url($href) . "'" : ""); ?>
+                   data-bwg="<?php echo $bwg; ?>"
+                   data-container_id="<?php echo $params['container_id']; ?>"
+                   data-alb_gal_id="<?php echo(($params['album_gallery_id'] != 0) ? $row->alb_gal_id : $row->id); ?>"
+                   data-def_type="<?php echo $row->def_type; ?>"
+                   data-title="<?php echo htmlspecialchars(addslashes($row->name)); ?>">
+                  <span class="bwg_title_spun_<?php echo $bwg; ?>"><?php echo $row->name; ?></span>
+                </a>
                 <?php
               }
-              else {
-                ?>
-              <span class="bwg_description_spun1_<?php echo $bwg; ?>">
+              if ( $params['extended_album_description_enable'] && $row->description ) {
+                if ( stripos($row->description, '<!--more-->') !== FALSE ) {
+                  $description_array = explode('<!--more-->', $row->description);
+                  $description_short = $description_array[0];
+                  $description_full = $description_array[1];
+                  ?>
+                <span class="bwg_description_spun1_<?php echo $bwg; ?>">
+                  <span class="bwg_description_spun2_<?php echo $bwg; ?>">
+                    <span class="bwg_description_short_<?php echo $bwg; ?>">
+                      <?php echo $description_short; ?>
+                    </span>
+                    <span class="bwg_description_full">
+                      <?php echo $description_full; ?>
+                    </span>
+                  </span>
+                  <span data-more-msg="<?php _e('More', BWG()->prefix); ?>"
+                        data-hide-msg="<?php _e('Hide', BWG()->prefix); ?>"
+                        class="bwg_description_more bwg_description_more_<?php echo $bwg; ?> bwg_more">
+                    <?php _e('More', BWG()->prefix); ?>
+                  </span>
+                </span>
+                  <?php
+                }
+                else {
+                  ?>
+                  <span class="bwg_description_spun1_<?php echo $bwg; ?>">
                 <span class="bwg_description_short_<?php echo $bwg; ?>">
                   <?php echo $row->description; ?>
                 </span>
               </span>
-                <?php
+                  <?php
+                }
               }
-            }
-            ?>
+              ?>
+            </div>
           </div>
-        </div>
-        <?php
-      }
+          <?php
+        }
         ?>
       </div>
       <?php
@@ -207,60 +187,46 @@ class BWGViewAlbum_extended_preview extends BWGViewSite {
     $rgb_album_extended_thumbs_bg_color = WDWLibrary::spider_hex2rgb($theme_row->album_extended_thumbs_bg_color);
     $rgb_album_extended_div_bg_color = WDWLibrary::spider_hex2rgb($theme_row->album_extended_div_bg_color);
     ?>
-    /* Style for thumbnail view.*/
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_extended_thumbnails_<?php echo $bwg; ?> * {
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-    }
     #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_extended_thumbnails_<?php echo $bwg; ?> {
-      display: block;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
       background-color: rgba(<?php echo $rgb_album_extended_thumbs_bg_color['red']; ?>, <?php echo $rgb_album_extended_thumbs_bg_color['green']; ?>, <?php echo $rgb_album_extended_thumbs_bg_color['blue']; ?>, <?php echo number_format($theme_row->album_extended_thumb_bg_transparent / 100, 2, ".", ""); ?>);
-      font-size: 0;
       text-align: <?php echo $theme_row->album_extended_thumb_align; ?>;
-      max-width: inherit;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_extended_div_<?php echo $bwg; ?> {
-      display: table;
-      width: 100%;
-      height: <?php echo $params['extended_album_height']; ?>px;
-      border-spacing: <?php echo $theme_row->album_extended_div_padding; ?>px;
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-extended-item {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      min-height: <?php echo $params['extended_album_height']; ?>px;
       border-bottom: <?php echo $theme_row->album_extended_div_separator_width; ?>px <?php echo $theme_row->album_extended_div_separator_style; ?> #<?php echo $theme_row->album_extended_div_separator_color; ?>;
       background-color: rgba(<?php echo $rgb_album_extended_div_bg_color['red']; ?>, <?php echo $rgb_album_extended_div_bg_color['green']; ?>, <?php echo $rgb_album_extended_div_bg_color['blue']; ?>, <?php echo number_format($theme_row->album_extended_div_bg_transparent / 100, 2, ".", ""); ?>);
       border-radius: <?php echo $theme_row->album_extended_div_border_radius; ?>;
       margin: <?php echo $theme_row->album_extended_div_margin; ?>;
+      overflow: hidden;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_extended_thumb_div_<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-extended-item0 {
+      margin: <?php echo $theme_row->album_extended_div_padding; ?>px <?php echo $theme_row->album_extended_div_padding / 2; ?>px;
       background-color: #<?php echo $theme_row->album_extended_thumb_div_bg_color; ?>;
       border-radius: <?php echo $theme_row->album_extended_thumb_div_border_radius; ?>;
-      text-align: center;
       border: <?php echo $theme_row->album_extended_thumb_div_border_width; ?>px <?php echo $theme_row->album_extended_thumb_div_border_style; ?> #<?php echo $theme_row->album_extended_thumb_div_border_color; ?>;
-      display: table-cell;
-      vertical-align: middle;
+      display: flex;
+      flex-direction: column;
       padding: <?php echo $theme_row->album_extended_thumb_div_padding; ?>;
+      justify-content: center;
+      max-width: <?php echo $params['extended_album_thumb_width']; ?>px;
     }
-    @media only screen and (max-width : 320px) {
-      #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_extended_thumb_div_<?php echo $bwg; ?> {
-        display: table-row;
-      }
-    }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_extended_text_div_<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-extended-item1 {
+      margin: <?php echo $theme_row->album_extended_div_padding; ?>px <?php echo $theme_row->album_extended_div_padding / 2; ?>px;
       background-color: #<?php echo $theme_row->album_extended_text_div_bg_color; ?>;
       border-radius: <?php echo $theme_row->album_extended_text_div_border_radius; ?>;
       border: <?php echo $theme_row->album_extended_text_div_border_width; ?>px <?php echo $theme_row->album_extended_text_div_border_style; ?> #<?php echo $theme_row->album_extended_text_div_border_color; ?>;
-      display: table-cell;
-      width: 100%;
+      display: flex;
+      flex-direction: column;
       border-collapse: collapse;
-      vertical-align: middle;
       padding: <?php echo $theme_row->album_extended_text_div_padding; ?>;
+      justify-content: <?php if ( $theme_row->album_extended_title_desc_alignment == 'top' ) { echo 'start'; } elseif ( $theme_row->album_extended_title_desc_alignment == 'bottom' ) { echo 'flex-end'; } else { echo 'center'; } ; ?>;
     }
-    @media only screen and (max-width : 320px) {
-      #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_extended_text_div_<?php echo $bwg; ?> {
-        display: table-row;
-      }
-    }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_title_spun_<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg_title_spun_<?php echo $bwg; ?> {
       border: <?php echo $theme_row->album_extended_title_span_border_width; ?>px <?php echo $theme_row->album_extended_title_span_border_style; ?> #<?php echo $theme_row->album_extended_title_span_border_color; ?>;
       color: #<?php echo $theme_row->album_extended_title_font_color; ?>;
       display: block;
@@ -272,15 +238,15 @@ class BWGViewAlbum_extended_preview extends BWGViewSite {
       padding: <?php echo $theme_row->album_extended_title_padding; ?>;
       text-align: left;
       vertical-align: middle;
-      width: inherit;
+      width: 100%;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_description_spun1_<?php echo $bwg; ?> a {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg_description_spun1_<?php echo $bwg; ?> a {
       color: #<?php echo $theme_row->album_extended_desc_font_color; ?>;
       font-size: <?php echo $theme_row->album_extended_desc_font_size; ?>px;
       font-weight: <?php echo $theme_row->album_extended_desc_font_weight; ?>;
       font-family: <?php echo $theme_row->album_extended_desc_font_style; ?>;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_description_spun1_<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg_description_spun1_<?php echo $bwg; ?> {
       border: <?php echo $theme_row->album_extended_desc_span_border_width; ?>px <?php echo $theme_row->album_extended_desc_span_border_style; ?> #<?php echo $theme_row->album_extended_desc_span_border_color; ?>;
       display: inline-block;
       color: #<?php echo $theme_row->album_extended_desc_font_color; ?>;
@@ -290,23 +256,23 @@ class BWGViewAlbum_extended_preview extends BWGViewSite {
       height: inherit;
       padding: <?php echo $theme_row->album_extended_desc_padding; ?>;
       vertical-align: middle;
-      width: inherit;
+      width: 100%;
       word-wrap: break-word;
       word-break: break-word;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_description_spun1_<?php echo $bwg; ?> * {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg_description_spun1_<?php echo $bwg; ?> * {
       margin: 0;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_description_spun2_<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg_description_spun2_<?php echo $bwg; ?> {
       float: left;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_description_short_<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg_description_short_<?php echo $bwg; ?> {
       display: inline;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_description_full {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg_description_full {
       display: none;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_description_more_<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg_description_more_<?php echo $bwg; ?> {
       clear: both;
       color: #<?php echo $theme_row->album_extended_desc_more_color; ?>;
       cursor: pointer;
@@ -314,75 +280,56 @@ class BWGViewAlbum_extended_preview extends BWGViewSite {
       font-size: <?php echo $theme_row->album_extended_desc_more_size; ?>px;
       font-weight: normal;
     }
-    /*Album thumbs styles.*/
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_thumb_<?php echo $bwg; ?> {
-      display: inline-block;
-      text-align: center;
-    }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_thumb_spun1_<?php echo $bwg; ?> {
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-item0 {
+      padding: <?php echo $theme_row->album_extended_thumb_padding; ?>px;
       background-color: #<?php echo $theme_row->album_extended_thumb_bg_color; ?>;
       border-radius: <?php echo $theme_row->album_extended_thumb_border_radius; ?>;
       border: <?php echo $theme_row->album_extended_thumb_border_width; ?>px <?php echo $theme_row->album_extended_thumb_border_style; ?> #<?php echo $theme_row->album_extended_thumb_border_color; ?>;
       box-shadow: <?php echo $theme_row->album_extended_thumb_box_shadow; ?>;
-      display: inline-block;
-      height: <?php echo $params['extended_album_thumb_height']; ?>px;
       margin: <?php echo $theme_row->album_extended_thumb_margin; ?>px;
       opacity: <?php echo number_format($theme_row->album_extended_thumb_transparent / 100, 2, ".", ""); ?>;
       filter: Alpha(opacity=<?php echo $theme_row->album_extended_thumb_transparent; ?>);
-      <?php echo ($theme_row->album_extended_thumb_transition) ? 'transition: all 0.3s ease 0s;-webkit-transition: all 0.3s ease 0s;' : ''; ?>
-      padding: <?php echo $theme_row->album_extended_thumb_padding; ?>px;
-      text-align: center;
-      vertical-align: middle;
-      width: <?php echo $params['extended_album_thumb_width']; ?>px;
-      z-index: 100;
     }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_thumb_spun1_<?php echo $bwg; ?>:hover {
-      opacity: 1;
-      filter: Alpha(opacity=100);
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      -moz-backface-visibility: hidden;
-      -ms-backface-visibility: hidden;
-      z-index: 102;
+    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-item1 {
+      padding-top: <?php echo $params['extended_album_thumb_height'] / $params['extended_album_thumb_width'] * 100; ?>%;
     }
-    @media only screen and (min-width: 480px) {
-        #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_thumb_spun1_<?php echo $bwg; ?>:hover {
-          transform: <?php echo $theme_row->album_extended_thumb_hover_effect; ?>(<?php echo $theme_row->album_extended_thumb_hover_effect_value; ?>);
+    <?php if ( $theme_row->album_extended_thumb_hover_effect == 'zoom' ) { ?>
+      @media only screen and (min-width: 480px) {
+        #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-item1 img {
+          <?php echo ($theme_row->album_extended_thumb_transition) ? '-webkit-transition: all .3s; transition: all .3s;' : ''; ?>
+        }
+        #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-item1 img:hover {
+          -ms-transform: scale(<?php echo $theme_row->album_extended_thumb_hover_effect_value; ?>);
+          -webkit-transform: scale(<?php echo $theme_row->album_extended_thumb_hover_effect_value; ?>);
+          transform: scale(<?php echo $theme_row->album_extended_thumb_hover_effect_value; ?>);
+        }
+        #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-item0:hover {
+          -ms-transform: none;
+          -webkit-transform: none;
+          transform: none;
+        }
+      }
+      <?php
+    }
+    else {
+      ?>
+      @media only screen and (min-width: 480px) {
+        #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-item0 {
+          <?php echo ($theme_row->album_extended_thumb_transition) ? 'transition: all 0.3s ease 0s;-webkit-transition: all 0.3s ease 0s;' : ''; ?>
+        }
+        #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-item0:hover {
           -ms-transform: <?php echo $theme_row->album_extended_thumb_hover_effect; ?>(<?php echo $theme_row->album_extended_thumb_hover_effect_value; ?>);
           -webkit-transform: <?php echo $theme_row->album_extended_thumb_hover_effect; ?>(<?php echo $theme_row->album_extended_thumb_hover_effect_value; ?>);
+          transform: <?php echo $theme_row->album_extended_thumb_hover_effect; ?>(<?php echo $theme_row->album_extended_thumb_hover_effect_value; ?>);
         }
-    }
-    #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg_album_thumb_spun2_<?php echo $bwg; ?> {
-      display: inline-block;
-      height: <?php echo $params['extended_album_thumb_height']; ?>px;
-      overflow: hidden;
-      width: <?php echo $params['extended_album_thumb_width']; ?>px;
-    }
-    @media screen and (max-width: <?php echo $params['extended_album_thumb_width'] + 100; ?>px) {
-      div[class^="bwg_album_extended_thumb_div_"],
-      span[class^="bwg_album_thumb_"],
-      span[class^="bwg_album_thumb_"] .bwg_img_custom
-      {
-        width: 100% !important;
-        height: auto !important;
+        #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-extended .bwg-item1 img:hover {
+          -ms-transform: none;
+          -webkit-transform: none;
+          transform: none;
+        }
       }
-      span[class^="bwg_album_thumb_"] .bwg_img_custom {
-        margin:0px auto !important;
-      }
+      <?php
     }
-    @media screen and (max-width: <?php echo $params['extended_album_image_thumb_width'] + 100; ?>px) {
-      div[class^="bwg_mosaic_thumbnails_"],
-      div[class^="bwg_mosaic_thumb_spun_"],
-      img[class^="bwg_mosaic_thumb_"]
-      {
-        width: 100% !important;
-        height: auto !important;
-      }
-      img[class^="bwg_mosaic_thumb_"] {
-        margin:0px auto !important;
-      }
-    }
-    <?php
 
     /* Add gallery styles, if gallery type exist.*/
     if ( $this->gallery_view && method_exists($this->gallery_view, 'inline_styles') ) {
@@ -404,6 +351,7 @@ class BWGViewAlbum_extended_preview extends BWGViewSite {
 
       echo $this->gallery_view->inline_styles($bwg, $theme_row, $params);
     }
+
     return ob_get_clean();
   }
 }

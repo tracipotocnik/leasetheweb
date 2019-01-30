@@ -474,7 +474,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery('#options_link').attr('href', jQuery('#options_link').attr('data-href') + '&active_tab=2&album_type=' + gallery_type);
       jQuery("#tr_album").css('display', '');
       jQuery("#bwg_pro_version").html('Masonry gallery group');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/compact-album/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/masonry/");
       jQuery(".wd-free-msg").show();
       if ( jQuery(".wd-free-msg").length != 0 ) {
         jQuery("#insert").attr("style", "visibility: hidden;");

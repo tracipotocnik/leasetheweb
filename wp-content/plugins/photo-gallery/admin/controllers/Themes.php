@@ -227,18 +227,6 @@ class ThemesController_bwg {
     $reset = WDWLibrary::get('reset', FALSE);
     // Get Theme data.
     $row = $this->model->get_row_data($id, $reset);
-    if (!isset($row->container_margin)) {
-      $row->container_margin = 1;
-    }
-    if (!isset($row->masonry_container_margin)) {
-      $row->masonry_container_margin = 1;
-    }
-    if (!isset($row->mosaic_container_margin)) {
-      $row->mosaic_container_margin = 1;
-    }
-    if (!isset($row->compact_container_margin)) {
-      $row->compact_container_margin = 1;
-    }
 		$current_type = WDWLibrary::get('current_type', 'Thumbnail');
 		$form_action  = add_query_arg( array(
                                 'page' => 'themes_' . BWG()->prefix,
@@ -316,9 +304,9 @@ class ThemesController_bwg {
 		);
 
 		$button_styles = array(
-			'fa-chevron' => __('Chevron', BWG()->prefix),
-			'fa-angle' => __('Angle', BWG()->prefix),
-			'fa-angle-double' => __('Double', BWG()->prefix),
+			'bwg-icon-angle' => __('Angle', BWG()->prefix),
+			'bwg-icon-chevron' => __('Chevron', BWG()->prefix),
+			'bwg-icon-double' => __('Double', BWG()->prefix),
 		);
 
 		$rate_icons = array(

@@ -79,6 +79,7 @@ class UninstallController_bwg {
       $wpdb->prefix . 'bwg_option',
       $wpdb->prefix . 'bwg_theme',
       $wpdb->prefix . 'bwg_shortcode',
+      $wpdb->prefix . 'bwg_file_paths',
     );
 
     return $tables;

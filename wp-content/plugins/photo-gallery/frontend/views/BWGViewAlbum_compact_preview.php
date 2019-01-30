@@ -235,7 +235,7 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
       #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-thumbnails .bwg-item0 {
       <?php echo ($theme_row->album_compact_thumb_transition) ? 'transition: all 0.3s ease 0s;-webkit-transition: all 0.3s ease 0s;' : ''; ?>
       }
-      #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?> .bwg-album-thumbnails .bwg-item0:hover {
+      #bwg_container1_<?php echo $bwg; ?> #bwg_container2_<?php echo $bwg; ?> .bwg-container-<?php echo $bwg; ?>.bwg-album-thumbnails .bwg-item0:hover {
         -ms-transform: <?php echo $theme_row->album_compact_thumb_hover_effect; ?>(<?php echo $theme_row->album_compact_thumb_hover_effect_value; ?>);
         -webkit-transform: <?php echo $theme_row->album_compact_thumb_hover_effect; ?>(<?php echo $theme_row->album_compact_thumb_hover_effect_value; ?>);
         transform: <?php echo $theme_row->album_compact_thumb_hover_effect; ?>(<?php echo $theme_row->album_compact_thumb_hover_effect_value; ?>);
@@ -342,18 +342,6 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
       $theme_row->mosaic_thumb_border_radius = $theme_row->album_compact_thumb_border_radius;
 
       $theme_row->thumb_box_shadow = $theme_row->album_compact_thumb_box_shadow;
-
-      $theme_row->thumb_hover_effect = $theme_row->album_compact_thumb_hover_effect;
-      $theme_row->masonry_thumb_hover_effect = $theme_row->album_compact_thumb_hover_effect;
-      $theme_row->mosaic_thumb_hover_effect = $theme_row->album_compact_thumb_hover_effect;
-
-      $theme_row->thumb_transition = $theme_row->album_compact_thumb_transition;
-      $theme_row->masonry_thumb_transition = $theme_row->album_compact_thumb_transition;
-      $theme_row->mosaic_thumb_transition = $theme_row->album_compact_thumb_transition;
-
-      $theme_row->thumb_hover_effect_value = $theme_row->album_compact_thumb_hover_effect_value;
-      $theme_row->masonry_thumb_hover_effect_value = $theme_row->album_compact_thumb_hover_effect_value;
-      $theme_row->mosaic_thumb_hover_effect_value = $theme_row->album_compact_thumb_hover_effect_value;
 
       $theme_row->thumb_title_font_color_hover = $theme_row->album_compact_title_font_color_hover;
       $theme_row->thumb_title_font_color = $theme_row->album_compact_title_font_color;

@@ -1,58 +1,6 @@
 // Forms
 
-.nf-form-fields-required {
-  font-size: rem-calc(13);
-}
-
-.nf-error-msg {
-  font-size: rem-calc(13);
-}
-
-.nf-before-form-content {
-  margin-bottom: rem-calc(20);
-}
-
-.nf-form-title {
-  .text-block & {
-    text-align: center;
-  }
-}
-
-.nf-field-label {
-  .text-block & {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-#ninja_forms_required_items,
-.nf-field-container {
-  margin-bottom: rem-calc(30);
-}
-
-.ninja-forms-form-wrap {
-  .text-block & {
-    text-align: center;
-  }
-
-  .nf-field-label {
-    label {
-      color: var(--text-color-default);
-      font-weight: 400;
-
-      .text-image-block--primary &,
-      .text-image-block--dark &,
-      .module--primary &,
-      .module--dark & {
-        color: var(--text-color-inverted);
-      }
-    }
-  }
-
-  .label-above .nf-field-label {
-    margin-bottom: rem-calc(5);
-  }
-
+%form-fields {
   [type=color],
   [type=date],
   [type=datetime-local],
@@ -106,6 +54,80 @@
       @extend .button--inverse;
     }
   }
+}
+
+%label {
+  color: var(--text-color-default);
+  font-weight: 400;
+
+  .text-image-block--primary &,
+  .text-image-block--dark &,
+  .module--primary &,
+  .module--dark & {
+    color: var(--text-color-inverted);
+  }
+}
+
+.form {
+  text-align: center;
+
+  @extend %form-fields;
+}
+
+.form__label {
+  @extend %label;
+
+  display: block;
+  margin-bottom: 0.3125rem;
+}
+
+.nf-form-fields-required {
+  font-size: rem-calc(13);
+}
+
+.nf-error-msg {
+  font-size: rem-calc(13);
+}
+
+.nf-before-form-content {
+  margin-bottom: rem-calc(20);
+}
+
+.nf-form-title {
+  .text-block & {
+    text-align: center;
+  }
+}
+
+.nf-field-label {
+  .text-block & {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+#ninja_forms_required_items,
+.nf-field-container,
+.form__field-container {
+  margin-bottom: rem-calc(30);
+}
+
+.ninja-forms-form-wrap {
+  .text-block & {
+    text-align: center;
+  }
+
+  .nf-field-label {
+    label {
+      @extend %label;
+    }
+  }
+
+  .label-above .nf-field-label {
+    margin-bottom: rem-calc(5);
+  }
+
+  @extend %form-fields;
 
   .label-right {
     text-align: left;

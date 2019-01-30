@@ -140,7 +140,6 @@ class GalleriesController_bwg {
     $message = 0;
     $successfully_updated = 0;
     $url_arg = array('page' => $this->page,'task' => 'display');
-
     $check = WDWLibrary::get('check', '');
     $all = WDWLibrary::get('check_all_items', '');
     $all = ($all == 'on' ? TRUE : FALSE);
@@ -285,8 +284,8 @@ class GalleriesController_bwg {
                                            ), admin_url('admin.php'));
     $params['add_preview_image_action'] = add_query_arg(array(
                                                           'action' => 'addImages',
-                                                          'width' => '800',
-                                                          'height' => '550',
+                                                          'bwg_width' => '800',
+                                                          'bwg_height' => '550',
                                                           'extensions' => 'jpg,jpeg,png,gif',
                                                           'callback' => 'bwg_add_preview_image',
                                                           BWG()->nonce => wp_create_nonce('addImages'),
@@ -294,8 +293,8 @@ class GalleriesController_bwg {
                                                         ), admin_url('admin-ajax.php'));
     $params['add_images_action'] = add_query_arg(array(
                                                    'action' => 'addImages',
-                                                   'width' => '1150',
-                                                   'height' => '800',
+                                                   'bwg_width' => '1150',
+                                                   'bwg_height' => '800',
                                                    'extensions' => 'jpg,jpeg,png,gif',
                                                    'callback' => 'bwg_add_image',
                                                    BWG()->nonce => wp_create_nonce('addImages'),
@@ -303,8 +302,8 @@ class GalleriesController_bwg {
                                                  ), admin_url('admin-ajax.php'));
     $params['add_tags_action'] = add_query_arg(array(
                                                  'action' => 'addTags_' . BWG()->prefix,
-                                                 'width' => '785',
-                                                 'height' => '550',
+                                                 'bwg_width' => '785',
+                                                 'bwg_height' => '550',
                                                  BWG()->nonce => wp_create_nonce('addTags_' . BWG()->prefix),
                                                ), admin_url('admin-ajax.php'));
     $params['preview_action'] = WDWLibrary::get_custom_post_permalink(array(

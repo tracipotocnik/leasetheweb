@@ -206,6 +206,11 @@ class WDWLibrary {
           $type = 'error';
           break;
         }
+        case 27: {
+          $message = __('http:// wrapper is disabled in the server configuration by allow_url_fopen=0.', BWG()->prefix);
+          $type = 'error';
+          break;
+        }
         default: {
           $message = '';
           break;
@@ -1312,13 +1317,12 @@ class WDWLibrary {
     global $wpdb;
     $message_id = 21;
     $options = new WD_BWG_Options();
-
     if ( $options->built_in_watermark_type != 'none' ) {
       $limitstart = '';
       if ( !$limit ) {
         $limitstart = ' LIMIT 50 OFFSET ' . $limit;
       }
-      $where = (($gallery_id) ? ' `gallery_id`=' . $gallery_id . ($image_id && !$limit ? ' AND `id`=' . $image_id : '') : 1);
+      $where = (($gallery_id) ? ' `gallery_id`=' . $gallery_id . ($image_id ? ' AND `id`=' . $image_id : '') : 1);
       $search = WDWLibrary::get( 's', '' );
       if ( $search ) {
         $where .= ' AND `filename` LIKE "%' . $search . '%"';
@@ -2061,6 +2065,7 @@ class WDWLibrary {
         break;
       case 'album_extended_preview':
         $defaults['extended_album_height'] = self::get_option_value('extended_album_height', 'extended_album_height', 'extended_album_height', $use_option_defaults, $params);
+        $defaults['extended_album_column_number'] = self::get_option_value('extended_album_column_number', 'extended_album_column_number', 'extended_album_column_number', $use_option_defaults, $params);
         $defaults['extended_album_thumb_width'] = self::get_option_value('extended_album_thumb_width', 'extended_album_thumb_width', 'album_extended_thumb_width', $use_option_defaults, $params);
         $defaults['extended_album_thumb_height'] = self::get_option_value('extended_album_thumb_height', 'extended_album_thumb_height', 'album_extended_thumb_height', $use_option_defaults, $params);
         $defaults['extended_album_image_column_number'] = self::get_option_value('extended_album_image_column_number', 'extended_album_image_column_number', 'album_extended_image_column_number', $use_option_defaults, $params);
@@ -2078,7 +2083,7 @@ class WDWLibrary {
         $defaults['show_tag_box'] = self::get_option_value('album_extended_show_tag_box', 'show_tag_box', 'album_extended_show_tag_box', $use_option_defaults, $params);
         $defaults['show_album_name'] = self::get_option_value('show_album_extended_name', 'show_album_name', 'show_album_extended_name', $use_option_defaults, $params);
         $defaults['show_gallery_description'] = self::get_option_value('album_extended_show_gallery_description', 'show_gallery_description', 'album_extended_show_gallery_description', $use_option_defaults, $params);
-        $defaults['extended_album_description_enable'] = self::get_option_value('extended_album_description_enable', 'extended_album_description_enable', 'extended_album_description_enable', $use_option_defaults, $params);
+		$defaults['extended_album_description_enable'] = self::get_option_value('extended_album_description_enable', 'extended_album_description_enable', 'extended_album_description_enable', $use_option_defaults, $params);
         $defaults['extended_album_view_type'] = self::get_option_value('extended_album_view_type', 'extended_album_view_type', 'album_extended_view_type', $use_option_defaults, $params);
         $defaults['extended_album_image_title'] = self::get_option_value('extended_album_image_title', 'extended_album_image_title', 'album_extended_image_title_show_hover', $use_option_defaults, $params);
         $defaults['extended_album_mosaic_hor_ver'] = self::get_option_value('extended_album_mosaic_hor_ver', 'extended_album_mosaic_hor_ver', 'album_mosaic', $use_option_defaults, $params);
@@ -2235,7 +2240,9 @@ class WDWLibrary {
       ),
     );
     $post = get_page_by_path($old_tag, OBJECT, BWG()->prefix . '_tag');
-    wp_delete_post($post->ID);
+    if (!empty($post)) {
+      wp_delete_post($post->ID, TRUE);
+    }
     WDWLibrary::bwg_create_custom_post($custom_post_params);
   }
 
@@ -2426,8 +2433,18 @@ class WDWLibrary {
         'bulk_action' => __('reset', BWG()->prefix),
         'disabled' => '',
       ),
-      'image_edit' => array(
-        'title' => __('Edit info', BWG()->prefix),
+      'image_edit_alt' => array(
+        'title' => __('Edit Alt/Title', BWG()->prefix),
+        'bulk_action' => __('edited', BWG()->prefix),
+        'disabled' => '',
+      ),
+      'image_edit_description' => array(
+        'title' => __('Edit description', BWG()->prefix),
+        'bulk_action' => __('edited', BWG()->prefix),
+        'disabled' => '',
+      ),
+      'image_edit_redirect' => array(
+        'title' => __('Edit redirect URL', BWG()->prefix),
         'bulk_action' => __('edited', BWG()->prefix),
         'disabled' => '',
       ),
@@ -2549,7 +2566,7 @@ class WDWLibrary {
     }
     $show_content = $show_content && !BWG()->is_pro;
     $support_forum_link = 'https://wordpress.org/support/plugin/photo-gallery';
-    $premium_link = 'https://web-dorado.com/files/fromPhotoGallery.php';
+    $premium_link = 'https://10web.io/plugins/wordpress-photo-gallery/?utm_source=photo_gallery&utm_medium=free_plugin';
     wp_enqueue_style(BWG()->prefix . '-roboto');
     wp_enqueue_style(BWG()->prefix . '-pricing');
     ob_start();
@@ -2657,7 +2674,7 @@ class WDWLibrary {
     $post_id = get_option( 'wp_page_for_privacy_policy' );
     if ( $post_id ) {
       $post = get_post( $post_id, OBJECT );
-      if ( $post->post_status == 'publish' ) {
+      if ( !is_null($post) && $post->post_status == 'publish' ) {
         $permalink = get_permalink( $post_id );
       }
     }
@@ -2774,7 +2791,7 @@ class WDWLibrary {
   }
 
   public static function error_message_ids() {
-	  return array( 26 );
+	  return array( 26, 27 );
   }
 
   /**

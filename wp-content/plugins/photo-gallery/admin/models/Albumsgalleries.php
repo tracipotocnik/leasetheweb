@@ -19,7 +19,7 @@ class AlbumsgalleriesModel_bwg {
     $limit = $total ? '' : ' LIMIT ' . $params['page_num'] . ',' . $params['items_per_page'];
     $query = '(SELECT id, name, preview_image, random_preview_image, published, 1 as is_album FROM ' . $wpdb->prefix . 'bwg_album WHERE id <> ' . $params['album_id'] . ' ' . (($where) ? 'AND '. $where : '' ) . ')
                 UNION ALL
-              (SELECT id, name, preview_image, random_preview_image, published, 0 as is_album FROM ' . $wpdb->prefix . 'bwg_gallery ' . (($where) ? 'WHERE '. $where : '' ) . $order_by . $limit . ')';
+              (SELECT id, name, preview_image, random_preview_image, published, 0 as is_album FROM ' . $wpdb->prefix . 'bwg_gallery ' . (($where) ? 'WHERE '. $where : '' )  . ')' . $order_by . $limit;
 
     if ($total) {
       $query = 'SELECT COUNT(*) FROM (' . $query . ') as temp';

@@ -580,7 +580,9 @@ a.wd-btn-primary:link {
 }
 
 @media screen and (max-width: 640px) {
-  .btn_view_thumbs, .btn_view_list {
+  .btn_view_thumbs,
+  .btn_view_list,
+  .dashicons-list-view.ctrl_bar_btn {
     display: none;
   }
 
@@ -791,4 +793,98 @@ a.wd-btn-primary:link {
 
 #explorer_header .item_name, #explorer_header .item_size, #explorer_header .item_date_modified {
   padding: 0px 15px;
+}
+
+#explorer_body_container .fm-no-found-wrap {
+	position: absolute;
+	top: 35%;
+	left: 0;
+	right: 0;
+	display:none;
+	text-align: center;
+}
+
+#explorer_body_container .fm-no-found-wrap h2 {
+	font-size: 20px;
+	line-height: 28px;
+	font-weight: 400;
+	margin: 0;
+}
+
+/* ----------- iPhone X ----------- */
+@media only screen
+and (max-device-width: 812px)
+and (-webkit-min-device-pixel-ratio: 3)
+and (orientation: landscape) {
+  #wrapper, #file_manager, #uploader {
+    width: 772px;
+  }
+}
+
+/* ----------- iPhone 6+, 7+ and 8+ ----------- */
+@media only screen
+and (max-device-width: 736px)
+and (-webkit-min-device-pixel-ratio: 3)
+and (orientation: landscape) {
+  #wrapper, #file_manager, #uploader {
+    width: 736px;
+  }
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+@media only screen
+and (max-device-width: 667px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: landscape) {
+  #wrapper, #file_manager, #uploader {
+    width: 667px;
+  }
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+@media only screen and (max-device-width: 568px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: landscape) {
+  #wrapper, #file_manager, #uploader {
+    width: 568px;
+  }
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+@media only screen
+and (max-device-width: 414px)
+and (-webkit-min-device-pixel-ratio: 3)
+and (orientation: portrait) {
+  #wrapper, #file_manager, #uploader {
+    width: 414px;
+  }
+}
+
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+@media only screen
+and (max-device-width: 375px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: portrait) {
+  #wrapper, #file_manager, #uploader {
+    width: 375px;
+  }
+}
+
+/* ----------- iPhone X ----------- */
+@media only screen
+and (max-device-width: 375px)
+and (-webkit-min-device-pixel-ratio: 3)
+and (orientation: portrait) {
+  #wrapper, #file_manager, #uploader {
+    width: 375px;
+  }
+}
+
+/* ----------- iPhone 5, 5S, 5C and 5SE ----------- */
+@media only screen and (max-device-width: 320px)
+and (-webkit-min-device-pixel-ratio: 2)
+and (orientation: portrait) {
+  #wrapper, #file_manager, #uploader {
+    width: 320px;
+  }
 }

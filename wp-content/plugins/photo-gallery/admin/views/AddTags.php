@@ -16,8 +16,8 @@ class AddTagsView_bwg extends AdminView_bwg {
     ob_start();
     $params['page_url'] = add_query_arg(array(
                                           'action' => 'addTags_' . BWG()->prefix,
-                                          'width' => '785',
-                                          'height' => '550',
+                                          'bwg_width' => '785',
+                                          'bwg_height' => '550',
                                           'TB_iframe' => '1',
                                         ), admin_url('admin-ajax.php'));
     echo $this->body($params);

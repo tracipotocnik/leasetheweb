@@ -7,6 +7,14 @@
     padding: rem-calc($module-spacing-desktop 0);
   }
 
+  &--flush {
+    padding-bottom: 30px;
+
+    @include breakpoint(medium) {
+      padding-bottom: 50px;
+    }
+  }
+
   &--dark {
     background: var(--black-color);
     color: var(--text-color-inverted);

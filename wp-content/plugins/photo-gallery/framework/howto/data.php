@@ -140,7 +140,7 @@ function bwg_howto_php_code($params) {
     }
   </style>
   <div class="wd-howto-phpcode">
-    <input id="wd_howto_php_code" class="wd-howto-phpinput" value="&#60;?php photo_gallery(<?php echo $params['shortcode_id']; ?>); ?&#62;" onclick="spider_select_value(this)" readonly="readonly" />
+    <input id="wd_howto_php_code" class="wd-howto-phpinput" value="&#60;?php if( function_exists('photo_gallery') ) { photo_gallery(<?php echo $params['shortcode_id']; ?>); } ?&#62;" onclick="spider_select_value(this)" readonly="readonly" />
     <button class="wd-howto-copy-button" onclick="wd_copy_input_value('wd_howto_php_code'); return false;"><?php _e('Copy', BWG()->prefix); ?></button>
   </div>
   <?php

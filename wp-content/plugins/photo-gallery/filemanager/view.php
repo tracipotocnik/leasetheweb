@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class FilemanagerView
+ * Class FilemanagerViewwp_db
  */
 class FilemanagerView {
 
@@ -21,8 +21,23 @@ class FilemanagerView {
   /**
    * Display.
    */
-  public function display() {
-    if (isset($_GET['filemanager_msg']) && esc_html($_GET['filemanager_msg']) != '') {
+  public function display( $params = array() ) {
+	$dir = $params['dir'];
+	$items = $params['items'];
+	$path_components = $params['path_components'];
+    $session = $params['session_data'];
+    $sort_by = $session['sort_by'];
+    $sort_order = $session['sort_order'];
+    $clipboard_task = $session['clipboard_task'];
+    $clipboard_files = $session['clipboard_files'];
+    $clipboard_src = $session['clipboard_src'];
+    $clipboard_dest = $session['clipboard_dest'];
+    $items_view = $session['items_view'];
+    $page_per = $params['page_per'];
+	$ajax_pagination_url = $params["ajax_pagination_url"];
+	$ajax_get_all_select_url = $params["ajax_get_all_select_url"];
+
+	if (isset($_GET['filemanager_msg']) && esc_html($_GET['filemanager_msg']) != '') {
       ?>
       <div id="file_manager_message" style="height:40px;">
         <div  style="background-color: #FFEBE8; border: 1px solid #CC0000; margin: 5px 15px 2px; padding: 5px 10px;">
@@ -32,19 +47,8 @@ class FilemanagerView {
       <?php
       $_GET['filemanager_msg'] = '';
     }
-    
-    $file_manager_data = $this->model->get_file_manager_data();
-    $items_view = $file_manager_data['session_data']['items_view'];
-    $sort_by = $file_manager_data['session_data']['sort_by'];
-    $sort_order = $file_manager_data['session_data']['sort_order'];
-    $clipboard_task = $file_manager_data['session_data']['clipboard_task'];
-    $clipboard_files = $file_manager_data['session_data']['clipboard_files'];
-    $clipboard_src = $file_manager_data['session_data']['clipboard_src'];
-    $clipboard_dest = $file_manager_data['session_data']['clipboard_dest'];
-
     // Register and include styles and scripts.
     BWG()->register_admin_scripts();
-
     wp_print_scripts('jquery');
     wp_print_scripts('jquery-ui-widget');
     wp_print_scripts('wp-pointer');
@@ -58,46 +62,29 @@ class FilemanagerView {
     <script src="<?php echo BWG()->plugin_url; ?>/filemanager/js/jq_uploader/jquery.iframe-transport.js"></script>
     <script src="<?php echo BWG()->plugin_url; ?>/filemanager/js/jq_uploader/jquery.fileupload.js"></script>
     <script>
+	  var DS = "<?php echo addslashes('/'); ?>";
       var demo_message = "<?php echo addslashes(__('This option is disabled in demo.', BWG()->prefix)); ?>";
       var ajaxurl = "<?php echo wp_nonce_url( admin_url('admin-ajax.php'), 'addImages', 'bwg_nonce' ); ?>";
-      var DS = "<?php echo addslashes('/'); ?>";
-
+      var ajax_pagination_url = "<?php echo $ajax_pagination_url; ?>";
+	  var ajax_get_all_select_url = "<?php echo $ajax_get_all_select_url; ?>";
       var errorLoadingFile = "<?php echo __('File loading failed', BWG()->prefix); ?>";
-
       var warningRemoveItems = "<?php echo __('Are you sure you want to permanently remove selected items?', BWG()->prefix); ?>";
       var warningCancelUploads = "<?php echo __('This will cancel uploads. Continue?', BWG()->prefix); ?>";
-
       var messageEnterDirName = "<?php echo __('Enter directory name', BWG()->prefix); ?>";
       var messageEnterNewName = "<?php echo __('Enter new name', BWG()->prefix); ?>";
       var messageFilesUploadComplete = "<?php echo __('Processing uploaded files...', BWG()->prefix); ?>";
-
       var root = "<?php echo addslashes($this->controller->get_uploads_dir()); ?>";
       var dir = "<?php echo (isset($_REQUEST['dir']) ? trim(esc_html($_REQUEST['dir'])) : ''); ?>";
       var dirUrl = "<?php echo $this->controller->get_uploads_url() . (isset($_REQUEST['dir']) ? esc_html($_REQUEST['dir']) . '/' : ''); ?>";
       var callback = "<?php echo (isset($_REQUEST['callback']) ? esc_html($_REQUEST['callback']) : ''); ?>";
       var sortBy = "<?php echo $sort_by; ?>";
       var sortOrder = "<?php echo $sort_order; ?>";
-      var wdb_all_files = <?php echo isset($file_manager_data["all_files"]) && json_encode($file_manager_data["all_files"]) ? json_encode($file_manager_data["all_files"]) : "''"; ?>;
-      var element_load_count = <?php echo isset($file_manager_data["element_load_count"]) && json_encode($file_manager_data["element_load_count"]) ? json_encode($file_manager_data["element_load_count"]) : "''"; ?>;
+      var page_per = "<?php echo $page_per; ?>";
     </script>
     <script src="<?php echo BWG()->plugin_url; ?>/filemanager/js/default.js?ver=<?php echo BWG()->plugin_version; ?>"></script>
     <link href="<?php echo BWG()->plugin_url; ?>/filemanager/css/default.css?ver=<?php echo BWG()->plugin_version; ?>" type="text/css" rel="stylesheet">
-    <?php
-    switch ($items_view) {
-      case 'list':
-        ?>
-        <link href="<?php echo BWG()->plugin_url; ?>/filemanager/css/default_view_list.css?ver=<?php echo BWG()->plugin_version; ?>" type="text/css" rel="stylesheet">
-        <?php
-        break;
-      case 'thumbs':
-        ?>
-        <link href="<?php echo BWG()->plugin_url; ?>/filemanager/css/default_view_thumbs.css?ver=<?php echo BWG()->plugin_version; ?>" type="text/css" rel="stylesheet">
-        <?php
-        break;
-    }
-    $i = 0;
-	?>
-    <form id="adminForm" name="adminForm" action="" method="post" class="wp-core-ui">
+	<link href="<?php echo BWG()->plugin_url; ?>/filemanager/css/default_view_<?php echo $items_view; ?>.css?ver=<?php echo BWG()->plugin_version; ?>" type="text/css" rel="stylesheet">
+	<form id="adminForm" name="adminForm" action="" method="post" class="wp-core-ui">
       <?php wp_nonce_field( '', 'bwg_nonce' ); ?>
       <div id="wrapper">
 		<div id="file_manager">
@@ -111,6 +98,8 @@ class FilemanagerView {
               <span class="dashicons dashicons-media-document ctrl_bar_btn" onclick="<?php echo (BWG()->is_demo ? 'alert(demo_message)' : 'onBtnCutClick(event, this)'); ?>" title="<?php echo __('Cut', BWG()->prefix); ?>"></span>
               <span class="dashicons dashicons-editor-paste-text ctrl_bar_btn" onclick="<?php echo (BWG()->is_demo ? 'alert(demo_message)' : 'onBtnPasteClick(event, this)'); ?>" title="<?php echo __('Paste', BWG()->prefix); ?>"></span>
               <span class="dashicons dashicons-trash ctrl_bar_btn" onclick="<?php echo (BWG()->is_demo ? 'alert(demo_message)' : 'onBtnRemoveItemsClick(event, this)'); ?>" title="<?php echo __('Remove items', BWG()->prefix); ?>"></span>
+              <span class="ctrl_bar_divider">|</span>
+              <span class="dashicons dashicons-update ctrl_bar_btn" onclick="<?php echo (BWG()->is_demo ? 'alert(demo_message)' : 'onBtnParsingItemsClick(event, this)'); ?>" title="<?php echo __('Refresh', BWG()->prefix); ?>"></span>
               <span class="ctrl_bar_divider">|</span>
             </div>
             <div class="ctrls_right">
@@ -127,16 +116,12 @@ class FilemanagerView {
             </div>
           </div>
           <div id="path">
-            <?php
-            foreach ($file_manager_data['path_components'] as $key => $path_component) {
-              ?>
-              <a <?php echo ($key == 0) ? 'title="'. __("To change upload directory go to Options page.", BWG()->prefix).'"' : ''; ?> class="path_component path_dir"
-                 onclick="onPathComponentClick(event, this, <?php echo $key; ?>);">
-                  <?php echo str_replace('\\', '', $path_component['name']); ?></a>
+            <?php foreach ( $path_components as $key => $path_component ) { ?>
+              <a class="path_component path_dir" onclick="onPathComponentClick(event, this, <?php echo $key; ?>);">
+                <?php echo str_replace( ABSPATH, '', $path_component['name'] ); ?>
+              </a>
               <a class="path_component path_separator"><?php echo '/'; ?></a>
-              <?php
-            }
-            ?>
+            <?php } ?>
           </div>
           <div id="explorer">
             <div id="explorer_header_wrapper">
@@ -198,70 +183,26 @@ class FilemanagerView {
             </div>
             <div id="explorer_body_wrapper">
               <div id="explorer_body_container">
-                <div id="explorer_body" data-files_count="<?php echo $file_manager_data["files_count"]; ?>">
+                <div id="explorer_body" data-page_per=<?php echo $items['page_per']; ?> data-files_count="<?php echo $items["num_rows"]; ?>">
                   <?php
-                  foreach ($file_manager_data['files'] as $key => $file) {
+                  $i = 0;
+                  foreach ( $items['files'] as $key => $file ) {
                     if ( BWG()->is_demo !== '1' || strpos( $file[ 'date_modified' ], '20 July 2014' ) === FALSE ) {
-                      $file[ 'name' ] = esc_html( $file[ 'name' ] );
-                      $file[ 'filename' ] = esc_html( $file[ 'filename' ] );
-                      $file[ 'thumb' ] = esc_html( $file[ 'thumb' ] );
-                      ?>
-                      <div class="explorer_item" draggable="true"
-                           name="<?php echo $file[ 'name' ]; ?>"
-                           filename="<?php echo $file[ 'filename' ]; ?>"
-                           alt="<?php echo $file[ 'alt' ]; ?>"
-                           filethumb="<?php echo $file[ 'thumb' ]; ?>"
-                           filesize="<?php echo $file[ 'size' ]; ?>"
-                           filetype="<?php echo strtoupper( $file[ 'type' ] ); ?>"
-                           date_modified="<?php echo $file[ 'date_modified' ]; ?>"
-                           fileresolution="<?php echo $file[ 'resolution' ]; ?>"
-                           fileCredit="<?php echo isset( $file[ 'credit' ] ) ? $file[ 'credit' ] : ''; ?>"
-                           fileAperture="<?php echo isset( $file[ 'aperture' ] ) ? $file[ 'aperture' ] : ''; ?>"
-                           fileCamera="<?php echo isset( $file[ 'camera' ] ) ? $file[ 'camera' ] : ''; ?>"
-                           fileCaption="<?php echo isset( $file[ 'caption' ] ) ? $file[ 'caption' ] : ''; ?>"
-                           fileIso="<?php echo isset( $file[ 'iso' ] ) ? $file[ 'iso' ] : ''; ?>"
-                           fileOrientation="<?php echo isset( $file[ 'orientation' ] ) ? $file[ 'orientation' ] : ''; ?>"
-                           fileCopyright="<?php echo isset( $file[ 'copyright' ] ) ? $file[ 'copyright' ] : ''; ?>"
-                           fileTags='<?php echo isset( $file[ 'tags' ] ) ? $file[ 'tags' ] : ''; ?>'
-                           onmouseover="onFileMOver(event, this);"
-                           onmouseout="onFileMOut(event, this);"
-                           onclick="onFileClick(event, this);"
-                           ondblclick="onFileDblClick(event, this);"
-                           ondragstart="onFileDragStart(event, this);"
-                        <?php if ( $file[ 'is_dir' ] == true ) { ?>
-                          ontouchend="onFileDblClick(event, this);"
-                          ondragover="onFileDragOver(event, this);"
-                          ondrop="onFileDrop(event, this);"
-                        <?php } ?>
-                           isDir="<?php echo $file[ 'is_dir' ] == true ? 'true' : 'false'; ?>">
-                        <span class="item_numbering"><?php echo ++$i; ?></span>
-                        <span class="item_thumb">
-                         <img src="<?php echo $file[ 'thumb' ]; ?>" <?php echo $key >= 24 ? 'onload="loaded()"' : ''; ?> />
-                        </span>
-                        <span class="item_icon">
-                         <img src="<?php echo $file[ 'thumb' ]; ?>"/>
-                        </span>
-                        <span class="item_name">
-                         <?php echo $file[ 'name' ]; ?>
-                        </span>
-                        <span class="item_size">
-                          <?php echo $file[ 'size' ]; ?>
-                        </span>
-                        <span class="item_date_modified">
-                          <?php echo $file[ 'date_modified' ]; ?>
-                        </span>
-                      </div>
-                      <?php
+                      $file['index'] = ++$i;
+                      echo $this->print_file_thumb($file);
                     }
                   }
                   ?>
                 </div>
+				<div class="fm-no-found-wrap">
+					<h2><?php _e('No items found.', BWG()->prefix); ?></h2>
+				</div>
               </div>
             </div>
           </div>
           <div class="ctrls_bar ctrls_bar_footer">
             <div class="ctrls_left">
-              <a id="select_all_images" class="button button-primary button-large" onclick="onBtnSelectAllClick();"><?php echo __('Select All', BWG()->prefix); ?></a>
+              <a id="select_all_images" class="button button-primary button-large" onclick="onBtnSelectAllClick('<?php echo $dir; ?>');"><?php echo __('Select All', BWG()->prefix); ?></a>
             </div>
             <div class="ctrls_right">
               <span id="file_names_span">
@@ -310,8 +251,8 @@ class FilemanagerView {
               $query_url = add_query_arg(array('action' => 'bwg_UploadHandler', 'dir' => (isset($_REQUEST['dir']) ? esc_html($_REQUEST['dir']) : '') . '/'), $query_url);
               ?>
                 <input id="jQueryUploader" type="file" name="files[]"
-                       data-url="<?php echo $query_url; ?>"
-                       multiple>
+				   data-url="<?php echo $query_url; ?>"
+				   multiple>
               </div>
              </div>
           </label>
@@ -355,10 +296,9 @@ class FilemanagerView {
 			'upload_problem': '<?php _e('There has been a problem while trying to upload the following images. Please try to upload them again.', BWG()->prefix); ?>',
 			'allowed_upload_types' : '<?php _e('Allowed upload types JPG, JPEG, GIF, PNG.', BWG()->prefix); ?>'
 		}
-		jQuery(window).load(function() {
+		jQuery(document).ready(function () {
 			jQuery("#loading_div", window.parent.document).hide();
 		});
-
 		jQuery("#jQueryUploader").fileupload({
 		  dataType: "json",
 		  dropZone: jQuery("#uploader_hitter"),
@@ -444,4 +384,60 @@ class FilemanagerView {
     <?php
     die();
   }
+
+  /**
+   * Print file thumb.
+   *
+   * @param array $file
+   *
+   * @return false|string
+   */
+	function print_file_thumb( $file = array() ) {
+		ob_start();
+		$file['name'] = esc_html( $file['name'] );
+		$file['filename'] = esc_html( $file['filename'] );
+		$file['alt' ] = esc_html( $file['alt'] );
+		$file['thumb'] = esc_html( $file['thumb'] );
+		$file['credit'] = esc_html( $file['credit'] );
+		$file['aperture'] = esc_html( $file['aperture'] );
+		$file['camera'] = esc_html( $file['camera'] );
+		$file['caption'] = esc_html( $file['caption'] );
+		$file['copyright'] = esc_html( $file['copyright'] );
+		$file['tags'] = esc_html( $file['tags'] );
+		?>
+		<div class="explorer_item"
+			name="<?php echo $file['name']; ?>"
+			filename="<?php echo $file['filename']; ?>"
+			alt="<?php echo $file['alt']; ?>"
+			filethumb="<?php echo $file['thumb']; ?>"
+			filesize="<?php echo $file['size']; ?>"
+			filetype="<?php echo strtoupper( $file['type'] ); ?>"
+			date_modified="<?php echo $file['date_modified']; ?>"
+			fileresolution="<?php echo $file['resolution']; ?>"
+			fileCredit="<?php echo isset( $file['credit'] ) ? $file['credit'] : ''; ?>"
+			fileAperture="<?php echo isset( $file['aperture'] ) ? $file['aperture'] : ''; ?>"
+			fileCamera="<?php echo isset( $file['camera'] ) ? $file['camera'] : ''; ?>"
+			fileCaption="<?php echo isset( $file['caption'] ) ? $file['caption'] : ''; ?>"
+			fileIso="<?php echo isset( $file['iso'] ) ? $file['iso'] : ''; ?>"
+			fileOrientation="<?php echo isset( $file['orientation'] ) ? $file['orientation'] : ''; ?>"
+			fileCopyright="<?php echo isset( $file['copyright'] ) ? $file['copyright'] : ''; ?>"
+			fileTags='<?php echo isset( $file['tags'] ) ? $file['tags'] : ''; ?>'
+			onmouseover="onFileMOver(event, this);"
+			onmouseout="onFileMOut(event, this);"
+			onclick="onFileClick(event, this);"
+			ondblclick="onFileDblClick(event, this);"
+			<?php if ( $file[ 'is_dir' ] == true ) { ?>
+				ontouchend="onFileDblClick(event, this);"
+			<?php } ?>
+			isDir="<?php echo ($file[ 'is_dir' ] == true) ? 'true' : 'false'; ?>">
+				<span class="item_numbering"><?php echo $file['index']; ?></span>
+				<span class="item_thumb"><img src="<?php echo $file[ 'thumb' ]; ?>" /></span>
+				<span class="item_icon"><img src="<?php echo $file[ 'thumb' ]; ?>" /></span>
+				<span class="item_name"><?php echo $file['name']; ?></span>
+				<span class="item_size"><?php echo $file['size']; ?></span>
+				<span class="item_date_modified"><?php echo $file['date_modified']; ?></span>
+		</div>
+		<?php
+		return ob_get_clean();
+	}
 }

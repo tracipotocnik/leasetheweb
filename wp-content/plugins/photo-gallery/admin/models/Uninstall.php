@@ -70,6 +70,7 @@ class UninstallModel_bwg {
     delete_option("wd_bwg_options");
     delete_option('tenweb_notice_status');
     delete_user_meta(get_current_user_id(), 'bwg_photo_gallery');
+    delete_option('tenweb_notice_status');
     if ( isset($_COOKIE['bwg_image_asc_or_desc']) ) {
       $_COOKIE['bwg_image_asc_or_desc'] = '';
     }

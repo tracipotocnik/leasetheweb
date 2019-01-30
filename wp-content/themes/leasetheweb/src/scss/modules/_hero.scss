@@ -6,6 +6,12 @@
   text-align: center;
   width: 100%;
 
+  &--small {
+    @include breakpoint(medium) {
+      min-height: rem-calc(600);
+    }
+  }
+
   &--large {
     @include breakpoint(medium) {
       min-height: rem-calc(600);

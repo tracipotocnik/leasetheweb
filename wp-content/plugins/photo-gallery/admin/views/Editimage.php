@@ -14,7 +14,7 @@ class EditimageView_bwg {
     $instagram_post_width  = (int) WDWLibrary::get('instagram_post_width', $image_width);
     $instagram_post_height = (int) WDWLibrary::get('instagram_post_height', $image_height);
     $modified_date = WDWLibrary::get('modified_date', '');
-    $FeedbackSocialProofHeight = 132;
+    $FeedbackSocialProofHeight = 176;
     if ( $instagram_post_width ) {
       if ( $image_height / ($instagram_post_height + $FeedbackSocialProofHeight) < $image_width / $instagram_post_width ) {
         $instagram_post_width = ($image_height - $FeedbackSocialProofHeight) * $instagram_post_width / $instagram_post_height + 16;
@@ -148,8 +148,8 @@ class EditimageView_bwg {
                                      'image_id' => $image_id,
                                      'image_url' => $image_data->image_url,
                                      'thumb_url' => $image_data->thumb_url,
-                                     'width' => '1000',
-                                     'height' => '600',
+                                     'bwg_width' => '1000',
+                                     'bwg_height' => '600',
                                      'TB_iframe' => '1',
                                    ), admin_url('admin-ajax.php'));
     }
@@ -161,8 +161,8 @@ class EditimageView_bwg {
                                      'action' => 'editimage_' . BWG()->prefix,
                                      'type' => 'crop',
                                      'image_id' => $image_id,
-                                     'width' => '1000',
-                                     'height' => '600',
+                                     'bwg_width' => '1000',
+                                     'bwg_height' => '600',
                                      'TB_iframe' => '1',
                                    ), admin_url('admin-ajax.php'));
     }
@@ -185,7 +185,7 @@ class EditimageView_bwg {
         imagedestroy($dst_r);
       }
       elseif ( $type_orig == 3 ) {
-        $img_r = imagecreatefrompng($filename);
+        $img_r = imagecreatefrompng($exp_filename[0]);
         $dst_r = ImageCreateTrueColor($thumb_width, $thumb_height);
         imageColorAllocateAlpha($dst_r, 0, 0, 0, 127);
         imagealphablending($dst_r, FALSE);
@@ -198,7 +198,7 @@ class EditimageView_bwg {
         imagedestroy($dst_r);
       }
       elseif ( $type_orig == 1 ) {
-        $img_r = imagecreatefromgif($filename);
+        $img_r = imagecreatefromgif($exp_filename[0]);
         $dst_r = ImageCreateTrueColor($thumb_width, $thumb_height);
         imageColorAllocateAlpha($dst_r, 0, 0, 0, 127);
         imagealphablending($dst_r, FALSE);
@@ -471,8 +471,8 @@ class EditimageView_bwg {
                                      'image_id' => $image_id,
                                      'image_url' => $image_data->image_url,
                                      'thumb_url' => $image_data->thumb_url,
-                                     'width' => '650',
-                                     'height' => '500',
+                                     'bwg_width' => '650',
+                                     'bwg_height' => '500',
                                      'TB_iframe' => '1',
                                    ), admin_url('admin-ajax.php'));
     }
@@ -484,8 +484,8 @@ class EditimageView_bwg {
                                      'action' => 'editimage_' . BWG()->prefix,
                                      'type' => 'rotate',
                                      'image_id' => $image_id,
-                                     'width' => '650',
-                                     'height' => '500',
+                                     'bwg_width' => '650',
+                                     'bwg_height' => '500',
                                      'TB_iframe' => '1',
                                    ), admin_url('admin-ajax.php'));
     }
@@ -789,7 +789,6 @@ class EditimageView_bwg {
     wp_print_scripts('jquery-ui-slider');
     ?>
     <link type="text/css" rel="stylesheet" id="bwg_tables-css" href="<?php echo BWG()->front_url . '/css/bwg_edit_image.css'; ?>" media="all">
-    <link type="text/css" rel="stylesheet" href="<?php echo BWG()->front_url . '/css/font-awesome/font-awesome.min.css?ver=4.6.3'; ?>">
     <form method="post" id="bwg_rotate_image" action="<?php echo $form_action; ?>">
       <?php wp_nonce_field('editimage_' . BWG()->prefix, 'bwg_nonce'); ?>
       <div class="main_cont" style="height: <?php echo $popup_height; ?>px;">
