@@ -21,7 +21,7 @@ if (is_singular('post')) {
 
 if (post_password_required($post->ID)) {
   //action URL for the post-level password protection form
-  $context['password_form_action_url'] = add_query_arg('action', 'postpass', wp_login_url());
+  $context['password_form_action_url'] = '/wp-login.php?action=postpass';
   Timber::render('single-password.twig', $context);
 } else {
   Timber::render($templates, $context);
