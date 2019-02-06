@@ -45,12 +45,24 @@
         {% if (module.text_image_block_button_1_text and module.text_image_block_button_1_url) or (module.text_image_block_button_2_text and module.text_image_block_button_2_url) %}
           <div class="text-image-block__buttons">
             {% if module.text_image_block_button_1_text and module.text_image_block_button_1_url %}
-              <a class="button button--small" href="{{ module.text_image_block_button_1_url }}">
+              <a class="button button--small
+                {% if module.button_1_color_override %}
+                  button--{{ module.button_1_color_override }}
+                {% endif %}"
+                href="{{ module.text_image_block_button_1_url }}"
+                {% if module.new_tab_1 %}target="_blank"{% endif %}>
                 {{ module.text_image_block_button_1_text }}
               </a>
             {% endif %}
             {% if module.text_image_block_button_2_text and module.text_image_block_button_2_url %}
-              <a class="button button--small button--outline" href="{{ module.text_image_block_button_2_url }}">
+              <a class="button button--small
+                {% if module.button_2_color_override %}
+                  button--{{ module.button_2_color_override }}
+                {% else %}
+                  button--outline
+                {% endif %}"
+                href="{{ module.text_image_block_button_2_url }}"
+                {% if module.new_tab_2 %}target="_blank"{% endif %}>
                 {{ module.text_image_block_button_2_text }}
               </a>
             {% endif %}

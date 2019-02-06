@@ -116,6 +116,182 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5c5a94a8da91e",
+            "label": "Button Style",
+            "name": "button_style",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "round": "Round",
+                "square": "Square"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "round",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5ac9a5c164b06",
+            "label": "Head Block - Pre CSS",
+            "name": "head_block_pre_css",
+            "type": "textarea",
+            "instructions": "Code inserted before CSS declared in the &lt;head&gt;. Include font declarations here.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5aca813c54ad6",
+            "label": "Head Block - Post CSS",
+            "name": "head_block_post_css",
+            "type": "textarea",
+            "instructions": "Code inserted after CSS declared in the &lt;head&gt;. Include CSS overrides here.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5acad7be5e817",
+            "label": "Scripts Block - Top",
+            "name": "scripts_block_top",
+            "type": "textarea",
+            "instructions": "Code inserted after the opening &lt;body&gt; tag.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5ac9a6a364b07",
+            "label": "Scripts Block - Bottom",
+            "name": "scripts_block_bottom",
+            "type": "textarea",
+            "instructions": "Code inserted before the closing &lt;\/body&gt; tag.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": "",
+            "new_lines": ""
+        },
+        {
+            "key": "field_5ac9a899d0426",
+            "label": "Primary Font",
+            "name": "primary_font",
+            "type": "text",
+            "instructions": "Defaults to Proxima Nova if left blank. Fallback is set to sans-serif. Do not end in a semi-colon.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ac9a94fd0427",
+            "label": "Primary Font Regular Weight",
+            "name": "primary_font_regular_weight",
+            "type": "text",
+            "instructions": "Defaults to 400 if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ac9a962d0428",
+            "label": "Primary Font Medium Weight",
+            "name": "primary_font_medium_weight",
+            "type": "text",
+            "instructions": "Defaults to 500 if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ac9a970d0429",
+            "label": "Primary Font Bold Weight",
+            "name": "primary_font_bold_weight",
+            "type": "text",
+            "instructions": "Defaults to 700 if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
@@ -135,5 +311,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1548881535
+    "modified": 1549440229
 }

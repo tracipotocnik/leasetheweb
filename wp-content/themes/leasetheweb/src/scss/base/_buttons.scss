@@ -1,23 +1,23 @@
 .button {
   background: var(--primary-color);
-  border-radius: rem-calc(28);
+  border-radius: var(--button-border-radius);
   border-width: 2px;
   color: var(--text-color-inverted);
-  font-size: rem-calc(14);
-  letter-spacing: rem-calc(0.8);
+  font-size: 14px;
+  letter-spacing: 0.8px;
   margin: 0;
-  min-width: rem-calc(160);
+  min-width: 160px;
   outline: none;
-  padding: rem-calc(12 25);
+  padding: 12px 25px;
   text-transform: uppercase;
   transition: all 0.25s ease-out;
 
   @include primary-font-bold();
 
   @include breakpoint(medium) {
-    font-size: rem-calc(15);
-    min-width: rem-calc(200);
-    padding: rem-calc(15 25);
+    font-size: 15px;
+    min-width: 200px;
+    padding: 15px 25px;
   }
 
   &:hover,
@@ -26,7 +26,7 @@
   }
 
   .icon {
-    height: rem-calc(18);
+    height: 18px;
     left: 0;
     position: absolute;
     top: 50%;
@@ -89,7 +89,43 @@
 }
 
 .button--small {
-  font-size: rem-calc(14);
-  min-width: rem-calc(160);
-  padding: rem-calc(12 25);
+  font-size: 14px;
+  min-width: 160px;
+  padding: 12px 25px;
+}
+
+.button--a {
+  background: var(--button-a-color);
+  border-color: var(--button-a-color);
+  color: var(--text-color-inverted);
+
+  &:hover,
+  &:focus {
+    background: var(--button-a-hover-color);
+    border-color: var(--button-a-hover-color);
+  }
+}
+
+.button--b {
+  background: var(--button-b-color);
+  border-color: var(--button-b-color);
+  color: var(--text-color-inverted);
+
+  &:hover,
+  &:focus {
+    background: var(--button-b-hover-color);
+    border-color: var(--button-b-hover-color);
+  }
+}
+
+.button--c {
+  background: var(--button-c-color);
+  border-color: var(--button-c-color);
+  color: var(--text-color-inverted);
+
+  &:hover,
+  &:focus {
+    background: var(--button-c-hover-color);
+    border-color: var(--button-c-hover-color);
+  }
 }

@@ -19,7 +19,12 @@
         {% endif %}
         {% if block.two_up_cta_button_text and block.two_up_cta_button_url %}
           <div class="two-up-cta__button">
-            <a class="button" href="{{ block.two_up_cta_button_url }}">
+            <a class="button
+              {% if block.button_color_override %}
+                button--{{ block.button_color_override }}
+              {% endif %}"
+              href="{{ block.two_up_cta_button_url }}"
+              {% if block.new_tab %}target="_blank"{% endif %}>
               {{ block.two_up_cta_button_text }}
             </a>
           </div>

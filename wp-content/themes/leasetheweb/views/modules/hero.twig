@@ -50,11 +50,17 @@
         {% endif %}
         {% if module.hero_button_text and module.hero_button_url %}
           <a class="hero__button button
-            {% if (module.hero_background_type == 'image' and module.hero_background_overlay == 'primary') or module.hero_background_type == 'solid_primary' %}
-              button--inverse
-            {% elseif (module.hero_background_type == 'image' and module.hero_background_overlay == 'secondary') or module.hero_background_type == 'solid_secondary' %}
-              button--inverse
-            {% endif %}" href="{{ module.hero_button_url }}">
+            {% if module.button_color_override %}
+              button--{{ module.button_color_override }}
+            {% else %}
+              {% if (module.hero_background_type == 'image' and module.hero_background_overlay == 'primary') or module.hero_background_type == 'solid_primary' %}
+                button--inverse
+              {% elseif (module.hero_background_type == 'image' and module.hero_background_overlay == 'secondary') or module.hero_background_type == 'solid_secondary' %}
+                button--inverse
+              {% endif %}
+            {% endif %}"
+            href="{{ module.hero_button_url }}"
+            {% if module.new_tab %}target="_blank"{% endif %}>
             {{ module.hero_button_text }}
           </a>
         {% endif %}

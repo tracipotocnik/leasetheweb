@@ -31,6 +31,7 @@
       --text-color-inverted: {{ options.inverted_text_color }};
       --secondary-color: {{ options.secondary_color }};
       --black-color: {{ options.black }};
+
       {% if options.primary_font %}
         --primary-font: {{ options.primary_font }}, sans-serif;
       {% else %}
@@ -50,6 +51,31 @@
         --primary-font-bold-weight: {{ options.primary_font_bold_weight }};
       {% else %}
         --primary-font-bold-weight: 700;
+      {% endif %}
+
+      {% if options.button_style == 'square' %}
+        --button-border-radius: 0;
+      {% else %}
+        --button-border-radius: 28px;
+      {% endif %}
+
+      {% if options.button_a_color %}
+        --button-a-color: {{ options.button_a_color }};
+      {% endif %}
+      {% if options.button_a_hover_color %}
+        --button-a-hover-color: {{ options.button_a_hover_color }};
+      {% endif %}
+      {% if options.button_b_color %}
+        --button-b-color: {{ options.button_b_color }};
+      {% endif %}
+      {% if options.button_b_hover_color %}
+        --button-b-hover-color: {{ options.button_b_hover_color }};
+      {% endif %}
+      {% if options.button_c_color %}
+        --button-c-color: {{ options.button_c_color }};
+      {% endif %}
+      {% if options.button_c_hover_color %}
+        --button-c-hover-color: {{ options.button_c_hover_color }};
       {% endif %}
     }
   </style>

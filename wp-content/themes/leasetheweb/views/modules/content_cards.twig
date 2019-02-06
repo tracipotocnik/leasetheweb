@@ -42,7 +42,14 @@
                 {% endif %}
                 {% if block.content_card_button_text and block.content_card_button_url %}
                   <div class="content-card__button">
-                    <a class="button button--small button--dark" href="{{ block.content_card_button_url }}">
+                    <a class="button button--small
+                      {% if block.button_color_override %}
+                        button--{{ block.button_color_override }}
+                      {% else %}
+                        button--dark
+                      {% endif %}"
+                      href="{{ block.content_card_button_url }}"
+                      {% if block.new_tab %}target="_blank"{% endif %}>
                       {{ block.content_card_button_text }}
                     </a>
                   </div>

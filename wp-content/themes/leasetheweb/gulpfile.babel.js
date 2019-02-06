@@ -208,7 +208,7 @@ gulp.task('styleguide', ['styleguide:generate', 'styleguide:applystyles']);
 // Watch
 gulp.task('default', function() {
   sync.init({
-    proxy: 'http://leasetheweb.wp.local',
+    proxy: 'http://localhost:8888/',
     port: 3001,
     ghostMode: {
       scroll: true,

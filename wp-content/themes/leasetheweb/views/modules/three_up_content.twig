@@ -34,9 +34,13 @@
             {% if block.three_up_content_block_button_text and block.three_up_content_block_button_url %}
               <div class="three-up-content__block__button">
                 <a class="button button--small
-                  {% if module.three_up_content_background != 'none' %}
+                  {% if block.button_color_override %}
+                    button--{{ block.button_color_override }}
+                  {% elseif module.three_up_content_background != 'none' %}
                     button--inverse
-                  {% endif %}" href="{{ block.three_up_content_block_button_url }}">
+                  {% endif %}"
+                  href="{{ block.three_up_content_block_button_url }}"
+                  {% if block.new_tab %}target="_blank"{% endif %}>
                   {{ block.three_up_content_block_button_text }}
                 </a>
               </div>
@@ -46,9 +50,13 @@
       </div>
       {% if module.three_up_content_button_text and module.three_up_content_button_url %}
         <a class="three-up-content__button button
-          {% if module.three_up_content_background != 'none' %}
+          {% if module.button_color_override %}
+            button--{{ module.button_color_override }}
+          {% elseif module.three_up_content_background != 'none' %}
             button--inverse
-          {% endif %}" href="{{ module.three_up_content_button_url }}">
+          {% endif %}"
+          href="{{ module.three_up_content_button_url }}"
+          {% if module.new_tab %}target="_blank"{% endif %}>
           {{ module.three_up_content_button_text }}
         </a>
       {% endif %}

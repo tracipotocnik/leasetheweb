@@ -43,8 +43,12 @@
                     {% for button in block.accordion_list_button %}
                       <a
                         class="button
-                        {% if loop.last %}button--outline{% endif %}
-                        {% if button.button_icon != 'none' %}button--has-icon{% endif %}"
+                        {% if button.button_color_override %}
+                          button--{{ button.button_color_override }}
+                        {% else %}
+                          {% if loop.last %}button--outline{% endif %}
+                          {% if button.button_icon != 'none' %}button--has-icon{% endif %}
+                        {% endif %}"
                         href="{{ button.button_url }}"
                         {% if button.new_tab %}target="_blank"{% endif %}>
                         <span class="button__text">
