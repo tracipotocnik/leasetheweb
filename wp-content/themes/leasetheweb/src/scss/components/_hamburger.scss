@@ -6,42 +6,50 @@
   cursor: pointer;
   display: inline-block;
   font-size: 0;
-  height: rem-calc(15);
+  height: 15px;
   margin: 0 0 0 auto;
   padding: 0;
   position: relative;
   text-indent: -9999px;
-  top: rem-calc(1);
-  width: rem-calc(30);
+  top: 1px;
+  width: 30px;
 
   &:focus {
     outline: none;
   }
 
   a {
-    background-color: rgba(255, 255, 255, 1);
+    background-color: $white;
     display: block;
     font-size: 0;
-    height: rem-calc(3);
+    height: 3px;
     left: 0;
     line-height: 0;
     position: absolute;
     right: 0;
-    top: rem-calc(6);
+    top: 6px;
     transition: background-color 0.3s;
     width: 100%;
 
+    .title-bar--white & {
+      background-color: var(--black-color);
+    }
+
     &::before,
     &::after {
-      background-color: #fff;
+      background-color: $white;
       content: "";
       display: block;
-      height: rem-calc(3);
+      height: 3px;
       left: 0;
       position: absolute;
       transition-delay: 0.3s, 0s, 0s;
       transition-duration: 0.3s, 0.3s, 0.3s;
       width: 100%;
+
+      .title-bar--white & {
+        background-color: var(--black-color);
+      }
     }
 
     &::before {
@@ -57,7 +65,7 @@
 
   &[aria-expanded="true"] {
     a {
-      background-color: rgba(255, 255, 255, 0);
+      background-color: transparent;
 
       &::before,
       &::after {

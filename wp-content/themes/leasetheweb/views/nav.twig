@@ -1,4 +1,4 @@
-<aside class="primary-nav" id="primaryNav" data-off-canvas data-position="right">
+<aside class="primary-nav{% if options.header_style == 'white' %} primary-nav--white{% endif %}" id="primaryNav" data-off-canvas data-position="right">
   <h1 class="show-for-large primary-nav__logo">
     <a href="{{ site.url }}">
       <img src="{{ TimberImage(options.header_logo).src }}" alt="{{ site.name }}">
@@ -24,9 +24,9 @@
             </a>
           </li>
         {% endfor %}
-      </ul> <!-- /.menu.nested -->
+      </ul>
       {% endif %}
     </li>
   {% endfor %}
-  </ul> <!-- /.menu -->
-</aside> <!-- /.off-canvas -->
+  </ul>
+</aside>

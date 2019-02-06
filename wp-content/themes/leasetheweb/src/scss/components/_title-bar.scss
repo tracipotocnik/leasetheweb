@@ -4,8 +4,12 @@
   background: var(--black-color);
   display: flex;
   justify-content: space-between;
-  padding: rem-calc(12 24);
+  padding: 12px 24px;
   width: 100%;
+
+  &--white {
+    background: $white;
+  }
 
   &::after,
   &::before {
@@ -14,7 +18,7 @@
 }
 
 .title-bar-title {
-  height: rem-calc(65);
+  height: 65px;
   line-height: 1;
   margin: 0;
 

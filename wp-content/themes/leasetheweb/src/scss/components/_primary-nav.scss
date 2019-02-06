@@ -13,9 +13,9 @@
   @include off-canvas-position(right);
 
   background: var(--black-color);
-  font-size: rem-calc(14);
-  letter-spacing: rem-calc(1);
-  padding: rem-calc(20);
+  font-size: 14px;
+  letter-spacing: 1px;
+  padding: 20px;
   text-transform: uppercase;
 
   @include breakpoint(large) {
@@ -26,11 +26,15 @@
     justify-content: space-between;
     max-height: none;
     overflow: inherit;
-    padding: rem-calc(12 16 12 24);
+    padding: 12px 16px 12px 24px;
     position: static;
     width: 100%;
 
     @include primary-font-medium();
+
+    &--white {
+      background: $white;
+    }
 
     ~ .off-canvas-content {
       box-shadow: none;
@@ -56,7 +60,7 @@
 }
 
 .primary-nav__logo {
-  height: rem-calc(65);
+  height: 65px;
   line-height: 1;
   margin: 0;
 
@@ -82,7 +86,7 @@
   &.menu {
     > li {
       > a {
-        padding: rem-calc(18);
+        padding: 18px;
       }
     }
   }
@@ -98,8 +102,8 @@
 
 .js-drilldown-back > a::before {
   border-color: transparent var(--primary-color) transparent transparent;
-  margin-right: rem-calc(15);
-  margin-top: rem-calc(-4);
+  margin-right: 15px;
+  margin-top: -4px;
 }
 
 .is-drilldown-submenu {

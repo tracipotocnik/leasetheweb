@@ -16,4 +16,30 @@
       outline: none;
     }
   }
+
+  @include breakpoint(large) {
+    .primary-nav--white & {
+      a {
+        color: var(--black-color);
+
+        &:hover,
+        &:focus {
+          color: var(--link-hover-color);
+        }
+      }
+    }
+
+    &.submenu {
+      .primary-nav--white & {
+        a {
+          color: var(--black-color);
+
+          &:hover,
+          &:focus {
+            color: var(--link-hover-color);
+          }
+        }
+      }
+    }
+  }
 }

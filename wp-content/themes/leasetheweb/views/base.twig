@@ -20,7 +20,7 @@
 
       <div class="off-canvas-content" data-off-canvas-content>
         {% block header %}
-          <div class="title-bar hide-for-large">
+          <div class="title-bar{% if options.header_style == 'white' %} title-bar--white{% endif %} hide-for-large">
             <h1 class="title-bar-title">
               <a href="{{ site.url }}">
                 <img src="{{ TimberImage(options.header_logo).src }}" alt="{{ site.name }}">

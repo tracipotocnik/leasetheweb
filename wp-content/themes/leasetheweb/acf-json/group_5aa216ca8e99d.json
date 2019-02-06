@@ -51,6 +51,54 @@
             "mime_types": ""
         },
         {
+            "key": "field_5c5a94a8da91e",
+            "label": "Button Style",
+            "name": "button_style",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "round": "Round",
+                "square": "Square"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "round",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5c5b0599de982",
+            "label": "Header Style",
+            "name": "header_style",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "dark": "Dark",
+                "white": "White"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "dark",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
             "key": "field_5aa5fb8f1a251",
             "label": "Facebook URL",
             "name": "facebook_url",
@@ -116,30 +164,6 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
-        },
-        {
-            "key": "field_5c5a94a8da91e",
-            "label": "Button Style",
-            "name": "button_style",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "round": "Round",
-                "square": "Square"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "default_value": "round",
-            "layout": "vertical",
-            "return_format": "value",
-            "save_other_choice": 0
         },
         {
             "key": "field_5ac9a5c164b06",
@@ -311,5 +335,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1549440229
+    "modified": 1549469179
 }
