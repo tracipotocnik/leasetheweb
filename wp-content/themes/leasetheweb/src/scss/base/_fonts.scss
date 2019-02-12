@@ -17,3 +17,15 @@
   font-style: normal;
   font-weight: var(--primary-font-bold-weight);
 }
+
+@mixin secondary-font() {
+  font-family: var(--secondary-font);
+  font-style: normal;
+  font-weight: var(--secondary-font-regular-weight);
+}
+
+@mixin secondary-font-bold() {
+  font-family: var(--secondary-font);
+  font-style: normal;
+  font-weight: var(--secondary-font-bold-weight);
+}

@@ -6,7 +6,7 @@
 
 .review__stars {
   color: var(--primary-color);
-  margin-bottom: rem-calc(30);
+  margin-bottom: 30px;
 
   .module--primary &,
   .module--secondary & {
@@ -15,7 +15,7 @@
 
   .icon-star {
     color: transparent;
-    margin: 0 rem-calc(2.5);
+    margin: 0 2.5px;
     stroke: currentColor;
   }
 }
@@ -53,16 +53,15 @@
 .review__quote {
   @extend h4;
 
-  @include primary-font();
+  @include secondary-font;
 
-  font-style: italic;
-  margin-bottom: rem-calc(18);
+  margin-bottom: 18px;
 }
 
 .review__attribution {
-  @include primary-font-bold();
+  @include secondary-font-bold;
 
-  font-size: rem-calc(18);
+  font-size: 18px;
   line-height: 1.4;
   margin: 0;
 }

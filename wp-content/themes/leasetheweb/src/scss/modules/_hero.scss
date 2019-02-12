@@ -8,13 +8,13 @@
 
   &--small {
     @include breakpoint(medium) {
-      min-height: rem-calc(600);
+      min-height: 600px;
     }
   }
 
   &--large {
     @include breakpoint(medium) {
-      min-height: rem-calc(600);
+      min-height: 600px;
     }
   }
 
@@ -51,15 +51,15 @@
 
 .hero__content {
   margin: auto;
-  max-width: rem-calc(780);
+  max-width: 780px;
   position: relative;
 }
 
 .hero__subtitle {
-  font-size: rem-calc(16);
-  margin: rem-calc(18) 0 0;
+  font-size: 16px;
+  margin: 18px 0 0;
 }
 
 .hero__button {
-  margin-top: rem-calc(30);
+  margin-top: 30px;
 }

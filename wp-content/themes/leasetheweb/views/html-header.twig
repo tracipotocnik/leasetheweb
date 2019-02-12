@@ -52,6 +52,22 @@
         --primary-font-bold-weight: 700;
       {% endif %}
 
+      {% if options.secondary_font %}
+        --secondary-font: {{ options.secondary_font }}, sans-serif;
+      {% else %}
+        --secondary-font: 'proxima-nova', sans-serif;
+      {% endif %}
+      {% if options.secondary_font_regular_weight %}
+        --secondary-font-regular-weight: {{ options.secondary_font_regular_weight }};
+      {% else %}
+        --secondary-font-regular-weight: 400;
+      {% endif %}
+      {% if options.secondary_font_bold_weight %}
+        --secondary-font-bold-weight: {{ options.secondary_font_bold_weight }};
+      {% else %}
+        --secondary-font-bold-weight: 700;
+      {% endif %}
+
       {% if options.button_style == 'square' %}
         --button-border-radius: 0;
       {% else %}

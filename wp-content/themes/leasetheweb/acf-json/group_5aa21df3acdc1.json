@@ -138,6 +138,23 @@
             "default_value": "#f7f4f2"
         },
         {
+            "key": "field_5c62fc0872fc2",
+            "label": "Button Override Colors",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
             "key": "field_5c5a9bd73c5c8",
             "label": "Button A Color",
             "name": "button_a_color",
@@ -146,22 +163,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "default_value": ""
-        },
-        {
-            "key": "field_5c5a9d7f0de5c",
-            "label": "Button A Hover Color",
-            "name": "button_a_hover_color",
-            "type": "color_picker",
-            "instructions": "optional",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -176,7 +178,37 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "25",
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": ""
+        },
+        {
+            "key": "field_5c5a9c0a3c5cb",
+            "label": "Button C Color",
+            "name": "button_c_color",
+            "type": "color_picker",
+            "instructions": "optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": ""
+        },
+        {
+            "key": "field_5c5a9d7f0de5c",
+            "label": "Button A Hover Color",
+            "name": "button_a_hover_color",
+            "type": "color_picker",
+            "instructions": "optional",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -191,22 +223,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "25",
-                "class": "",
-                "id": ""
-            },
-            "default_value": ""
-        },
-        {
-            "key": "field_5c5a9c0a3c5cb",
-            "label": "33",
-            "name": "button_c_color",
-            "type": "color_picker",
-            "instructions": "optional",
-            "required": 1,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "25",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -221,7 +238,7 @@
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "25",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
@@ -245,5 +262,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1549989092
+    "modified": 1549990979
 }

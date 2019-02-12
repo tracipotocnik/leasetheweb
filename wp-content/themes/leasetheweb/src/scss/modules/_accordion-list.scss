@@ -2,7 +2,7 @@
 
 .accordion-list__title {
   color: var(--primary-color);
-  margin-bottom: rem-calc(42);
+  margin-bottom: 42px;
 
   .module--primary &,
   .module--secondary & {
@@ -12,7 +12,7 @@
 
 .accordion-list__item {
   border-top: 2px solid $lighter-gray;
-  padding: rem-calc(32 0 28);
+  padding: 32px 0 28px;
   position: relative;
 
   &:last-child {
@@ -38,7 +38,7 @@
   margin: 0;
   outline: none;
   overflow: visible;
-  padding: rem-calc(20 0 20 30);
+  padding: 20px 0 20px 30px;
   position: absolute;
   right: 0;
   -webkit-tap-highlight-color: transparent;
@@ -80,10 +80,10 @@
 .accordion-list__item-title {
   cursor: pointer;
   margin: 0;
-  padding-right: rem-calc(30);
+  padding-right: 30px;
   position: relative;
 
-  @include primary-font();
+  @include primary-font;
 }
 
 .accordion-list__item-content {
@@ -97,9 +97,9 @@
 
 .accordion-list__item-body {
   margin: 0;
-  max-width: rem-calc(885);
+  max-width: 885px;
   overflow: hidden;
-  padding: rem-calc(30 0 3 0);
+  padding: 30px 0 3px;
 
   p:last-child {
     margin: 0;
@@ -107,10 +107,10 @@
 }
 
 .accordion-list__buttons {
-  margin: rem-calc(20 -3 0);
+  margin: 20px -3px 0;
 
   .button {
-    margin: rem-calc(10 3 0);
+    margin: 10px 3px 0;
 
     .module--primary &,
     .module--secondary & {

@@ -336,6 +336,22 @@
             "endpoint": 0
         },
         {
+            "key": "field_5c62fce6e7c3e",
+            "label": "Primary",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
             "key": "field_5ac9a899d0426",
             "label": "Primary Font",
             "name": "primary_font",
@@ -410,10 +426,88 @@
             "prepend": "",
             "append": "",
             "maxlength": ""
+        },
+        {
+            "key": "field_5c62fd0ae7c3f",
+            "label": "Secondary",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5c62fc79e7c3a",
+            "label": "Secondary Font",
+            "name": "secondary_font",
+            "type": "text",
+            "instructions": "Defaults to Proxima Nova if left blank. Fallback is set to sans-serif. Do not end in a semi-colon.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5c62fc92e7c3b",
+            "label": "Secondary Font Regular Weight",
+            "name": "secondary_font_regular_weight",
+            "type": "text",
+            "instructions": "Defaults to 400 if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5c6301c87e3bd",
+            "label": "Secondary Font Bold Weight",
+            "name": "secondary_font_bold_weight",
+            "type": "text",
+            "instructions": "Defaults to 700 if left blank.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
         }
     ],
     "location": [
         [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-theme-settings"
+            },
             {
                 "param": "options_page",
                 "operator": "==",
@@ -429,5 +523,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1549989092
+    "modified": 1549992544
 }
