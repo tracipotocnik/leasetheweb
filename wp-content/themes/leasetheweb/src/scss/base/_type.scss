@@ -2,9 +2,9 @@
 
 body {
   color: var(--text-color-default);
-  font-size: rem-calc(16);
+  font-size: 16px;
 
-  @include primary-font();
+  @include primary-font;
 }
 
 h1 {
