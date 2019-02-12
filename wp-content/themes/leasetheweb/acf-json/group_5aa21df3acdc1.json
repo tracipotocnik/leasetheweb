@@ -116,11 +116,26 @@
             "required": 1,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "66",
+                "width": "33",
                 "class": "",
                 "id": ""
             },
             "default_value": "#212121"
+        },
+        {
+            "key": "field_5c62e7f25a63a",
+            "label": "Light Color",
+            "name": "light_color",
+            "type": "color_picker",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "#f7f4f2"
         },
         {
             "key": "field_5c5a9bd73c5c8",
@@ -184,11 +199,11 @@
         },
         {
             "key": "field_5c5a9c0a3c5cb",
-            "label": "Button C Color",
+            "label": "33",
             "name": "button_c_color",
             "type": "color_picker",
             "instructions": "optional",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "25",
@@ -230,5 +245,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1549442654
+    "modified": 1549989092
 }

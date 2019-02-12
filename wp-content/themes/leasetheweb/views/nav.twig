@@ -1,4 +1,4 @@
-<aside class="primary-nav{% if options.header_style == 'white' %} primary-nav--white{% endif %}" id="primaryNav" data-off-canvas data-position="right">
+<aside class="primary-nav primary-nav--{{ options.header_style }}" id="primaryNav" data-off-canvas data-position="right">
   <h1 class="show-for-large primary-nav__logo">
     <a href="{{ site.url }}">
       <img src="{{ TimberImage(options.header_logo).src }}" alt="{{ site.name }}">

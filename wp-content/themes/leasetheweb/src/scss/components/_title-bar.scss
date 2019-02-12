@@ -11,6 +11,10 @@
     background: $white;
   }
 
+  &--light {
+    background: var(--light-color);
+  }
+
   &::after,
   &::before {
     display: none;

@@ -3,6 +3,116 @@
     "title": "Theme Settings",
     "fields": [
         {
+            "key": "field_5c5a94a8da91e",
+            "label": "Button Style",
+            "name": "button_style",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "round": "Round",
+                "square": "Square"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "round",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5c5b0599de982",
+            "label": "Header Style",
+            "name": "header_style",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "dark": "Dark",
+                "light": "Light",
+                "white": "White"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "dark",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5c62f0eba6a8f",
+            "label": "Footer Style",
+            "name": "footer_style",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "dark": "Dark",
+                "light": "Light",
+                "white": "White"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "default_value": "dark",
+            "layout": "vertical",
+            "return_format": "value",
+            "save_other_choice": 0
+        },
+        {
+            "key": "field_5c520e58cbabc",
+            "label": "Password Page Message",
+            "name": "private_page_message",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Enter your password.",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5c62e6cd4018a",
+            "label": "Logos",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
             "key": "field_5aa216e0c9c29",
             "label": "Header Logo",
             "name": "header_logo",
@@ -51,52 +161,21 @@
             "mime_types": ""
         },
         {
-            "key": "field_5c5a94a8da91e",
-            "label": "Button Style",
-            "name": "button_style",
-            "type": "radio",
+            "key": "field_5c62e7004018b",
+            "label": "Social Links",
+            "name": "",
+            "type": "accordion",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
-                "width": "50",
+                "width": "",
                 "class": "",
                 "id": ""
             },
-            "choices": {
-                "round": "Round",
-                "square": "Square"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "default_value": "round",
-            "layout": "vertical",
-            "return_format": "value",
-            "save_other_choice": 0
-        },
-        {
-            "key": "field_5c5b0599de982",
-            "label": "Header Style",
-            "name": "header_style",
-            "type": "radio",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "dark": "Dark",
-                "white": "White"
-            },
-            "allow_null": 0,
-            "other_choice": 0,
-            "default_value": "dark",
-            "layout": "vertical",
-            "return_format": "value",
-            "save_other_choice": 0
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
         },
         {
             "key": "field_5aa5fb8f1a251",
@@ -147,10 +226,10 @@
             "placeholder": ""
         },
         {
-            "key": "field_5c520e58cbabc",
-            "label": "Private Page Message",
-            "name": "private_page_message",
-            "type": "text",
+            "key": "field_5c62e6ba40189",
+            "label": "Scripts",
+            "name": "",
+            "type": "accordion",
             "instructions": "",
             "required": 0,
             "conditional_logic": 0,
@@ -159,11 +238,9 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "Enter your password.",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
         },
         {
             "key": "field_5ac9a5c164b06",
@@ -191,7 +268,7 @@
             "type": "textarea",
             "instructions": "Code inserted after CSS declared in the &lt;head&gt;. Include CSS overrides here.",
             "required": 0,
-            "conditional_logic": 0,
+            "conditional_logic": null,
             "wrapper": {
                 "width": "",
                 "class": "",
@@ -240,6 +317,23 @@
             "maxlength": "",
             "rows": "",
             "new_lines": ""
+        },
+        {
+            "key": "field_5c62e68540188",
+            "label": "Fonts",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
         },
         {
             "key": "field_5ac9a899d0426",
@@ -335,5 +429,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1549469179
+    "modified": 1549989092
 }

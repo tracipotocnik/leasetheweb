@@ -22,6 +22,10 @@
     background: var(--black-color) no-repeat center center;
     background-size: cover;
     color: var(--text-color-inverted);
+
+    &.hero--text-default {
+      color: var(--text-color-default);
+    }
   }
 }
 

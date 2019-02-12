@@ -25,7 +25,7 @@
   }
 
   &--light {
-    background: $tan;
+    background: var(--light-color);
 
     + .module--light {
       padding-top: 0;

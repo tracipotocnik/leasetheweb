@@ -2,16 +2,24 @@
 
 .footer {
   background: var(--black-color);
+
+  &--white {
+    background: $white;
+  }
+
+  &--light {
+    background: var(--light-color);
+  }
 }
 
 .footer__content {
-  padding: rem-calc(50 0);
+  padding: 50px 0;
   text-align: center;
   width: 100%;
 
   @include breakpoint(medium) {
     display: flex;
-    padding: rem-calc(110 0);
+    padding: 110px 0;
     text-align: left;
   }
 }
@@ -24,8 +32,8 @@
 
 .footer__logo {
   display: block;
-  margin: 0 auto rem-calc(40);
-  width: rem-calc(75);
+  margin: 0 auto 40px;
+  width: 75px;
 
   img {
     width: 100%;
@@ -33,7 +41,7 @@
 
   @include breakpoint(medium) {
     align-self: center;
-    margin: 0 rem-calc(60) 0 0;
+    margin: 0 60px 0 0;
   }
 
   &:focus {
@@ -43,11 +51,11 @@
 
 .footer__menu {
   display: block;
-  font-size: rem-calc(14);
-  letter-spacing: rem-calc(0.7);
+  font-size: 14px;
+  letter-spacing: 0.7px;
   line-height: 1.4;
   list-style: none;
-  margin: 0 0 rem-calc(20);
+  margin: 0 0 20px;
   padding: 0;
   text-transform: uppercase;
 
@@ -58,11 +66,11 @@
   }
 
   @include breakpoint(medium) {
-    margin: 0 rem-calc(27) 0 0;
+    margin: 0 27px 0 0;
   }
 
   li {
-    padding: rem-calc(0 0 15);
+    padding: 0 0 15px;
 
     @include breakpoint(medium) {
       &:last-child {
@@ -78,11 +86,21 @@
     &:focus {
       color: var(--link-hover-color);
     }
+
+    .footer--white &,
+    .footer--light & {
+      color: var(--text-color-default);
+
+      &:hover,
+      &:focus {
+        color: var(--link-hover-color);
+      }
+    }
   }
 }
 
 .footer__social {
-  margin-top: rem-calc(30);
+  margin-top: 30px;
 
   @include breakpoint(medium) {
     align-items: center;
@@ -91,28 +109,28 @@
   }
 
   .icon-facebook {
-    height: rem-calc(33);
-    width: rem-calc(18);
+    height: 33px;
+    width: 18px;
   }
 
   .icon-twitter {
-    height: rem-calc(25);
-    width: rem-calc(31);
+    height: 25px;
+    width: 31px;
   }
 
   .icon-instagram {
-    height: rem-calc(30);
-    width: rem-calc(30);
+    height: 30px;
+    width: 30px;
   }
 }
 
 .footer__social__link {
   color: var(--primary-color);
   display: inline-block;
-  margin: 0 rem-calc(15);
+  margin: 0 15px;
 
   @include breakpoint(medium) {
-    margin: 0 0 0 rem-calc(25);
+    margin: 0 0 0 25px;
   }
 
   &:hover,
@@ -125,8 +143,8 @@
 .footer__bottom {
   border-top: 1px solid $gray;
   color: $gray;
-  font-size: rem-calc(14);
-  padding: rem-calc(13 0 35);
+  font-size: 14px;
+  padding: 13px 0 35px;
   text-align: center;
 
   a {
@@ -150,7 +168,7 @@
 
 .footer__attribution {
   display: none;
-  margin: 0 0 rem-calc(3);
+  margin: 0 0 3px;
 
   @include breakpoint(medium) {
     margin: 0;

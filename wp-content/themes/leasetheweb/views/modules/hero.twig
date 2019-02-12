@@ -5,12 +5,19 @@
   {% if module.hero_size == 'flush' %}
     module--flush
   {% endif %}
+
   {% if module.hero_background_type == 'image' %}
     hero--has-image
   {% endif %}
 
+  {% if module.hero_text_color == 'default' %}
+    hero--text-default
+  {% endif %}
+
   {% if module.hero_background_type == 'solid_dark' %}
     module--dark
+  {% elseif module.hero_background_type == 'solid_light' %}
+    module--light
   {% elseif module.hero_background_type == 'solid_primary' %}
     module--primary
   {% elseif module.hero_background_type == 'solid_secondary' %}
