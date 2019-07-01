@@ -26,23 +26,26 @@ class GalleriesModel_bwg {
     else {
       $query = 'SELECT COUNT(*)';
     }
-    $query .= ' FROM `' . $wpdb->prefix . 'bwg_gallery` as t1';
+    $query .= ' FROM (SELECT * FROM `' . $wpdb->prefix . 'bwg_gallery`';
+    if ( !current_user_can('manage_options') && BWG()->options->gallery_role ) {
+      $query .= " WHERE author=" . get_current_user_id();
+    }
+    else {
+      $query .= " WHERE author>=0";
+    }
+    if ( $search ) {
+      $query .= ' AND `name` LIKE "%' . $search . '%"';
+    }
+    if ( !$total ) {
+      $query .= ' ORDER BY `' . $orderby . '` ' . $order;
+      $query .= ' LIMIT ' . $page_num . ',' . $page_per;
+    }
+    $query .= ') as t1';
     if ( !$total ) {
       $query .= ' LEFT JOIN `' . $wpdb->prefix . 'bwg_image` as t2 on t1.id=t2.gallery_id';
     }
-    if ( !current_user_can('manage_options') && BWG()->options->gallery_role ) {
-      $query .= " WHERE t1.author=" . get_current_user_id();
-    }
-    else {
-      $query .= " WHERE t1.author>=0";
-    }
-    if ( $search ) {
-      $query .= ' AND t1.`name` LIKE "%' . $search . '%"';
-    }
     if ( !$total ) {
-      $query .= " GROUP BY t1.id";
-      $query .= ' ORDER BY `' . $orderby . '` ' . $order;
-      $query .= ' LIMIT ' . $page_num . ',' . $page_per;
+      $query .= " GROUP BY t1.id ORDER BY t1.`" . $orderby . "` " . $order;
     }
     if ( !$total ) {
       $rows = $wpdb->get_results($query);
@@ -212,6 +215,7 @@ class GalleriesModel_bwg {
       $rows['template']->filename = "tempfilename";
       $rows['template']->date = "tempdate";
       $rows['template']->resolution = "tempresolution";
+      $rows['template']->resolution_thumb = "tempthumbresolution";
       $rows['template']->size = "tempsize";
       $rows['template']->filetype = "tempfiletype";
       $rows['template']->description = "tempdescription";
@@ -441,12 +445,16 @@ class GalleriesModel_bwg {
           continue;
         }
         $thumb_url = WDWLibrary::get('thumb_url_' . $image_id, '');
-        $description = WDWLibrary::get('image_description_' . $image_id, '');
-        $alt = WDWLibrary::get('image_alt_text_' . $image_id, '');
+        $description = str_replace(array('\\', '\t'), '', WDWLibrary::get('image_description_' . $image_id, ''));
+        $alt = esc_html(str_replace(array('<a>', '</a>', '\\', '\t'), '',  WDWLibrary::get('image_alt_text_' . $image_id, '', FALSE)));
         $date = WDWLibrary::get('input_date_modified_' . $image_id, '');
         $size = WDWLibrary::get('input_size_' . $image_id, '');
         $filetype = WDWLibrary::get('input_filetype_' . $image_id, '');
         $resolution = WDWLibrary::get('input_resolution_' . $image_id, '');
+        $resolution_thumb = WDWLibrary::get('input_resolution_thumb_' . $image_id, '');
+        if( ($resolution_thumb == '' || $resolution_thumb == 'x') && $thumb_url != '' ) {
+          $resolution_thumb = WDWLibrary::get_thumb_size( $thumb_url );
+        }
         $order = (int) WDWLibrary::get('order_input_' . $image_id, 0);
         $redirect_url = WDWLibrary::get('redirect_url_' . $image_id, '');
         $tags_ids = WDWLibrary::get('tags_' . $image_id, '');
@@ -456,10 +464,11 @@ class GalleriesModel_bwg {
           'description' => WDWLibrary::spider_replace4byte($description),
           'redirect_url' => $redirect_url,
           'alt' => WDWLibrary::spider_replace4byte($alt),
-          'date' => $date,
+          'date' => date('Y-m-d H:i:s', strtotime($date)),
           'size' => $size,
           'filetype' => $filetype,
           'resolution' => $resolution,
+          'resolution_thumb' => $resolution_thumb,
           'order' => $order,
         );
         $temp_image_id = $image_id;
@@ -492,6 +501,8 @@ class GalleriesModel_bwg {
           $image_id = $new_image_id;
         }
         else {
+          $resolution_thumb = WDWLibrary::get_thumb_size( $thumb_url );
+          $data['resolution_thumb'] = $resolution_thumb;
           $save = $wpdb->update($wpdb->prefix . 'bwg_image', $data, array( 'id' => $image_id ));
         }
 
@@ -542,7 +553,6 @@ class GalleriesModel_bwg {
         }
       }
     }
-
     if ( !in_array($image_message, WDWLibrary::error_message_ids()) && $image_action && $checked_items_count ) {
       $actions = WDWLibrary::image_actions();
       $image_message = sprintf(_n('%s item successfully %s.', '%s items successfully %s.', $checked_items_count, BWG()->prefix), $checked_items_count, $actions[$image_action]['bulk_action']);
@@ -846,7 +856,7 @@ class GalleriesModel_bwg {
     if ( $search ) {
       $where .= ' AND `filename` LIKE "%' . $search . '%"';
     }
-    $images_data = $wpdb->get_results( 'SELECT id, image_url, thumb_url FROM `' . $wpdb->prefix . 'bwg_image` WHERE ' . $where );
+    $images_data = $wpdb->get_results( 'SELECT id, image_url, thumb_url, resolution_thumb FROM `' . $wpdb->prefix . 'bwg_image` WHERE ' . $where );
     @ini_set('memory_limit', '-1');
     foreach ( $images_data as $image_data ) {
       $image_data->image_url = stripcslashes($image_data->image_url);
@@ -907,8 +917,15 @@ class GalleriesModel_bwg {
           imagedestroy($thumb_rotate);
         }
       }
+        $resolution_thumb = isset($image_data->resolution_thumb) ? $image_data->resolution_thumb : '';
+        if($resolution_thumb != '') {
+            $res = explode('x', $resolution_thumb);
+            $resolution_thumb = $res[1] . "x" . $res[0];
+            WDWLibrary::update_thumb_dimansions($resolution_thumb,"id = $image_data->id");
+        }
     }
-    WDWLibrary::update_image_modified_date( $where );
+
+    WDWLibrary::update_image_modified_date($where);
 
 	return 22;
   }
@@ -939,9 +956,13 @@ class GalleriesModel_bwg {
       $new_file_path = htmlspecialchars_decode(BWG()->upload_dir . $img_id->thumb_url, ENT_COMPAT | ENT_QUOTES);
       if ( WDWLibrary::repair_image_original($file_path) ) {
         WDWLibrary::resize_image( $file_path, $new_file_path, BWG()->options->upload_thumb_width, BWG()->options->upload_thumb_height );
+        $resolution_thumb = WDWLibrary::$thumb_dimansions;
+        if($resolution_thumb != '') {
+            WDWLibrary::update_thumb_dimansions($resolution_thumb,"id = $img_id->id");
+        }
       }
     }
-	  WDWLibrary::update_image_modified_date( $where );
+    WDWLibrary::update_image_modified_date( $where );
 
     return 23;
   }
@@ -1031,9 +1052,6 @@ class GalleriesModel_bwg {
    * @return int
    */
   public function image_edit_alt( $id, $gallery_id = 0, $all = FALSE ) {
-    var_dump($id);
-    var_dump($gallery_id);
-
     if ( $gallery_id == 0 ) {
       $gallery_id = (int) WDWLibrary::get('current_id', 0);
     }

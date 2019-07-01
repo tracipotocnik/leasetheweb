@@ -198,6 +198,7 @@ function submitFiles() {
           fileData['filetype'] = wdb_all_files_filtered[i]["type"];
           fileData['date_modified'] = wdb_all_files_filtered[i]["date_modified"];
           fileData['resolution'] = wdb_all_files_filtered[i]["resolution"];
+          fileData['resolution_thumb'] = wdb_all_files_filtered[i]["resolution_thumb"];
           fileData['aperture'] = wdb_all_files_filtered[i]["aperture"];
           fileData['credit'] = wdb_all_files_filtered[i]["credit"];
           fileData['camera'] =wdb_all_files_filtered[i]["camera"];
@@ -227,6 +228,7 @@ function submitFiles() {
         fileData['filetype'] = jQuery(file_object).attr("filetype");
         fileData['date_modified'] = jQuery(file_object).attr("date_modified");
         fileData['resolution'] = jQuery(file_object).attr("fileresolution");
+        fileData['resolution_thumb'] = jQuery(file_object).attr("fileresolution_thumb");
         fileData['aperture'] = jQuery(file_object).attr("fileAperture");
         fileData['credit'] = jQuery(file_object).attr("fileCredit");
         fileData['camera'] = jQuery(file_object).attr("fileCamera");
@@ -376,14 +378,14 @@ function onBtnBackClick(event, obj) {
 }
 
 function onPathComponentClick(event, obj, key) {
-	if (typeof key != "undefined" && key == 0) {
-		path = "";
-	}
-	else {
-		path = jQuery(obj).html();
-		path = path.trim();
-	}
-	submit("", null, null, null, path, null, null, null, null, null, null);
+	var path = '';
+	var pathArr = [];
+	jQuery("#path .path_dir").each( function( i,v ) {
+		path += ( i == 0 ) ? '' : '/' + jQuery(v).text().trim();
+		pathArr[i] = path;
+	});
+	var path = ( pathArr[key] ) ? pathArr[key] : '';
+	submit('display', null, null, null, path, null, null, null, null, null, null);
 }
 
 function onBtnShowImportClick(event, obj) {
@@ -410,17 +412,7 @@ function onKeyDown(e) {
 	var e = e || window.event;
 	var chCode1 = e.which || e.paramlist_keyCode;
 	if ((e.ctrlKey || e.metaKey) && chCode1 == 65) {
-		all_files_selected = true;
-		jQuery(".explorer_item").addClass("explorer_item_select");
-		jQuery(".importer_item").addClass("importer_item_select");
-		filesSelected = [];
-		jQuery(".explorer_item").each(function() {
-		  var objName = jQuery(this).attr("name");
-		  if (filesSelected.indexOf(objName) == -1) {
-			filesSelected.push(objName);
-			keyFileSelected = this;
-		  }
-		});
+    onBtnSelectAllClick(dir + DS);
 		e.preventDefault();
 	}
 }

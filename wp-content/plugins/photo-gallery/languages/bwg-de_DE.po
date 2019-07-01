@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bwg\n"
 "POT-Creation-Date: 2018-01-24 10:48+0400\n"
-"PO-Revision-Date: 2018-01-24 10:48+0400\n"
+"PO-Revision-Date: 2019-03-11 00:23-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.2.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
@@ -79,7 +79,7 @@ msgstr ""
 #: admin/views/Comments.php:106 admin/views/Galleries.php:108
 #: admin/views/Galleries.php:203 admin/views/Galleries.php:726
 msgid "Publish"
-msgstr ""
+msgstr "Veröffentlichen"
 
 #: admin/controllers/Albums.php:39 admin/controllers/Comments.php:41
 #: admin/controllers/Galleries.php:34 admin/controllers/Galleries.php:81
@@ -126,11 +126,11 @@ msgstr ""
 
 #: admin/controllers/Albums.php:93 photo-gallery.php:257
 msgid "Gallery Groups"
-msgstr ""
+msgstr "Galerie Gruppen"
 
 #: admin/controllers/Albumsgalleries.php:50
 msgid "Galleries / Gallery groups"
-msgstr ""
+msgstr "Galerien / Galerie-gruppen"
 
 #: admin/controllers/Comments.php:93 photo-gallery.php:268
 #, fuzzy
@@ -156,7 +156,7 @@ msgstr ""
 
 #: admin/controllers/Galleries.php:52
 msgid "Recreate thumbnail"
-msgstr ""
+msgstr "Thumbnails neu erzeugen"
 
 #: admin/controllers/Galleries.php:53
 msgid "recreated"
@@ -213,10 +213,8 @@ msgid "Add tag"
 msgstr ""
 
 #: admin/controllers/Galleries.php:137 photo-gallery.php:1478
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Galleries"
-msgstr "Galerie ist leer."
+msgstr "Galerien"
 
 #: admin/controllers/Galleries.php:437 admin/controllers/Options.php:191
 msgid "Item Succesfully Saved."
@@ -572,7 +570,7 @@ msgstr ""
 #: admin/views/AddTags.php:65 admin/views/Albums.php:50
 #: admin/views/Comments.php:61 admin/views/Themes.php:72
 msgid "Select all"
-msgstr ""
+msgstr "Alle auswählen"
 
 #: admin/views/AddTags.php:68 admin/views/AddTags.php:86
 #: admin/views/Albums.php:89 admin/views/Comments.php:64
@@ -592,7 +590,7 @@ msgstr ""
 
 #: admin/views/AdminView.php:94
 msgid "Add New"
-msgstr ""
+msgstr "Neue hinzufügen"
 
 #: admin/views/AdminView.php:164 framework/WDWLibrary.php:316
 #: framework/WDWLibrary.php:494 framework/WDWLibrary.php:817
@@ -635,7 +633,7 @@ msgstr "Letzte"
 
 #: admin/views/AdminView.php:281 filemanager/view.php:248
 msgid "Select All"
-msgstr ""
+msgstr "Alle auswählen"
 
 #: admin/views/AdminView.php:286
 msgid "Select bulk action"
@@ -643,11 +641,11 @@ msgstr ""
 
 #: admin/views/AdminView.php:288
 msgid "Bulk Actions"
-msgstr ""
+msgstr "Sammelaktion"
 
 #: admin/views/AdminView.php:297
 msgid "Apply"
-msgstr ""
+msgstr "Anwenden"
 
 #: admin/views/Albums.php:53 admin/views/Albumsgalleries.php:77
 #: admin/views/Albumsgalleries.php:101 admin/views/Shortcode.php:609
@@ -677,10 +675,8 @@ msgstr "Sie können das Standard Theme nicht löschen"
 
 #: admin/views/Albums.php:106 admin/views/Albums.php:182
 #: admin/views/Galleries.php:110 admin/views/Galleries.php:207
-#, fuzzy
-#| msgid "Previous"
 msgid "Preview"
-msgstr "Zurück"
+msgstr "Vorschau"
 
 #: admin/views/Albums.php:109 admin/views/Albumsgalleries.php:114
 #: admin/views/Comments.php:112 admin/views/Galleries.php:113
@@ -693,36 +689,36 @@ msgstr "Kommentare anzeigen"
 
 #: admin/views/Albums.php:166
 msgid "Gallery Group Title"
-msgstr ""
+msgstr "Galerie Gruppentitel"
 
 #: admin/views/Albums.php:173 admin/views/Albums.php:295
 #: admin/views/Galleries.php:195 admin/views/Galleries.php:265
 msgid "How to use"
-msgstr ""
+msgstr "Anleitung"
 
 #: admin/views/Albums.php:179 admin/views/Galleries.php:203
 #: admin/views/Galleries.php:575 admin/views/Shortcode.php:1631
 #: admin/views/Shortcode.php:2888 admin/views/Themes.php:175
 msgid "Update"
-msgstr ""
+msgstr "Aktualisieren"
 
 #: admin/views/Albums.php:193 admin/views/Galleries.php:228
 msgid "Preview image"
-msgstr ""
+msgstr "Vorschaubild der Galerie"
 
 #: admin/views/Albums.php:195 admin/views/Galleries.php:232
 msgid "Add Preview Image"
-msgstr ""
+msgstr "Vorschaubild hinzufügen"
 
 #: admin/views/Albums.php:196 admin/views/Albums.php:238
 #: admin/views/Galleries.php:235 admin/views/Galleries.php:490
 #: filemanager/view.php:256
 msgid "Add"
-msgstr ""
+msgstr "Hinzufügen"
 
 #: admin/views/Albums.php:204 admin/views/Galleries.php:245
 msgid "Published"
-msgstr ""
+msgstr "Veröffentlicht"
 
 #: admin/views/Albums.php:206 admin/views/Galleries.php:247
 #: admin/views/Options.php:132 admin/views/Options.php:157
@@ -794,7 +790,7 @@ msgstr ""
 #: wd/includes/overview.php:227 wd/includes/overview.php:234
 #: wd/includes/overview.php:241 wd/includes/overview.php:251
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #: admin/views/Albums.php:208 admin/views/Galleries.php:249
 #: admin/views/Options.php:133 admin/views/Options.php:158
@@ -866,11 +862,11 @@ msgstr ""
 #: wd/includes/overview.php:236 wd/includes/overview.php:243
 #: wd/includes/overview.php:246 wd/includes/overview.php:251
 msgid "No"
-msgstr ""
+msgstr "Nein"
 
 #: admin/views/Albums.php:219
 msgid "Galleries and Gallery Groups"
-msgstr ""
+msgstr "Galerien und Galerie-gruppen"
 
 #: admin/views/Albums.php:247 admin/views/Albums.php:291
 #: admin/views/Galleries.php:219 admin/views/Galleries.php:261
@@ -885,7 +881,7 @@ msgstr ""
 #: admin/views/Albums.php:251 admin/views/Galleries.php:298
 #: admin/views/Options.php:81 admin/views/Shortcode.php:1344
 msgid "Advanced"
-msgstr ""
+msgstr "Erweiterte Einstellungen"
 
 #: admin/views/Albums.php:259 admin/views/Galleries.php:309
 msgid "Slug"
@@ -895,7 +891,7 @@ msgstr ""
 #: admin/views/Galleries.php:635 admin/views/Galleries.php:742
 #: frontend/views/BWGViewGalleryBox.php:1584
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #: admin/views/Albums.php:300 admin/views/Galleries.php:270
 msgid "Page or Post editor"
@@ -1039,14 +1035,12 @@ msgid "Images count"
 msgstr ""
 
 #: admin/views/Galleries.php:188
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery title"
-msgstr "Galerie ist leer."
+msgstr "Galerie Titel"
 
 #: admin/views/Galleries.php:223
 msgid "Basic"
-msgstr ""
+msgstr "Grundlegende Einstellungen"
 
 #: admin/views/Galleries.php:340
 msgid "Gallery content type"
@@ -1119,15 +1113,15 @@ msgstr ""
 
 #: admin/views/Galleries.php:415 admin/views/Galleries.php:418
 msgid "Add Images"
-msgstr ""
+msgstr "Fotos hinzufügen"
 
 #: admin/views/Galleries.php:420
 msgid "Import from Media Library"
-msgstr ""
+msgstr "Fotos von der Medienbibliothek hinzufügen"
 
 #: admin/views/Galleries.php:427 admin/views/Galleries.php:429
 msgid "Embed Media"
-msgstr ""
+msgstr "Medien einbetten"
 
 #: admin/views/Galleries.php:430 admin/views/Galleries.php:432
 msgid "Social Bulk Embed"
@@ -1163,7 +1157,7 @@ msgstr ""
 #: filemanager/view.php:262 filemanager/view.php:263
 #: wd/templates/display_deactivation_popup.php:23
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #: admin/views/Galleries.php:480
 msgid "<b>Youtube</b> URL example:"
@@ -1228,10 +1222,8 @@ msgid "Description: "
 msgstr ""
 
 #: admin/views/Galleries.php:613
-#, fuzzy
-#| msgid "You have already rated."
 msgid "You have unsaved changes."
-msgstr "Sie haben schon bewertet. "
+msgstr "Sie haben nicht gespeicherte Änderungen."
 
 #: admin/views/Galleries.php:626 photo-gallery.php:395
 #, fuzzy
@@ -1261,7 +1253,7 @@ msgstr ""
 
 #: admin/views/Galleries.php:705
 msgid "Date modified"
-msgstr ""
+msgstr "Änderungsdatum"
 
 #: admin/views/Galleries.php:706 admin/views/Shortcode.php:614
 msgid "Resolution"
@@ -1977,7 +1969,7 @@ msgstr ""
 
 #: admin/views/Options.php:1518 admin/views/Options.php:1664
 msgid "Add Image"
-msgstr ""
+msgstr "Foto hinzufügen"
 
 #: admin/views/Options.php:1521
 msgid "Only .png format is supported."
@@ -2171,7 +2163,7 @@ msgstr ""
 
 #: admin/views/Shortcode.php:195
 msgid "All Galleries"
-msgstr ""
+msgstr "Alle Galerien"
 
 #: admin/views/Shortcode.php:207
 msgid "Album"
@@ -2278,10 +2270,8 @@ msgstr ""
 
 #: admin/views/Shortcode.php:421 admin/views/Shortcode.php:729
 #: admin/views/Shortcode.php:773 admin/views/Shortcode.php:817
-#, fuzzy
-#| msgid "Load More..."
 msgid "Load More"
-msgstr "Laden Sie Mehr ..."
+msgstr "Mehr laden"
 
 #: admin/views/Shortcode.php:422 admin/views/Shortcode.php:679
 #: admin/views/Shortcode.php:730 admin/views/Shortcode.php:774
@@ -2382,10 +2372,8 @@ msgid "Slideshow Filmstrip size"
 msgstr ""
 
 #: admin/views/Shortcode.php:678
-#, fuzzy
-#| msgid "Load More..."
 msgid "Load more"
-msgstr "Laden Sie Mehr ..."
+msgstr "Mehr laden"
 
 #: admin/views/Shortcode.php:708 admin/views/Shortcode.php:752
 #: admin/views/Shortcode.php:796
@@ -3926,7 +3914,7 @@ msgstr ""
 
 #: admin/views/Widget.php:121 admin/views/WidgetSlideshow.php:87
 msgid "Galleries:"
-msgstr ""
+msgstr "Galerien:"
 
 #: admin/views/Widget.php:123 admin/views/Widget.php:144
 #: admin/views/WidgetSlideshow.php:89
@@ -4080,37 +4068,35 @@ msgstr ""
 
 #: filemanager/view.php:60
 msgid "Processing uploaded files..."
-msgstr ""
+msgstr "Hochgeladene Fotos werden verarbeitet"
 
 #: filemanager/view.php:98
 msgid "Up"
-msgstr ""
+msgstr "Zum übergeordneten Ordner gehen"
 
 #: filemanager/view.php:99
 msgid "Make a directory"
-msgstr ""
+msgstr "Ordner erstellen"
 
 #: filemanager/view.php:100
 msgid "Rename item"
-msgstr ""
+msgstr "Namen ändern"
 
 #: filemanager/view.php:102
 msgid "Copy"
-msgstr ""
+msgstr "Kopieren"
 
 #: filemanager/view.php:103
 msgid "Cut"
-msgstr ""
+msgstr "Ausschneiden"
 
 #: filemanager/view.php:104
 msgid "Paste"
-msgstr ""
+msgstr "Einfügen"
 
 #: filemanager/view.php:105
-#, fuzzy
-#| msgid " item(s)"
 msgid "Remove items"
-msgstr "Objekt(e)"
+msgstr "Foto(s) löschen"
 
 #: filemanager/view.php:109
 msgid "View thumbs"
@@ -4122,15 +4108,13 @@ msgstr ""
 
 #: filemanager/view.php:114
 msgid "Upload files"
-msgstr ""
+msgstr "Fotos hochladen"
 
 #: filemanager/view.php:128
 msgid "To change upload directory go to Options page."
 msgstr ""
 
 #: filemanager/view.php:140
-#, fuzzy
-#| msgid "Order by: "
 msgid "Order by:"
 msgstr "Sortieren nach:"
 
@@ -4147,10 +4131,8 @@ msgid "Click to sort by date modified"
 msgstr ""
 
 #: filemanager/view.php:256
-#, fuzzy
-#| msgid "There are no images in this gallery."
 msgid "Add selected images to gallery"
-msgstr "Es befinden sich keine Bilder in dieser Galerie."
+msgstr "Ausgewählte Fotos zur Galerie hinzufügen"
 
 #: filemanager/view.php:272
 msgid "Thumbnail Maximum Dimensions:"
@@ -4177,21 +4159,19 @@ msgstr ""
 
 #: filemanager/view.php:290
 msgid "Drag files here or click the button below"
-msgstr ""
+msgstr "Ziehe Fotos in dieses Fenster oder klick auf den Button unten"
 
 #: filemanager/view.php:290
 msgid "to upload files"
-msgstr ""
+msgstr "um Fotos hochzuladen"
 
 #: filemanager/view.php:354
 msgid "No files to upload"
-msgstr ""
+msgstr "Keine Fotos zum Hochladen ausgewählt"
 
 #: framework/WDWLibrary.php:61
-#, fuzzy
-#| msgid "Item Succesfully Saved."
 msgid "Item successfully saved."
-msgstr "Objekt erfolgreich gesichert."
+msgstr "Objekt erfolgreich gespeichert."
 
 #: framework/WDWLibrary.php:67 framework/WDWLibrary.php:172
 msgid "Failed."
@@ -4360,10 +4340,8 @@ msgid "No %s found."
 msgstr ""
 
 #: framework/WDWLibrary.php:2012
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery Tags"
-msgstr "Galerie ist leer."
+msgstr "Galerie Tags"
 
 #: frontend/views/BWGViewAlbum_compact_preview.php:23
 #: frontend/views/BWGViewAlbum_extended_preview.php:19
@@ -4759,11 +4737,11 @@ msgstr ""
 
 #: photo-gallery.php:254
 msgid "Add Galleries/Images"
-msgstr ""
+msgstr "Galerien/Fotos hinzufügen"
 
 #: photo-gallery.php:262
 msgid "Options"
-msgstr ""
+msgstr "Optionen"
 
 #: photo-gallery.php:275
 msgid "Pro Version"
@@ -4861,8 +4839,6 @@ msgid "Selected"
 msgstr ""
 
 #: photo-gallery.php:399
-#, fuzzy
-#| msgid "Item Succesfully Saved."
 msgid "Items Succesfully Saved."
 msgstr "Objekt erfolgreich gesichert."
 

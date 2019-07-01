@@ -21,7 +21,7 @@ Copy and paste wd library into your plugin folder.
   }
   
 In your plugin main file check if library main TenWebLib class doesn't exist, include it
-    if (!class_exists("TenWebLib")) {
+    if (!class_exists("TenWebLibNew")) {
         $plugin_dir = apply_filters('tenweb_free_users_lib_path', array('version' => '1.1.0', 'path' => $this->plugin_dir));
         require_once($plugin_dir['path'] . '/wd/start.php');
     }

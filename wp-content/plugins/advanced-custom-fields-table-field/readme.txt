@@ -1,10 +1,10 @@
 === Advanced Custom Fields: Table Field ===
 Contributors: jonua
 Tags: acf table
-Requires at least: 4.9
-Tested up to: 4.9.8
-Stable tag: 1.2.6
-Requires PHP: 7.0.0
+Requires at least: 5.0.3
+Tested up to: 5.1
+Stable tag: 1.3.5
+Requires PHP: 5.6
 License: GPLv2 or later
 
 A Table Field Add-on for the Advanced Custom Fields Plugin.
@@ -19,10 +19,16 @@ The table field works also with the repeater and flexible field types.
 
 = Features =
 * Table Header (Option)
+* Table Caption (Option)
+* Support for ACF Gutenberg blocks
 * Add and remove table columns and rows
 * Change order of columns and rows by dragging
 * To move to the next cells editor press key: tab
 * To move to the previous cells editor press key: shift + tab
+
+= ACF Pro 5.8 will introduce Blocks for Gutenberg =
+
+The Table Field will support the new [ACF Blocks for Gutenberg](https://www.advancedcustomfields.com/blog/acf-5-8-introducing-acf-blocks-for-gutenberg/). You can test it now. Download and install the latest ACF Pro 4.8 Beta available on your ACF account. Click the ***See all versions*** link alongside your license.
 
 == Frequently Asked Questions ==
 
@@ -33,11 +39,16 @@ To render the table fields data as an html table in one of your template files (
 `
 $table = get_field( 'your_table_field_name' );
 
-if ( $table ) {
+if ( ! empty ( $table ) ) {
 
 	echo '<table border="0">';
 
-		if ( $table['header'] ) {
+		if ( ! empty( $table['caption'] ) ) {
+
+			echo '<caption>' . $table['caption'] . '</caption>';
+		}
+
+		if ( ! empty( $table['header'] ) ) {
 
 			echo '<thead>';
 
@@ -76,6 +87,17 @@ if ( $table ) {
 	echo '</table>';
 }
 `
+
+= Table field returns no data on get_field()? =
+
+If the table has only one empty cell, then `get_field()` returns `FALSE`. `get_field()` returns NULL when a field is not stored in the database. That happens when a page is copied but not their fields content. You can check both with `empty()`…
+
+`$table = get_field( 'your_table_field_name' );
+
+if ( ! empty( $table ) ) {
+	// $table is not FALSE and not NULL.
+	// Field exists in database and has content.
+}`
 
 = How to handle line breaks? =
 
@@ -138,6 +160,7 @@ For now the way to go is using the Elementors shortcode Widget. Before you can u
 `function shortcode_acf_tablefield( $atts ) {
 
     $a = shortcode_atts( array(
+        'table-class' => '',
         'field-name' => false,
         'post-id' => false,
     ), $atts );
@@ -148,7 +171,12 @@ For now the way to go is using the Elementors shortcode Widget. Before you can u
 
     if ( $table ) {
 
-        $return .= '<table border="0">';
+        $return .= '<table class="' . $a['table-class'] . '" border="0">';
+
+            if ( ! empty( $table['caption'] ) ) {
+
+                echo '<caption>' . $table['caption'] . '</caption>';
+            }
 
             if ( $table['header'] ) {
 
@@ -197,15 +225,59 @@ add_shortcode( 'table', 'shortcode_acf_tablefield' );`
 
 Then use the shortcode in a Elementors shortcode widget like this, to **insert a table from the current page or post**…
 
-`[table field-name="your table field name"]`
+`[table field-name="your table field name" table-class="my-table"]`
 
 You also can **insert a table from another page or post**…
 
-`[table field-name="your table field name" post-id="123"]`
+`[table field-name="your table field name" post-id="123" table-class="my-table"]`
 
 Or you can **insert a table from a ACF option page**…
 
-`[table field-name="your table field name" post-id="option"]`
+`[table field-name="your table field name" post-id="option" table-class="my-table"]`
+
+= Updating a table using update_field() =
+
+You can use the ACF PHP function `update_field()` to change a tables data.
+
+Example: adding a new row
+`
+// the post ID where to update the table field
+$post_id = 123;
+
+// gets the table data
+$table_data = get_field( 'table', $post_id );
+
+// defines the new row and its columns
+$new_row = array(
+
+	// must define the same amount of columns as exists in the table
+
+	// column 1
+	array(
+		// the 'c' stands for content of the cell
+		'c' => 'Cell Content of Column 1',
+	),
+
+	// column 2
+	array(
+		'c' => 'Cell Content of Column 2',
+	)
+);
+
+// adds the new row to the table body data
+array_push( $table_data['body'], $new_row );
+
+// saves the new table data
+update_field( 'table', $table_data, $post_id );
+`
+
+= Third party plugins issues =
+
+Since version 1.3.1 of the table plugin, the storing format of the table data changes from JSON string to serialized array for new or updated tables. The issue with JSON is because of third party plugins that do not properly applying `wp_slash()` to a post_meta value before updating with `update_post_metadata()`. This can break JSON strings because `update_post_metadata()` removes backslashes by default. Backslashes are part of the JSON string syntax escaping quotation marks in content.
+
+The table field plugin prevents broken JSON strings to save as a table field data and throws an error message that explains the issue. But this may also breaks the functionality of the third party plugin trying to update the table data. You could disable the JSON string check in the table field plugin using the following code in the wp-config.php file. But then the table JSON data are no longer protected from destroing by `update_post_metadata()`. Use the following code in wp-config.php only, if you understand the risk…
+
+`define( "ACF_TABLEFIELD_FILTER_POSTMETA", false );`
 
 == Installation ==
 
@@ -238,11 +310,39 @@ However, only when activated as a plugin will updates be available.
 
 == Upgrade Notice ==
 
-= 1.2.6 =
-Fixes an PHP error and improves JavaScript code.
+= 1.3.5 =
+Fixes an issue that removes table header content using update_field() while option "use header" is set to "no".
+* Fixes an issue with the update_post_metadata filter
 
+= 1.3.4 =
+Fixes an issue that prevents the removal of table contents.
 
 == Changelog ==
+
+= 1.3.5 =
+* Fixes an issue that removes table header content using update_field() while option "use header" is set to "no".
+* Fixes an issue with the update_post_metadata filter
+
+= 1.3.4 =
+* Fixes an issue that prevents the removal of table contents
+
+= 1.3.3 =
+* Fixes returning empty table after saving content containing a single quote.
+
+= 1.3.2 =
+* Fixes returning empty table after saving content containing quotes
+* Fixes an issue using update_field() on a table field
+
+= 1.3.1 =
+* Changes table data storing format from JSON string to serialized array. This is due to an issue caused by third party plugins using update_post_meta() without providing wp_slash() to the value before. Existing table data values in JSON string format in the database will still exists and be compatible. When a field is saved again, the storage format changes from JSON to serialized array.
+* Fixes an PHP error of table caption
+
+= 1.3.0 =
+* Adds support for table caption
+* Fixes an JavaScript issue for ACF version 4
+
+= 1.2.7 =
+* Adds PHP constant ACF_TABLEFIELD_FILTER_POSTMETA. Setting this constant to false prevents an update_post_metadata filter looking for tablefield JSON strings destroyed by update_post_meta().
 
 = 1.2.6 =
 * Replaces jQuery.noConflict methode

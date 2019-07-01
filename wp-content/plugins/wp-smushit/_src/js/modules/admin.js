@@ -218,7 +218,7 @@ jQuery( function ( $ ) {
 		scan_type = 'undefined' == typeof scan_type ? 'media' : scan_type;
 
 		// Remove the Skip resmush attribute from button.
-		$( 'button.wp-smush-all' ).removeAttr( 'data-smush' );
+		$( '.wp-smush-all' ).removeAttr( 'data-smush' );
 
 		// Remove notices.
 		const notices = $( '.sui-notice-top.sui-notice-success' );
@@ -265,12 +265,6 @@ jQuery( function ( $ ) {
 						wp_smushit_data.bytes = parseInt( wp_smushit_data.size_before ) - parseInt( wp_smushit_data.size_after )
 					}
 
-					let smush_percent = ( wp_smushit_data.count_smushed / wp_smushit_data.count_total ) * 100;
-					smush_percent = WP_Smush.helpers.precise_round( smush_percent, 1 );
-
-					// Update it in stats bar.
-					$( '.wp-smush-images-percent' ).html( smush_percent );
-
 					// Hide the Existing wrapper.
 					const notices = $( '.bulk-smush-wrapper .sui-notice' );
 					if ( notices.length > 0 ) {
@@ -282,14 +276,10 @@ jQuery( function ( $ ) {
 
 					// Show Bulk wrapper.
 					$( '.wp-smush-bulk-wrapper' ).show();
-
-					if ( 'undefined' !== typeof r.data.count ) {
-						update_progress_bar_resmush( r.data.count );
-					}
 				}
 				// If content is received, Prepend it.
 				if ( 'undefined' !== typeof r.data.content ) {
-					$( '.bulk-smush-wrapper .sui-box-body' ).prepend( r.data.content );
+					$( '.bulk-smush-wrapper .sui-box-body p:first-of-type' ).after( r.data.content );
 				}
 				// If we have any notice to show.
 				if ( 'undefined' !== typeof r.data.notice ) {
@@ -411,6 +401,31 @@ jQuery( function ( $ ) {
 	}
 
 	/**
+	 * When 'All' is selected for the Image Sizes setting, select all available sizes.
+	 *
+	 * @since 3.2.1
+	 */
+	$('#all-image-sizes').on('change', function() {
+		$('input[name^="wp-smush-image_sizes"]').prop('checked', true);
+	});
+
+	/**
+	 * Handle re-check api status button click (Settings)
+	 *
+	 * @since 3.2.0.2
+	 */
+	$('#wp-smush-update-api-status').on('click', function (e) {
+		e.preventDefault();
+
+		//$(this).prop('disabled', true);
+		$(this).addClass('sui-button-onload');
+
+		$.post(ajaxurl, {action: 'recheck_api_status'}, function () {
+			location.reload();
+		});
+	});
+
+	/**
 	 * Handle the Smush Stats link click
 	 */
 	$( 'body' ).on( 'click', 'a.smush-stats-details', function ( e ) {
@@ -435,6 +450,19 @@ jQuery( function ( $ ) {
 		// prevent the default action
 		e.preventDefault();
 		new Smush( $( this ), false );
+	} );
+
+	/** Handle show in bulk smush button click **/
+	$( 'body' ).on( 'click', '.wp-smush-remove-skipped', function( e ) {
+		e.preventDefault();
+
+		// Send Ajax request to remove the image from the skip list.
+		$.post( ajaxurl, {
+			action: 'remove_from_skip_list',
+			id: $(this).attr('data-id')
+		} );
+
+		remove_element( $(this) );
 	} );
 
 	/** Handle NextGen Gallery smush button click **/
@@ -514,8 +542,17 @@ jQuery( function ( $ ) {
 		remove_element( $el );
 	} );
 
+	/**
+	* Parse remove data change.
+	*/
+	$('input[name=wp-smush-keep_data]').on('change', function (e) {
+		const otherClass = 'keep_data-true' === e.target.id ? 'keep_data-false' : 'keep_data-true';
+		e.target.parentNode.classList.add('active');
+		document.getElementById(otherClass).parentNode.classList.remove('active');
+	});
+
 	// On Click Update Settings. Check for change in settings.
-	$( 'input#wp-smush-save-settings' ).on( 'click', function ( e ) {
+	$( 'button#wp-smush-save-settings' ).on( 'click', function ( e ) {
 		e.preventDefault();
 
 		let setting_type = '';
@@ -545,40 +582,16 @@ jQuery( function ( $ ) {
 				return true;
 			} );
 		} else {
-			// Get all the main settings.
-			const strip_exif     = document.getElementById( "wp-smush-strip_exif" ),
-				  super_smush    = document.getElementById( "wp-smush-lossy" ),
-				  smush_original = document.getElementById( "wp-smush-original" ),
-				  resize_images  = document.getElementById( "wp-smush-resize" ),
-				  smush_pngjpg   = document.getElementById( "wp-smush-png_to_jpg" ),
-				  webp           = document.getElementById( "wp-smush-webp" ),
-				  detection      = document.getElementById( 'wp-smush-detection' );
-
-			let update_button_txt = true;
-
 			$( '.wp-smush-hex-notice' ).hide();
-
-			// If Preserve Exif is Checked, and all other settings are off, just save the settings.
-			if ( ( strip_exif === null || ! strip_exif.checked )
-				&& ( super_smush === null || ! super_smush.checked )
-				&& ( smush_original === null || ! smush_original.checked )
-				&& ( resize_images === null || ! resize_images.checked )
-				&& ( smush_pngjpg === null || ! smush_pngjpg.checked )
-				&& ( webp === null || ! webp.checked )
-				&& ( detection === null || ! detection.checked )
-			) {
-				update_button_txt = false;
-			}
 
 			// Update text.
 			self.attr( 'disabled', 'disabled' ).addClass( 'button-grey' );
 
-			if ( update_button_txt ) {
-				if ( 'undefined' !== typeof self.attr( 'data-msg' ) ) {
-					self.val( self.attr( 'data-msg' ) );
-				} else {
-					self.val( wp_smush_msgs.checking );
-				}
+			// Update save button text.
+			if ( 'undefined' !== typeof self.attr( 'data-msg' ) && self.attr( 'data-msg' ).length > 0 ) {
+				self.html( self.attr( 'data-msg' ) );
+			} else {
+				self.html( wp_smush_msgs.checking );
 			}
 
 			// Check if type is set in data attributes.
@@ -589,7 +602,7 @@ jQuery( function ( $ ) {
 			let param = {
 				action: 'scan_for_resmush',
 				wp_smush_options_nonce: jQuery( '#wp_smush_options_nonce' ).val(),
-				scan_type: scan_type
+				type: scan_type
 			};
 
 			param = jQuery.param( param ) + '&' + jQuery( 'form#wp-smush-settings-form' ).serialize();
@@ -754,7 +767,7 @@ jQuery( function ( $ ) {
 	$( 'body' ).on( 'click', '.wp-smush-trigger-bulk', function ( e ) {
 		e.preventDefault();
 		//Induce Setting button save click
-		$( 'button.wp-smush-all' ).click();
+		$( '.wp-smush-all' ).click();
 		$( 'span.sui-notice-dismiss' ).click();
 	} );
 
@@ -799,11 +812,10 @@ jQuery( function ( $ ) {
 	} );
 
 	// Handle Automatic Smush Checkbox toggle, to show/hide image size settings.
-	$( 'body' ).on( 'click', '#wp-smush-auto', function () {
-		var self = $( this );
-		var settings_wrap = $( '.wp-smush-image-size-list' );
+	$( '#column-wp-smush-auto' ).on( 'click', '#wp-smush-auto', function () {
+		const settings_wrap = $( '#column-wp-smush-auto .auto-smush-notice' );
 
-		if ( self.is( ':checked' ) ) {
+		if ( $( this ).is( ':checked' ) ) {
 			settings_wrap.show();
 		} else {
 			settings_wrap.hide();

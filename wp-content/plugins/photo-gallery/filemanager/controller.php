@@ -160,7 +160,15 @@ class FilemanagerController {
 
     $cur_dir_path = $input_dir == '' ? $this->uploads_dir : $this->uploads_dir . '/' . $input_dir;
 
-    $new_dir_path_name = isset($_REQUEST['new_dir_name']) ? stripslashes(esc_html(sanitize_file_name($_REQUEST['new_dir_name']))) : '';
+    $new_dir_path_name = isset($_REQUEST['new_dir_name']) ? stripslashes(esc_html($_REQUEST['new_dir_name'])) : '';
+
+    // Do not sanitize folder name, if it contents mime types in name
+    $mime_types = wp_get_mime_types();
+    $filetype = wp_check_filetype( 'test.' . $new_dir_path_name, $mime_types );
+    if ( $filetype['ext'] !== $new_dir_path_name && '.' . $filetype['ext'] !== $new_dir_path_name ) {
+      $new_dir_path_name = sanitize_file_name($new_dir_path_name);
+    }
+
     $new_dir_path = $cur_dir_path . '/' . $new_dir_path_name;
     $new_dir_path = htmlspecialchars_decode($new_dir_path, ENT_COMPAT | ENT_QUOTES);
     $new_dir_path = $this->esc_dir($new_dir_path);

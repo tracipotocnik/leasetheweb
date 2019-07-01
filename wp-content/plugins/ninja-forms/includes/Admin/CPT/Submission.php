@@ -160,8 +160,6 @@ class NF_Admin_CPT_Submission
             'id' => __( '#', 'ninja-forms' ),
         );
 
-        $form_cache = WPN_Helper::get_nf_cache( $form_id );
-
         $form_fields = Ninja_Forms()->form( $form_id )->get_fields();
 
         foreach( $form_fields as $field ) {

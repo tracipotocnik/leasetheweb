@@ -56,7 +56,11 @@ class ShortcodeController_bwg {
   public function save() {
     global $wpdb;
     $tagtext = ((isset($_POST['tagtext'])) ? stripslashes($_POST['tagtext']) : '');
+
     if ($tagtext) {
+      /* clear tags */
+      $tagtext = " ".sanitize_text_field($tagtext);
+
       $id = ((isset($_POST['currrent_id'])) ? (int) esc_html(stripslashes($_POST['currrent_id'])) : 0);
       $insert = ((isset($_POST['bwg_insert'])) ? (int) esc_html(stripslashes($_POST['bwg_insert'])) : 0);
       if (!$insert) {

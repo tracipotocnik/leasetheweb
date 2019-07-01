@@ -4,8 +4,8 @@ class BWGViewThumbnails extends BWGViewSite {
     $theme_row = $params['theme_row'];
     $image_rows = $params['image_rows'];
     $image_rows = $image_rows['images'];
-
     $inline_style = $this->inline_styles($bwg, $theme_row, $params);
+    $lazyload = BWG()->options->lazyload_images;
     if ( !WDWLibrary::elementor_is_active() ) {
       if ( !$ajax ) {
         if ( BWG()->options->use_inline_stiles_and_scripts ) {
@@ -40,7 +40,7 @@ class BWGViewThumbnails extends BWGViewSite {
         $class = '';
         $data_image_id = '';
         $href = '';
-        $title = '<div class="bwg-title1"><div class="bwg-title2">' . ($image_row->alt ? $image_row->alt : '&nbsp;') . '</div></div>';
+        $title = '<div class="bwg-title1"><div class="bwg-title2">' . ($image_row->alt ? htmlspecialchars_decode($image_row->alt, ENT_COMPAT | ENT_QUOTES) : '&nbsp;') . '</div></div>';
         $play_icon = '<div class="bwg-play-icon1"><i title="' . __('Play', BWG()->prefix) . '" class="bwg-icon-play bwg-title2 bwg-play-icon2"></i></div>';
         $ecommerce_icon = '<div class="bwg-ecommerce1"><div class="bwg-ecommerce2">';
         if ( $image_row->pricelist_id ) {
@@ -61,16 +61,30 @@ class BWGViewThumbnails extends BWGViewSite {
         elseif ( $params['thumb_click_action'] == 'redirect_to_url' && $image_row->redirect_url ) {
           $href = ' href="' . $image_row->redirect_url . '" target="' .  ($params['thumb_link_target'] ? '_blank' : '')  . '"';
         }
+
+        $resolution_thumb = $image_row->resolution_thumb;
+        $image_thumb_width = '';
+        $image_thumb_height = '';
+
+        if($resolution_thumb != "" && strpos($resolution_thumb,'x') !== false) {
+          $resolution_th = explode("x", $resolution_thumb);
+          $image_thumb_width = $resolution_th[0];
+          $image_thumb_height = $resolution_th[1];
+        }
+
         ?>
       <div class="bwg-item">
         <a <?php echo $class; ?><?php echo $data_image_id; ?><?php echo $href; ?>>
         <?php if ( $params['image_title'] == 'show' && $theme_row->thumb_title_pos == 'top' ) { echo $title; } ?>
-        <div class="bwg-item0">
+        <div class="bwg-item0 <?php if( $lazyload ) { ?> lazy_loader <?php } ?>">
           <div class="bwg-item1 <?php echo $theme_row->thumb_hover_effect == 'zoom' && $params['image_title'] == 'hover' ? 'bwg-zoom-effect' : ''; ?>">
             <div class="bwg-item2">
-              <img class="skip-lazy bwg_standart_thumb_img_<?php echo $bwg; ?>"
+              <img class="skip-lazy bwg_standart_thumb_img_<?php echo $bwg; ?> <?php if( $lazyload ) { ?> bwg_lazyload <?php } ?>"
                    data-id="<?php echo $image_row->id; ?>"
-                   src="<?php echo ($is_embed ? "" : BWG()->upload_url) . $image_row->thumb_url; ?>"
+                   data-width="<?php echo $image_thumb_width; ?>"
+                   data-height="<?php echo $image_thumb_height; ?>"
+                   data-original="<?php echo ($is_embed ? "" : BWG()->upload_url) . $image_row->thumb_url; ?>"
+                   src="<?php if( !$lazyload ) { echo ($is_embed ? "" : BWG()->upload_url) . $image_row->thumb_url; } else { echo BWG()->plugin_url."/images/lazy_placeholder.gif"; } ?>"
                    alt="<?php echo $image_row->alt; ?>" />
             </div>
             <div class="<?php echo $theme_row->thumb_hover_effect == 'zoom' && $params['image_title'] == 'hover' ? 'bwg-zoom-effect-overlay' : ''; ?>">
@@ -166,7 +180,6 @@ class BWGViewThumbnails extends BWGViewSite {
       background-color: #<?php echo $theme_row->thumb_bg_color; ?>;
       border: <?php echo $theme_row->thumb_border_width; ?>px <?php echo $theme_row->thumb_border_style; ?> #<?php echo $theme_row->thumb_border_color; ?>;
       opacity: <?php echo number_format($theme_row->thumb_transparent / 100, 2, ".", ""); ?>;
-      filter: Alpha(opacity=<?php echo $theme_row->thumb_transparent; ?>);
       border-radius: <?php echo $theme_row->thumb_border_radius; ?>;
       box-shadow: <?php echo $theme_row->thumb_box_shadow; ?>;
     }
@@ -230,7 +243,6 @@ class BWGViewThumbnails extends BWGViewSite {
       justify-content: center;
       align-content: center;
       flex-direction: column;
-      filter: Alpha(opacity=0);
       opacity: 0;
     }
 	  <?php
@@ -261,7 +273,6 @@ class BWGViewThumbnails extends BWGViewSite {
       height: 100%;
       left: -3000px;
       opacity: 0;
-      filter: Alpha(opacity=0);
       position: absolute;
       top: 0;
       width: 100%;

@@ -1,10 +1,10 @@
 ﻿=== Zedna WP Image Lazy Load ===
 Contributors: zedna
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=3ZVGZTC7ZPCH2&lc=CZ&item_name=Zedna%20Brickick%20Website&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted
-Tags: bandwith, speed, page load, image, iframe, background, responsive, video, html5
+Tags: bandwith, speed, page load, image, iframe, background, responsive, video, html5, WooCommerce, Visual Composer
 Requires at least: 3.0.4
-Tested up to: 4.7.4
-Stable tag: 1.6.1
+Tested up to: 5.1.0
+Stable tag: 1.6.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,8 @@ Features:
 -reduce up to 90% of page load time, depends on elements amount
 
 -compatible with Visual Composer
+
+-compatible with WooCommerce
 
 -you can choose to skip all iframes or just one in specific element
 
@@ -73,6 +75,15 @@ This is used only when Visual Composer is active on your website, to override VC
 1. Speed test example
 
 == Upgrade Notice ==
+= 1.6.2.2 =
+Compatible with WP 5.1.1
+
+= 1.6.2.1 =
+Compatible with WP 5.1.0
+
+= 1.6.2 =
+Compatible with WP 5.1.0
+
 = 1.6.1 =
 Compatible with WP 4.9.2
 
@@ -104,6 +115,16 @@ Built on WP 4.4.1 but can work on older versions
 Built on WP 4.4.1 but can work on older versions
 
 == Changelog ==
+= 1.6.2.2 =
+* IE backwards compatibility
+
+= 1.6.2.1 =
+* Fixed error in console log caused by SVG images
+
+= 1.6.2 =
+* Option to add multiple classes
+* Code refactoring
+
 = 1.6.1 =
 * Added translations
 

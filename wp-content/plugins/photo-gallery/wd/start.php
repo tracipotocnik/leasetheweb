@@ -2,9 +2,9 @@
     if ( ! defined( 'ABSPATH' ) ) {
         exit;
     }	
-    define( 'TEN_WEB_LIB_API_PLUGIN_DATA_PATH', 'https://api.web-dorado.com/v2/_id_/plugindata' );
-    define( 'TEN_WEB_LIB_SUBSCRIBE_URL', 'https://core.10web.io/api/wp-subscribe' );
-    define( 'TEN_WEB_LIB_DEACTIVATION_URL', 'https://core.10web.io/api/deactivation_reasons' );
+    define( 'TEN_WEB_NEW_LIB_API_PLUGIN_DATA_PATH', 'https://api.web-dorado.com/v2/_id_/plugindata' );
+    define( 'TEN_WEB_NEW_LIB_SUBSCRIBE_URL', 'https://core.10web.io/api/wp-subscribe' );
+    define( 'TEN_WEB_NEW_LIB_DEACTIVATION_URL', 'https://core.10web.io/api/deactivation_reasons' );
 
     require_once dirname( __FILE__ ) . '/config.php';
 
@@ -28,12 +28,12 @@
      * custom_post; 
      */       
             
-    function ten_web_lib_init( $options ) {
+    function ten_web_new_lib_init( $options ) {
     
         // load files
         require_once dirname( __FILE__ ) . '/wd.php';
 
-        $wd = new TenWebLib();
+        $wd = new TenWebLibNew();
         $wd->wd_init( $options );
 
     }

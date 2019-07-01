@@ -1,5 +1,10 @@
 var bwg_shortcode_type;
+
 jQuery(document).ready(function () {
+  jQuery(".bwg_tw-container").parents().find(".wrap.wd-wrap-ajax").css({
+    'height': 'calc(100% - 55px)'
+  });
+
   jQuery(".mce-toolbar-grp.mce-inline-toolbar-grp.mce-container.mce-panel", parent.document).hide();
   /* Add tabs. */
   jQuery(".bwg_tabs").each(function () {
@@ -46,7 +51,16 @@ jQuery(document).ready(function () {
       jQuery('.masonry_col_num').show();
     }
   });
-
+	show_hide_compact_album_view( jQuery('#album_view_type option:selected').val() );
+	jQuery(document).on('change', '#album_view_type', function() {
+		var value = jQuery(this).val();
+		show_hide_compact_album_view( value );
+	});
+	show_hide_extended_album_view( jQuery('#album_extended_view_type option:selected').val() );
+	jQuery(document).on('change', '#album_extended_view_type', function() {
+		var value = jQuery(this).val();
+		show_hide_extended_album_view( value );
+	});
 });
 
 jQuery(window).load(function() {
@@ -86,7 +100,6 @@ function bwg_lightbox_hide_show_params() {
     jQuery("#tr_popup_captcha").css('display', '');
     jQuery("#tr_popup_facebook").css('display', '');
     jQuery("#tr_popup_twitter").css('display', '');
-    jQuery("#tr_popup_google").css('display', '');
     jQuery("#tr_popup_pinterest").css('display', '');
     jQuery("#tr_popup_thumblr").css('display', '');
   }
@@ -101,7 +114,6 @@ function bwg_lightbox_hide_show_params() {
     jQuery("#tr_popup_captcha").css('display', 'none');
     jQuery("#tr_popup_facebook").css('display', 'none');
     jQuery("#tr_popup_twitter").css('display', 'none');
-    jQuery("#tr_popup_google").css('display', 'none');
     jQuery("#tr_popup_pinterest").css('display', 'none');
     jQuery("#tr_popup_thumblr").css('display', 'none');
   }
@@ -351,11 +363,8 @@ function bwg_change_compuct_album_view_type() {
       jQuery("#compuct_album_image_thumb_dimensions").html(bwg_image_thumb_height);
       jQuery("#compuct_album_image_thumb_width").css('display', 'none');
       jQuery("#compuct_album_image_thumb_height").css('display', '');
-
     }
-    
   }
-  
 }
 
 function bwg_change_label(id, text) {
@@ -393,7 +402,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery("#tr_ecommerce_icon_hover .ecommerce_icon_show").css('display', '');  
       jQuery("#tr_tag").css('display', '');
       jQuery("#bwg_pro_version").html('Thumbnails');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").hide();
       jQuery("#insert").attr("style", "visibility: visible;");
       jQuery(".bwg-section.bwg-pro-views").show();
@@ -405,7 +414,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery("#tr_gallery").css('display', '');
       jQuery("#tr_tag").css('display', '');
       jQuery("#bwg_pro_version").html('Masonry');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/masonry/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/masonry/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").show();
       if ( jQuery(".wd-free-msg").length != 0 ) {
         jQuery("#insert").attr("style", "visibility: hidden;");
@@ -419,7 +428,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery("#tr_gallery").css('display', '');
       jQuery("#tr_tag").css('display', '');
       jQuery("#bwg_pro_version").html('Mosaic');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/mosaic/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/mosaic/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").show();
       if ( jQuery(".wd-free-msg").length != 0 ) {
         jQuery("#insert").attr("style", "visibility: hidden;");
@@ -432,7 +441,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery("#tr_gallery").css('display', '');
       jQuery("#tr_tag").css('display', '');
       jQuery("#bwg_pro_version").html('Slideshow');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/slideshow/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/slideshow/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").hide();
       jQuery("#insert").attr("style", "visibility: visible;");
       jQuery(".bwg-section.bwg-pro-views").show();
@@ -443,7 +452,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery("#tr_gallery").css('display', '');
       jQuery("#tr_tag").css('display', '');
       jQuery("#bwg_pro_version").html('Image browser');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/image-browser/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/image-browser/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").hide();
       jQuery("#insert").attr("style", "visibility: visible;");
       jQuery(".bwg-section.bwg-pro-views").show();
@@ -454,7 +463,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery("#tr_album").css('display', '');
       basic_metabox_title.text(basic_metabox_title.attr('data-title-album'));
       jQuery("#bwg_pro_version").html('Compuct gallery group');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/compact-album/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/compact-album/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").hide();
       jQuery("#insert").attr("style", "visibility: visible;");
       jQuery(".bwg-section.bwg-pro-views").show();
@@ -464,7 +473,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery('#options_link').attr('href', jQuery('#options_link').attr('data-href') + '&active_tab=2&album_type=' + gallery_type);
       jQuery("#tr_album").css('display', '');
       jQuery("#bwg_pro_version").html('Extended gallery group');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/extended-album/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/extended-album/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").hide();
       jQuery("#insert").attr("style", "visibility: visible;");
       jQuery(".bwg-section.bwg-pro-views").show();
@@ -474,7 +483,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery('#options_link').attr('href', jQuery('#options_link').attr('data-href') + '&active_tab=2&album_type=' + gallery_type);
       jQuery("#tr_album").css('display', '');
       jQuery("#bwg_pro_version").html('Masonry gallery group');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/masonry/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/masonry/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").show();
       if ( jQuery(".wd-free-msg").length != 0 ) {
         jQuery("#insert").attr("style", "visibility: hidden;");
@@ -487,7 +496,7 @@ function bwg_gallery_type(gallery_type) {
       jQuery("#tr_gallery").css('display', '');
       jQuery("#tr_tag").css('display', '');
       jQuery("#bwg_pro_version").html('Blog style');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/blog-style/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/blog-style/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").show();
       if ( jQuery(".wd-free-msg").length != 0 ) {
         jQuery("#insert").attr("style", "visibility: hidden;");
@@ -500,7 +509,7 @@ function bwg_gallery_type(gallery_type) {
 	  jQuery("#tr_gallery").css('display', '');
       jQuery("#tr_tag").css('display', '');
       jQuery("#bwg_pro_version").html('Carousel');
-      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/carousel/");
+      jQuery("#bwg_pro_version_link").attr("href", "https://demo.10web.io/photo-gallery/carousel/?utm_source=photo_gallery&utm_medium=free_plugin");
       jQuery(".wd-free-msg").show();
       if ( jQuery(".wd-free-msg").length != 0 ) {
         jQuery("#insert").attr("style", "visibility: hidden;");
@@ -589,4 +598,170 @@ function bwg_pagination_description(that) {
   obj = jQuery(that);
   obj.closest('.wd-group').find('.description').hide();
   jQuery('#' + obj.attr('name') + '_' + obj.val() + '_description').show();
+}
+
+function show_hide_compact_album_view ( val ) {
+	switch(val) {
+		case 'thumbnail': {
+			bwg_show_hide('tr_album_mosaic', 'none');
+			bwg_show_hide('tr_album_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_image_title_show_hover_0', '');
+			bwg_show_hide('album_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_thumbnail_dimensions', '');
+			bwg_show_hide('tr_album_images_per_page', '');
+		}
+		break;
+		case 'masonry': {
+			bwg_show_hide('tr_album_mosaic', 'none');
+			bwg_show_hide('tr_album_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_image_title_show_hover_0', '');
+			bwg_show_hide('album_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_thumbnail_dimensions', '');
+			bwg_show_hide('tr_album_images_per_page', '');
+		}
+		break;
+		case 'mosaic': {
+			bwg_show_hide('tr_album_mosaic', '');
+			bwg_show_hide('tr_album_resizable_mosaic', '');
+			bwg_show_hide('tr_album_mosaic_total_width', '');;
+			bwg_show_hide('for_album_image_title_show_hover_0', 'none');
+			bwg_show_hide('album_image_title_show_hover_0', 'none');
+			bwg_show_hide('for_album_ecommerce_icon_show_hover_0', 'none');
+			bwg_show_hide('tr_album_thumbnail_dimensions', '');
+			bwg_show_hide('tr_album_images_per_page', '');
+		}
+		break;
+		case 'slideshow': {
+			bwg_show_hide('tr_album_mosaic', 'none');
+			bwg_show_hide('tr_album_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_image_title_show_hover_0', '');
+			bwg_show_hide('album_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_thumbnail_dimensions', 'none');
+			bwg_show_hide('tr_album_images_per_page', 'none');
+		}
+		case 'image_browser': {
+			bwg_show_hide('tr_album_mosaic', 'none');
+			bwg_show_hide('tr_album_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_image_title_show_hover_0', '');
+			bwg_show_hide('album_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_thumbnail_dimensions', 'none');
+			bwg_show_hide('tr_album_images_per_page', 'none');
+		}
+		break;
+		case 'blog_style': {
+			bwg_show_hide('tr_album_mosaic', 'none');
+			bwg_show_hide('tr_album_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_image_title_show_hover_0', '');
+			bwg_show_hide('album_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_thumbnail_dimensions', 'none');
+			bwg_show_hide('tr_album_images_per_page', '');
+		}
+		break;
+		case 'carousel': {
+			bwg_show_hide('tr_album_mosaic', 'none');
+			bwg_show_hide('tr_album_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_image_title_show_hover_0', '');
+			bwg_show_hide('album_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_thumbnail_dimensions', 'none');
+			bwg_show_hide('tr_album_images_per_page', 'none');
+		}
+		break;
+	}
+}
+
+function show_hide_extended_album_view ( val ) {
+	switch(val) {
+		case 'thumbnail': {
+			bwg_show_hide('tr_album_extended_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_extended_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_extended_thumbnail_dimensions', '');
+			bwg_show_hide('tr_album_extended_images_per_page', '');
+		}
+		break;
+		case 'masonry': {
+			bwg_show_hide('tr_album_extended_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_extended_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_extended_thumbnail_dimensions', '');
+			bwg_show_hide('tr_album_extended_images_per_page', '');
+		}
+		break;
+		case 'mosaic': {
+			bwg_show_hide('tr_album_extended_mosaic', '');
+			bwg_show_hide('tr_album_extended_resizable_mosaic', '');
+			bwg_show_hide('tr_album_extended_mosaic_total_width', '');
+			bwg_show_hide('for_album_extended_image_title_show_hover_0', 'none');
+			bwg_show_hide('album_extended_image_title_show_hover_0', 'none');
+			bwg_show_hide('for_album_extended_ecommerce_icon_show_hover_0', 'none');
+			bwg_show_hide('tr_album_extended_thumbnail_dimensions', '');
+			bwg_show_hide('tr_album_extended_images_per_page', '');
+		}
+		break;
+		case 'slideshow': {
+			bwg_show_hide('tr_album_extended_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_extended_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_extended_thumbnail_dimensions', 'none');
+			bwg_show_hide('tr_album_extended_images_per_page', 'none');
+		}
+		case 'image_browser': {
+			bwg_show_hide('tr_album_extended_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_extended_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_extended_thumbnail_dimensions', 'none');
+			bwg_show_hide('tr_album_extended_images_per_page', 'none');
+		}
+		break;
+		case 'blog_style': {
+			bwg_show_hide('tr_album_extended_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_extended_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_extended_thumbnail_dimensions', 'none');
+			bwg_show_hide('tr_album_extended_images_per_page', '');
+		}
+		break;
+		case 'carousel': {
+			bwg_show_hide('tr_album_extended_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_resizable_mosaic', 'none');
+			bwg_show_hide('tr_album_extended_mosaic_total_width', 'none');
+			bwg_show_hide('for_album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('album_extended_image_title_show_hover_0', '');
+			bwg_show_hide('for_album_extended_ecommerce_icon_show_hover_0', '');
+			bwg_show_hide('tr_album_extended_thumbnail_dimensions', 'none');
+			bwg_show_hide('tr_album_extended_images_per_page', 'none');
+		}
+		break;
+	}
+}
+
+function bwg_show_hide(id, display) {
+	jQuery("#" + id).css('display', display);
 }

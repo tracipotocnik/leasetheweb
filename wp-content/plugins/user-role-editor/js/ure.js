@@ -456,10 +456,12 @@ function ure_apply_to_all_on_click(cb) {
 // end of ure_apply_to_all_on_click()
 
 
-// turn on checkbox back if clicked to turn off
-function ure_turn_it_back(control) {
-
-    control.checked = true;
+// turn on checkbox back if clicked to turn off - for 'administrator' role only!
+function ure_turn_it_back( event ) {
+    
+    if ( 'administrator'===ure_current_role ) {
+        event.target.checked = true; 
+    }
 
 }
 // end of ure_turn_it_back()
@@ -543,7 +545,18 @@ function ure_refresh_role_view(response) {
     ure_current_role_name = response.role_name;        
     // Select capabilities granted to a newly selected role and exclude others
     jQuery('.ure-cap-cb').each(function () { // go through all capabilities checkboxes
+        if (this.id.length===0) {
+            return;
+        }
         jQuery(this).prop('checked', response.caps.hasOwnProperty(this.id) && response.caps[this.id]);
+        if ( ure_data.do_not_revoke_from_admin==1 ) {  
+            var el = document.getElementById(this.id);
+            if ( 'administrator'===ure_current_role ) {
+                el.addEventListener( 'click', ure_turn_it_back );
+            } else {
+                el.removeEventListener( 'click', ure_turn_it_back );
+            }
+        }
     }); 
     
     // Recalculate granted capabilities for capabilities groups

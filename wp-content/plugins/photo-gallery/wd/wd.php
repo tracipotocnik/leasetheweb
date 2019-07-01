@@ -3,7 +3,7 @@
         exit;
     }
 
-    class TenWebLib {
+    class TenWebLibNew {
         ////////////////////////////////////////////////////////////////////////////////////////
         // Events                                                                             //
         ////////////////////////////////////////////////////////////////////////////////////////
@@ -37,10 +37,10 @@
             if(!is_array($options)){
                 return false;
             }
-            $config = new TenWebLibConfig();
+            $config = new TenWebNewLibConfig();
             $config->set_options( $options );
             $this->config = $config;
-            if( !class_exists("TenWebLibApi") ){
+            if( !class_exists("TenWebNewLibApi") ){
                 $this->wd_includes();
             }
 
@@ -61,7 +61,7 @@
 
                 $subscribe_page = add_menu_page( $wd_options->plugin_menu_title, $wd_options->plugin_menu_title, "manage_options", $wd_options->prefix . '_subscribe' , array( $this, 'display_subscribew_page' ), $wd_options->plugin_menu_icon, $wd_options->menu_position );
 
-                $subscribe_instance = new TenWebLibSubscribe($this->config);
+                $subscribe_instance = new TenWebNewLibSubscribe($this->config);
                 $this->subscribe_instance = $subscribe_instance;        
                 add_action( 'admin_print_styles-' . $subscribe_page, array( $subscribe_instance, 'subscribe_styles' ) );
                 add_action( 'admin_print_scripts-' . $subscribe_page, array( $subscribe_instance, 'subscribe_scripts' ) );
@@ -76,7 +76,7 @@
               $overview_page = add_submenu_page( $parent_slug, __( 'Premium', $wd_options->prefix ), '<span style="color:#4481ea;">' . $title . '</span>', $capability, 'overview_' . $wd_options->prefix, array( $this, 'display_overview_page' ) );
 
 
-              $overview_instance = new TenWebLibOverview( $this->config );
+              $overview_instance = new TenWebNewLibOverview( $this->config );
               $this->overview_instance = $overview_instance;
               add_action( 'admin_print_styles-' . $overview_page, array( $overview_instance, 'overview_styles' ) );
               add_action( 'admin_print_scripts-' . $overview_page, array( $overview_instance, 'overview_scripts' ) );
@@ -111,11 +111,11 @@
             $current_url =  $_SERVER['REQUEST_URI'];
             if( $wd_options->deactivate === true ){
                 if(strpos( $current_url, "plugins.php" ) !== false ){   
-                    new TenWebLibDeactivate( $this->config );
+                    new TenWebNewLibDeactivate( $this->config );
                 }                
             }           
             
-            new TenWebLibNotices( $this->config );
+            new TenWebNewLibNotices( $this->config );
 
         }
 		

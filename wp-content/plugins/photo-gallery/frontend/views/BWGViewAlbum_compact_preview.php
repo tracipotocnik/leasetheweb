@@ -5,14 +5,24 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
 
   public function display($params = array(), $bwg = 0) {
     /* Gallery view class.*/
-    if ( $params['gallery_view_type'] == 'masonry' ) {
+	$gallery_type = 'Thumbnails';
+	if ( $params['gallery_view_type'] == 'masonry' ) {
       $gallery_type = 'Thumbnails_masonry';
     }
     elseif ( $params['gallery_view_type'] == 'mosaic' ) {
       $gallery_type = 'Thumbnails_mosaic';
     }
-    else {
-      $gallery_type = 'Thumbnails';
+	elseif ( $params['gallery_view_type'] == 'slideshow' ) {
+      $gallery_type = 'Slideshow';
+    }
+	elseif ( $params['gallery_view_type'] == 'image_browser' ) {
+      $gallery_type = 'Image_browser';
+    }
+	elseif ( $params['gallery_view_type'] == 'blog_style' ) {
+      $gallery_type = 'Blog_style';
+    }
+    elseif ( $params['gallery_view_type'] == 'carousel' ) {
+      $gallery_type = 'Carousel';
     }
     require_once BWG()->plugin_dir . '/frontend/views/BWGView' . $gallery_type . '.php';
     $view_class = 'BWGView' . $gallery_type;
@@ -34,15 +44,15 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
     $theme_row->thumb_gal_title_shadow = $theme_row->album_compact_gal_title_shadow;
     $theme_row->thumb_gal_title_margin = $theme_row->album_compact_gal_title_margin;
     $theme_row->thumb_gal_title_align = $theme_row->album_compact_gal_title_align;
-
     $inline_style = $this->inline_styles($bwg, $theme_row, $params);
+    $lazyload = BWG()->options->lazyload_images;
     if ( !WDWLibrary::elementor_is_active() ) {
       if ( !$params['ajax'] ) {
         if ( BWG()->options->use_inline_stiles_and_scripts ) {
-        wp_add_inline_style('bwg_frontend', $inline_style);
+			wp_add_inline_style('bwg_frontend', $inline_style);
         }
         else {
-        echo '<style id="bwg-style-' . $bwg . '">' . $inline_style . '</style>';
+			echo '<style id="bwg-style-' . $bwg . '">' . $inline_style . '</style>';
         }
       }
     }
@@ -65,14 +75,24 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
          class="bwg-thumbnails bwg-container bwg-container-<?php echo $bwg; ?> bwg-album-thumbnails <?php echo $params['album_gallery_div_class']; ?>">
       <?php
       if ( !$params['album_gallery_rows']['page_nav']['total'] ) {
-        echo WDWLibrary::message(__('Album is empty.', BWG()->prefix), 'wd_error');
+        echo WDWLibrary::message(__('No results found.', BWG()->prefix), 'wd_error');
       }
       foreach ( $params['album_gallery_rows']['rows'] as $row ) {
         $href = add_query_arg(array(
-          "type_" . $bwg => $row->def_type,
-          "album_gallery_id_" . $bwg => (($params['album_gallery_id'] != 0) ? $row->alb_gal_id : $row->id),
-        ), $_SERVER['REQUEST_URI']);
-        $title = '<div class="bwg-title1"><div class="bwg-title2">' . ($row->name ? $row->name : '&nbsp;') . '</div></div>';
+                                "type_" . $bwg => $row->def_type,
+                                "album_gallery_id_" . $bwg => (($params['album_gallery_id'] != 0) ? $row->alb_gal_id : $row->id),
+                              ), $_SERVER['REQUEST_URI']);
+        $href = $this->http_strip_query_param($href, 'bwg_search_' . $bwg);
+        $href = $this->http_strip_query_param($href, 'page_number_' . $bwg);
+        $title = '<div class="bwg-title1"><div class="bwg-title2">' . ($row->name ? htmlspecialchars_decode($row->name, ENT_COMPAT | ENT_QUOTES) : '&nbsp;') . '</div></div>';
+        $resolution_thumb = $row->resolution_thumb;
+        $image_thumb_width = '';
+        $image_thumb_height = '';
+        if ( $resolution_thumb != "" && strpos($resolution_thumb, 'x') !== FALSE ) {
+          $resolution_th = explode("x", $resolution_thumb);
+          $image_thumb_width = $resolution_th[0];
+          $image_thumb_height = $resolution_th[1];
+        }
         ?>
         <div class="bwg-item">
           <a class="<?php echo $from !== "widget" ? 'bwg-album ' : ''; ?>bwg_album_<?php echo $bwg; ?>"
@@ -85,10 +105,15 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
              data-title="<?php echo htmlspecialchars(addslashes($row->name)); ?>"
              data-bwg="<?php echo $bwg; ?>">
             <?php if ( $params['compuct_album_title'] == 'show' && $theme_row->album_compact_thumb_title_pos == 'top' ) { echo $title; } ?>
-            <div class="bwg-item0">
+            <div class="bwg-item0 lazy_loader">
               <div class="bwg-item1 <?php echo $theme_row->album_compact_thumb_hover_effect == 'zoom' && $params['compuct_album_title'] == 'hover' ? 'bwg-zoom-effect' : ''; ?>">
                 <div class="bwg-item2">
-                  <img class="skip-lazy" src="<?php echo $row->preview_image; ?>" alt="<?php echo $row->name; ?>" />
+                  <img class="skip-lazy <?php if( $lazyload ) { ?> bwg_lazyload <?php } ?>"
+                       data-width="<?php echo $image_thumb_width; ?>"
+                       data-height="<?php echo $image_thumb_height; ?>"
+                       data-original="<?php echo $row->preview_image; ?>"
+                       src="<?php if( !$lazyload ) { echo $row->preview_image; } else { echo BWG()->plugin_url."/images/lazy_placeholder.gif"; } ?>"
+                       alt="<?php echo $row->name; ?>" />
                 </div>
                 <div class="<?php echo $theme_row->album_compact_thumb_hover_effect == 'zoom' && $params['compuct_album_title'] == 'hover' ? 'bwg-zoom-effect-overlay' : ''; ?>">
                   <?php if ( $params['compuct_album_title'] == 'hover' ) { echo $title; } ?>
@@ -113,9 +138,7 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
     ?>
     <input type="hidden" id="bwg_album_breadcrumb_<?php echo $bwg; ?>" name="bwg_album_breadcrumb_<?php echo $bwg; ?>" value='<?php echo $breadcrumb; ?>' />
     <?php
-
     $content = ob_get_clean();
-
     if ( $params['ajax'] ) {/* Ajax response after ajax call for filters and pagination.*/
       if ( $params['album_view_type'] != 'gallery' ) {
         parent::ajax_content($params, $bwg, $content);
@@ -196,7 +219,6 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
       background-color: #<?php echo $theme_row->album_compact_thumb_bg_color; ?>;
       border: <?php echo $theme_row->album_compact_thumb_border_width; ?>px <?php echo $theme_row->album_compact_thumb_border_style; ?> #<?php echo $theme_row->album_compact_thumb_border_color; ?>;
       opacity: <?php echo number_format($theme_row->album_compact_thumb_transparent / 100, 2, ".", ""); ?>;
-      filter: Alpha(opacity=<?php echo $theme_row->album_compact_thumb_transparent; ?>);
       border-radius: <?php echo $theme_row->album_compact_thumb_border_radius; ?>;
       box-shadow: <?php echo $theme_row->album_compact_thumb_box_shadow; ?>;
     }
@@ -260,7 +282,6 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
         justify-content: center;
         align-content: center;
         flex-direction: column;
-        filter: Alpha(opacity=0);
         opacity: 0;
       }
       <?php
@@ -364,8 +385,9 @@ class BWGViewAlbum_compact_preview extends BWGViewSite {
 
       $theme_row->thumb_title_shadow = $theme_row->album_compact_title_shadow;
       $theme_row->mosaic_thumb_title_shadow = $theme_row->album_compact_title_shadow;
-
-      echo $this->gallery_view->inline_styles($bwg, $theme_row, $params);
+      if ( !in_array( $params['gallery_type'], array('slideshow', 'image_browser', 'blog_style', 'carousel') ) ) {
+		echo $this->gallery_view->inline_styles($bwg, $theme_row, $params);
+	  }
     }
 
     return ob_get_clean();

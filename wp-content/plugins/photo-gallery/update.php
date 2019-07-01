@@ -389,37 +389,43 @@ class BWGUpdate {
       require_once(BWG()->plugin_dir . '/framework/WDWLibrary.php');
       WDWLibrary::before_update_create_custom_posts();
     }
-	if ( version_compare($version, '1.4.0' ) == -1 ) {
-      $wpdb->query("ALTER TABLE " . $wpdb->prefix . "bwg_gallery ADD `modified_date` int(10) NOT NULL DEFAULT 0");
-      $wpdb->query("ALTER TABLE " . $wpdb->prefix . "bwg_album ADD `modified_date` int(10) NOT NULL DEFAULT 0");
-      $wpdb->query("ALTER TABLE " . $wpdb->prefix . "bwg_image ADD `modified_date` int(10) NOT NULL DEFAULT 0");
+    if ( version_compare($version, '1.4.0' ) == -1 ) {
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "bwg_gallery ADD `modified_date` int(10) NOT NULL DEFAULT 0");
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "bwg_album ADD `modified_date` int(10) NOT NULL DEFAULT 0");
+        $wpdb->query("ALTER TABLE " . $wpdb->prefix . "bwg_image ADD `modified_date` int(10) NOT NULL DEFAULT 0");
+      }
+    if ( version_compare($version, '1.5.12' ) == -1 ) {
+      $charset_collate = $wpdb->get_charset_collate();
+      $file_paths_tbl = "CREATE TABLE IF NOT EXISTS `" . $wpdb->prefix . "bwg_file_paths` (
+        `id` bigint(20) NOT NULL AUTO_INCREMENT,
+        `is_dir` tinyint(1) DEFAULT 0,
+        `path` mediumtext,
+        `type` varchar(5),
+        `name` varchar(250),
+        `filename` varchar(250),
+        `alt` varchar(250),
+        `thumb` varchar(250),
+        `size` varchar(10),
+        `resolution` varchar(15),
+        `credit` varchar(250),
+        `aperture` int(10),
+        `camera` varchar(250),
+        `caption` varchar(250),
+        `iso` int(10),
+        `orientation` int(10),
+        `copyright` varchar(250),
+        `tags` mediumtext,
+        `date_modified` datetime,
+        PRIMARY KEY (`id`)
+      ) " . $charset_collate . ";";
+      $wpdb->query($file_paths_tbl);
     }
-	if ( version_compare($version, '1.5.12' ) == -1 ) {
-		$charset_collate = $wpdb->get_charset_collate();
-		$file_paths_tbl = "CREATE TABLE IF NOT EXISTS `" . $wpdb->prefix . "bwg_file_paths` (
-			`id` bigint(20) NOT NULL AUTO_INCREMENT,
-			`is_dir` tinyint(1) DEFAULT 0,
-			`path` mediumtext,
-			`type` varchar(5),
-			`name` varchar(250),
-			`filename` varchar(250),
-			`alt` varchar(250),
-			`thumb` varchar(250),
-			`size` varchar(10),
-			`resolution` varchar(15),
-			`credit` varchar(250),
-			`aperture` int(10),
-			`camera` varchar(250),
-			`caption` varchar(250),
-			`iso` int(10),
-			`orientation` int(10),
-			`copyright` varchar(250),
-			`tags` mediumtext,
-			`date_modified` datetime,
-			PRIMARY KEY (`id`)
-		) " . $charset_collate . ";";
-		$wpdb->query($file_paths_tbl);
-	}
+
+    if ( version_compare($version, '1.5.23' ) == -1 ) {
+      $wpdb->query("ALTER TABLE " . $wpdb->prefix . "bwg_file_paths ADD `resolution_thumb` varchar(15)");
+      $wpdb->query("ALTER TABLE " . $wpdb->prefix . "bwg_image ADD `resolution_thumb` varchar(128)");
+    }
+
     return;
   }
 }

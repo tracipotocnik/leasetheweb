@@ -50,7 +50,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
     <input type="hidden" id="currrent_id" name="currrent_id" value="" />
     <input type="hidden" id="title" name="title" value="" />
     <input type="hidden" id="bwg_insert" name="bwg_insert" value="" />
-    <div>
+    <div class="<?php echo (isset($_GET['callback']) && $_GET['callback']=='wdg_cb_tw/bwg') ? 'bwg_tw-container' : '' ?>">
       <div class="bwg_tabs meta-box-sortables">
         <ul class="bwg-tabs">
           <li class="tabs">
@@ -427,7 +427,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             <?php if ( !BWG()->is_pro ) { ?>
               <div class="media-toolbar-primary search-form" style="float: left;">
             <span class="media-button button-large">
-              <a id="bwg_pro_version_link" class="bwg_link_shortcode" target="_blank" href="https://demo.10web.io/photo-gallery/"><?php _e('Please see ', BWG()->prefix) ?><span id="bwg_pro_version"><?php _e('Thumbnails', BWG()->prefix) ?></span> <?php _e('View in Premium version', BWG()->prefix) ?></a>
+              <a id="bwg_pro_version_link" class="bwg_link_shortcode" target="_blank" href="https://demo.10web.io/photo-gallery/<?php echo BWG()->utm_source; ?>"><?php _e('Please see ', BWG()->prefix) ?><span id="bwg_pro_version"><?php _e('Thumbnails', BWG()->prefix) ?></span> <?php _e('View in Premium version', BWG()->prefix) ?></a>
             </span>
               </div>
             <?php } ?>
@@ -610,12 +610,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
               jQuery("#images_per_page").val(short_code['images_per_page']);
               jQuery("#load_more_image_count").val(short_code['load_more_image_count']);
               jQuery("select[id=sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
               if (short_code['show_search_box'] == 1) {
                 jQuery("#show_search_box_1").attr('checked', 'checked');
               }
@@ -729,12 +724,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
               jQuery("#masonry_images_per_page").val(short_code['images_per_page']);
               jQuery("#masonry_load_more_image_count").val(short_code['load_more_image_count']);
               jQuery("select[id=masonry_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#masonry_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#masonry_order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=masonry_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
               if (short_code['show_search_box'] == 1) {
                 jQuery("#masonry_show_search_box_1").attr('checked', 'checked');
               }
@@ -825,12 +815,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
               jQuery("#mosaic_images_per_page").val(short_code['images_per_page']);
               jQuery("#mosaic_load_more_image_count").val(short_code['load_more_image_count']);
               jQuery("select[id=mosaic_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#mosaic_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#mosaic_order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=mosaic_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
               if (short_code['show_search_box'] == 1) {
                 jQuery("#mosaic_show_search_box_1").attr('checked', 'checked');
               }
@@ -902,12 +887,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
               jQuery("#slideshow_width").val(short_code['slideshow_width']);
               jQuery("#slideshow_height").val(short_code['slideshow_height']);
               jQuery("select[id=slideshow_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#slideshow_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#slideshow_order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=slideshow_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
               if (short_code['enable_slideshow_autoplay'] == 1) {
                 jQuery("#slideshow_enable_autoplay_yes").attr('checked', 'checked');
               }
@@ -989,12 +969,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
                 jQuery("#image_browser_description_enable_" + short_code['image_browser_description_enable']).attr('checked', 'checked');
               }
               jQuery("select[id=image_browser_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#image_browser_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#image_browser_order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=image_browser_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
               if (short_code['showthumbs_name'] == 1) {
                 jQuery("#image_browser_thumb_name_yes").attr('checked', 'checked');
               }
@@ -1063,13 +1038,8 @@ class ShortcodeView_bwg extends AdminView_bwg {
                 jQuery("#blog_style_description_enable_0").attr('checked', 'checked');
               }
               jQuery("select[id=blog_style_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#blog_style_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#blog_style_order_by_0").attr('checked', 'checked');
-              }
-              if (short_code['showthumbs_name'] == 1) {
+              jQuery("select[id=blog_style_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
+			  if (short_code['showthumbs_name'] == 1) {
                 jQuery("#blog_style_thumb_name_yes").attr('checked', 'checked');
               }
               else {
@@ -1151,12 +1121,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
                 jQuery("#carousel_play_pause_butt_no").attr('checked', 'checked');
               }
               jQuery("select[id=carousel_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#carousel_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#carousel_order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=carousel_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
               if (short_code['gallery_download'] == 1) {
                 jQuery("#carousel_gallery_download_1").attr('checked', 'checked');
               }
@@ -1177,13 +1142,11 @@ class ShortcodeView_bwg extends AdminView_bwg {
               }
               jQuery("#albums_per_page").val(short_code['compuct_albums_per_page']);
               jQuery("#album_images_per_page").val(short_code['compuct_album_images_per_page']);
-              jQuery("select[id=album_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#album_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#album_order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=compact_album_sort_by] option[value='" + short_code['all_album_sort_by'] + "']").attr('selected', 'selected');
+              jQuery("select[id=compact_album_order_by] option[value='" + short_code['all_album_order_by'] + "']").attr('selected', 'selected');
+			  jQuery("select[id=album_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
+              jQuery("select[id=album_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
+
               if (short_code['show_search_box'] == 1) {
                 jQuery("#album_show_search_box_1").attr('checked', 'checked');
               }
@@ -1221,21 +1184,8 @@ class ShortcodeView_bwg extends AdminView_bwg {
                 jQuery("#album_show_gallery_description_0").attr('checked', 'checked');
               }
               jQuery("input[name=album_title_show_hover][value=" + short_code['compuct_album_title'] + "]").attr('checked', 'checked');
-              if (short_code['compuct_album_view_type'] == 'thumbnail') {
-                jQuery("#album_view_type_1").attr('checked', 'checked');
-                jQuery("#for_album_image_title_show_hover_0").show();
-                jQuery("#for_album_ecommerce_icon_show_hover_0").show();
-              }
-              else if (short_code['compuct_album_view_type'] == 'masonry') {
-                jQuery("#album_view_type_0").attr('checked', 'checked');
-                jQuery("#for_album_image_title_show_hover_0").show();
-                jQuery("#for_album_ecommerce_icon_show_hover_0").show();
-              }
-              else {
-                jQuery("#album_view_type_2").attr('checked', 'checked');
-                jQuery("#for_album_image_title_show_hover_0").hide();
-                jQuery("#for_album_ecommerce_icon_show_hover_0").hide();
-              }
+			  jQuery('#album_view_type').find('option').removeAttr("selected");
+			  jQuery("#album_view_type option[value='"+ short_code['compuct_album_view_type'] +"']").attr('selected', 'selected');
               jQuery("input[name='album_image_title_show_hover'][value='" + short_code['compuct_album_image_title'] + "']").attr('checked', 'checked');
               if (short_code['compuct_album_mosaic_hor_ver'] == "vertical") {
                 jQuery("#album_mosaic_0").attr('checked', 'checked');
@@ -1283,13 +1233,10 @@ class ShortcodeView_bwg extends AdminView_bwg {
               }
               jQuery("#albums_masonry_per_page").val(short_code['masonry_albums_per_page']);
               jQuery("#album_masonry_images_per_page").val(short_code['masonry_album_images_per_page']);
+              jQuery("select[id=masonry_album_sort_by] option[value='" + short_code['all_album_sort_by'] + "']").attr('selected', 'selected');
+              jQuery("select[id=masonry_album_order_by] option[value='" + short_code['all_album_order_by'] + "']").attr('selected', 'selected');
               jQuery("select[id=album_masonry_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#album_masonry_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#album_masonry_order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=album_masonry_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
               if (short_code['show_search_box'] == 1) {
                 jQuery("#album_masonry_show_search_box_1").attr('checked', 'checked');
               }
@@ -1354,13 +1301,10 @@ class ShortcodeView_bwg extends AdminView_bwg {
               }
               jQuery("#albums_extended_per_page").val(short_code['extended_albums_per_page']);
               jQuery("#album_extended_images_per_page").val(short_code['extended_album_images_per_page']);
+              jQuery("select[id=extended_album_sort_by] option[value='" + short_code['all_album_sort_by'] + "']").attr('selected', 'selected');
+              jQuery("select[id=extended_album_order_by] option[value='" + short_code['all_album_order_by'] + "']").attr('selected', 'selected');
               jQuery("select[id=album_extended_sort_by] option[value='" + short_code['sort_by'] + "']").attr('selected', 'selected');
-              if (short_code['order_by'] == 'asc') {
-                jQuery("#album_extended_order_by_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#album_extended_order_by_0").attr('checked', 'checked');
-              }
+              jQuery("select[id=album_extended_order_by] option[value='" + short_code['order_by'] + "']").attr('selected', 'selected');
               if (short_code['show_search_box'] == 1) {
                 jQuery("#album_extended_show_search_box_1").attr('checked', 'checked');
               }
@@ -1403,21 +1347,8 @@ class ShortcodeView_bwg extends AdminView_bwg {
               else {
                 jQuery("#album_extended_show_gallery_description_0").attr('checked', 'checked');
               }
-			        if (short_code['extended_album_view_type'] == 'thumbnail') {
-                jQuery("#album_extended_view_type_1").attr('checked', 'checked');
-                jQuery("#for_album_extended_image_title_show_hover_0").show();
-                jQuery("#for_album_extended_ecommerce_icon_show_hover_0").show();
-              }
-              else if (short_code['extended_album_view_type'] == 'masonry') {
-                jQuery("#album_extended_view_type_0").attr('checked', 'checked');
-                jQuery("#for_album_extended_image_title_show_hover_0").show();
-                jQuery("#for_album_extended_ecommerce_icon_show_hover_0").show();
-              }
-              else {
-                jQuery("#album_extended_view_type_2").attr('checked', 'checked');
-                jQuery("#for_album_extended_image_title_show_hover_0").hide();
-                jQuery("#for_album_extended_ecommerce_icon_show_hover_0").hide();
-              }
+			  jQuery('#album_extended_view_type').find('option').removeAttr("selected");
+			  jQuery("#album_extended_view_type option[value='"+ short_code['extended_album_view_type'] +"']").attr('selected', 'selected');
               jQuery("input[name='album_extended_image_title_show_hover'][value='" + short_code['extended_album_image_title'] + "']").attr('checked', 'checked');
               if (short_code['extended_album_mosaic_hor_ver'] == "vertical") {
                 jQuery("#album_extended_mosaic_0").attr('checked', 'checked');
@@ -1628,12 +1559,6 @@ class ShortcodeView_bwg extends AdminView_bwg {
               else {
                 jQuery("#popup_enable_twitter_0").attr('checked', 'checked');
               }
-              if (short_code['popup_enable_google'] == 1) {
-                jQuery("#popup_enable_google_1").attr('checked', 'checked');
-              }
-              else {
-                jQuery("#popup_enable_google_0").attr('checked', 'checked');
-              }
               if (short_code['popup_enable_pinterest'] == 1) {
                 jQuery("#popup_enable_pinterest_1").attr('checked', 'checked');
               }
@@ -1788,7 +1713,6 @@ class ShortcodeView_bwg extends AdminView_bwg {
             title = ' gal_title="' + jQuery.trim(jQuery('#gallery option:selected').text().replace("'", "").replace('"', '')) + '"';
             tagtext += ' gallery_id="' + jQuery("#gallery").val() + '"';
             tagtext += ' tag="' + jQuery("#tag").val() + '"';
-
             tagtext += ' thumb_width="' + jQuery("#thumb_width").val() + '"';
             tagtext += ' thumb_height="' + jQuery("#thumb_height").val() + '"';
             tagtext += ' image_column_number="' + jQuery("#image_column_number").val() + '"';
@@ -1796,7 +1720,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' images_per_page="' + jQuery("#images_per_page").val() + '"';
             tagtext += ' load_more_image_count="' + jQuery("#load_more_image_count").val() + '"';
             tagtext += ' sort_by="' + jQuery("#sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=order_by]:checked").val() + '"';
+            tagtext += ' order_by="' + jQuery("#order_by").val() + '"';
             tagtext += ' show_search_box="' + jQuery("input[name=show_search_box]:checked").val() + '"';
             tagtext += ' placeholder="' + jQuery("#placeholder").val() + '"';
             tagtext += ' search_box_width="' + jQuery("#search_box_width").val() + '"';
@@ -1814,7 +1738,6 @@ class ShortcodeView_bwg extends AdminView_bwg {
             title = ' gal_title="' + jQuery.trim(jQuery('#gallery option:selected').text().replace("'", "").replace('"', '')) + '"';
             tagtext += ' gallery_id="' + jQuery("#gallery").val() + '"';
             tagtext += ' tag="' + jQuery("#tag").val() + '"';
-
             tagtext += ' masonry_hor_ver="' + jQuery("input[name=masonry]:checked").val() + '"';
             tagtext += ' show_masonry_thumb_description="' + jQuery("input[name=show_masonry_thumb_description]:checked").val() + '"';
             tagtext += ' thumb_width="' + jQuery("#masonry_thumb_size").val() + '"';
@@ -1824,7 +1747,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' images_per_page="' + jQuery("#masonry_images_per_page").val() + '"';
             tagtext += ' load_more_image_count="' + jQuery("#masonry_load_more_image_count").val() + '"';
             tagtext += ' sort_by="' + jQuery("#masonry_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=masonry_order_by]:checked").val() + '"';
+            tagtext += ' order_by="' + jQuery("#masonry_order_by").val() + '"';
             tagtext += ' show_search_box="' + jQuery("input[name=masonry_show_search_box]:checked").val() + '"';
             tagtext += ' placeholder="' + jQuery("#masonry_placeholder").val() + '"';
             tagtext += ' search_box_width="' + jQuery("#masonry_search_box_width").val() + '"';
@@ -1832,7 +1755,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' show_tag_box="' + jQuery("input[name=masonry_show_tag_box]:checked").val() + '"';
             tagtext += ' showthumbs_name="' + jQuery("input[name=masonry_show_gallery_title]:checked").val() + '"';
             tagtext += ' image_title="' + jQuery("input[name=masonry_image_title]:checked").val() + '"';
-		      	tagtext += ' show_gallery_description="' + jQuery("input[name=masonry_show_gallery_description]:checked").val() + '"';
+			tagtext += ' show_gallery_description="' + jQuery("input[name=masonry_show_gallery_description]:checked").val() + '"';
             tagtext += ' play_icon="' + jQuery("input[name=masonry_play_icon]:checked").val() + '"';
             tagtext += ' gallery_download="' + jQuery("input[name=masonry_gallery_download]:checked").val() + '"';
             tagtext += ' ecommerce_icon="' + jQuery("input[name=masonry_ecommerce_icon_show_hover]:checked").val() + '"';
@@ -1842,7 +1765,6 @@ class ShortcodeView_bwg extends AdminView_bwg {
             title = ' gal_title="' + jQuery.trim(jQuery('#gallery option:selected').text().replace("'", "").replace('"', '')) + '"';
             tagtext += ' gallery_id="' + jQuery("#gallery").val() + '"';
             tagtext += ' tag="' + jQuery("#tag").val() + '"';
-
             tagtext += ' mosaic_hor_ver="' + jQuery("input[name=mosaic]:checked").val() + '"';
             tagtext += ' resizable_mosaic="' + jQuery("input[name=resizable_mosaic]:checked").val() + '"';
             tagtext += ' mosaic_total_width="' + jQuery("#mosaic_total_width").val() + '"';
@@ -1852,7 +1774,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' images_per_page="' + jQuery("#mosaic_images_per_page").val() + '"';
             tagtext += ' load_more_image_count="' + jQuery("#mosaic_load_more_image_count").val() + '"';
             tagtext += ' sort_by="' + jQuery("#mosaic_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=mosaic_order_by]:checked").val() + '"';
+            tagtext += ' order_by="' + jQuery("#mosaic_order_by").val() + '"';
             tagtext += ' show_search_box="' + jQuery("input[name=mosaic_show_search_box]:checked").val() + '"';
             tagtext += ' placeholder="' + jQuery("#mosaic_placeholder").val() + '"';
             tagtext += ' search_box_width="' + jQuery("#mosaic_search_box_width").val() + '"';
@@ -1875,7 +1797,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' slideshow_width="' + jQuery("#slideshow_width").val() + '"';
             tagtext += ' slideshow_height="' + jQuery("#slideshow_height").val() + '"';
             tagtext += ' sort_by="' + jQuery("#slideshow_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=slideshow_order_by]:checked").val() + '"';
+            tagtext += ' order_by="' + jQuery("#slideshow_order_by").val() + '"';
             tagtext += ' enable_slideshow_autoplay="' + jQuery("input[name=slideshow_enable_autoplay]:checked").val() + '"';
             tagtext += ' enable_slideshow_shuffle="' + jQuery("input[name=slideshow_enable_shuffle]:checked").val() + '"';
             tagtext += ' enable_slideshow_ctrl="' + jQuery("input[name=slideshow_enable_ctrl]:checked").val() + '"';
@@ -1902,7 +1824,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' image_browser_title_enable="' + jQuery("input[name=image_browser_title_enable]:checked").val() + '"';
             tagtext += ' image_browser_description_enable="' + jQuery("input[name=image_browser_description_enable]:checked").val() + '"';
             tagtext += ' sort_by="' + jQuery("#image_browser_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=image_browser_order_by]:checked").val() + '"';
+            tagtext += ' order_by="' + jQuery("#image_browser_order_by").val() + '"';
             tagtext += ' showthumbs_name="' + jQuery("input[name=image_browser_show_gallery_title]:checked").val() + '"';
             tagtext += ' show_gallery_description="' + jQuery("input[name=image_browser_show_gallery_description]:checked").val() + '"';
             tagtext += ' show_search_box="' + jQuery("input[name=image_browser_show_search_box]:checked").val() + '"';
@@ -1917,7 +1839,6 @@ class ShortcodeView_bwg extends AdminView_bwg {
             title = ' gal_title="' + jQuery.trim(jQuery('#gallery option:selected').text().replace("'", "").replace('"', '')) + '"';
             tagtext += ' gallery_id="' + jQuery("#gallery").val() + '"';
             tagtext += ' tag="' + jQuery("#tag").val() + '"';
-
             tagtext += ' blog_style_width="' + jQuery("#blog_style_width").val() + '"';
             tagtext += ' blog_style_title_enable="' + jQuery("input[name=blog_style_title_enable]:checked").val() + '"';
             tagtext += ' blog_style_images_per_page="' + jQuery("#blog_style_images_per_page").val() + '"';
@@ -1925,7 +1846,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' blog_style_enable_page="' + jQuery("input[name=blog_style_enable_page]:checked").val() + '"';
             tagtext += ' blog_style_description_enable="' + jQuery("input[name=blog_style_description_enable]:checked").val() + '"';
             tagtext += ' sort_by="' + jQuery("#blog_style_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=blog_style_order_by]:checked").val() + '"';
+            tagtext += ' order_by="' + jQuery("#blog_style_order_by").val() + '"';
             tagtext += ' showthumbs_name="' + jQuery("input[name=blog_style_show_gallery_title]:checked").val() + '"';
             tagtext += ' show_gallery_description="' + jQuery("input[name=blog_style_show_gallery_description]:checked").val() + '"';
             tagtext += ' show_search_box="' + jQuery("input[name=blog_style_show_search_box]:checked").val() + '"';
@@ -1940,7 +1861,6 @@ class ShortcodeView_bwg extends AdminView_bwg {
             title = ' gal_title="' + jQuery.trim(jQuery('#gallery option:selected').text().replace("'", "").replace('"', '')) + '"';
             tagtext += ' gallery_id="' + jQuery("#gallery").val() + '"';
             tagtext += ' tag="' + jQuery("#tag").val() + '"';
-
             tagtext += ' carousel_interval="' + jQuery("#carousel_interval").val() + '"';
             tagtext += ' carousel_width="' + jQuery("#carousel_width").val() + '"';
             tagtext += ' carousel_height="' + jQuery("#carousel_height").val() + '"';
@@ -1953,7 +1873,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' carousel_prev_next_butt="' + jQuery("input[name=carousel_prev_next_butt]:checked").val() + '"';
             tagtext += ' carousel_play_pause_butt="' + jQuery("input[name=carousel_play_pause_butt]:checked").val() + '"';
             tagtext += ' sort_by="' + jQuery("#carousel_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=carousel_order_by]:checked").val() + '"';
+            tagtext += ' order_by="' + jQuery("#carousel_order_by").val() + '"';
             tagtext += ' gallery_download="' + jQuery("input[name=carousel_gallery_download]:checked").val() + '"';
             break;
           }
@@ -1970,8 +1890,10 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' compuct_album_enable_page="' + jQuery("input[name=album_enable_page]:checked").val() + '"';
             tagtext += ' compuct_albums_per_page="' + jQuery("#albums_per_page").val() + '"';
             tagtext += ' compuct_album_images_per_page="' + jQuery("#album_images_per_page").val() + '"';
-            tagtext += ' sort_by="' + jQuery("#album_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=album_order_by]:checked").val() + '"';
+            tagtext += ' all_album_sort_by="' + jQuery("#compact_album_sort_by").val() + '"';
+            tagtext += ' all_album_order_by="' + jQuery("#compact_album_order_by").val() + '"';
+			tagtext += ' sort_by="' + jQuery("#album_sort_by").val() + '"';
+            tagtext += ' order_by="' + jQuery("#album_order_by").val() + '"';
             tagtext += ' show_search_box="' + jQuery("input[name=album_show_search_box]:checked").val() + '"';
             tagtext += ' placeholder="' + jQuery("#album_placeholder").val() + '"';
             tagtext += ' search_box_width="' + jQuery("#album_search_box_width").val() + '"';
@@ -1980,7 +1902,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' show_album_name="' + jQuery("input[name=show_album_name]:checked").val() + '"';
             tagtext += ' show_gallery_description="' + jQuery("input[name=album_show_gallery_description]:checked").val() + '"';
             tagtext += ' compuct_album_title="' + jQuery("input[name=album_title_show_hover]:checked").val() + '"';
-            tagtext += ' compuct_album_view_type="' + jQuery("input[name=album_view_type]:checked").val() + '"';
+            tagtext += ' compuct_album_view_type="' + jQuery('#album_view_type option:selected').val() + '"';
             tagtext += ' compuct_album_image_title="' + jQuery("input[name=album_image_title_show_hover]:checked").val() + '"';
             tagtext += ' compuct_album_mosaic_hor_ver="' + jQuery("input[name=album_mosaic]:checked").val() + '"';
             tagtext += ' compuct_album_resizable_mosaic="' + jQuery("input[name=album_resizable_mosaic]:checked").val() + '"';
@@ -1993,7 +1915,6 @@ class ShortcodeView_bwg extends AdminView_bwg {
           case 'album_masonry_preview' : {
             title = ' gal_title="' + jQuery.trim(jQuery('#album option:selected').text().replace("'", "").replace('"', '')) + '"';
             tagtext += ' album_id="' + jQuery("#album").val() + '"';
-
             tagtext += ' masonry_album_column_number="' + jQuery("#album_masonry_column_number").val() + '"';
             tagtext += ' masonry_album_thumb_width="' + jQuery("#album_masonry_thumb_width").val() + '"';
             tagtext += ' masonry_album_image_column_number="' + jQuery("#album_masonry_image_column_number").val() + '"';
@@ -2001,8 +1922,10 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' masonry_album_enable_page="' + jQuery("input[name=album_masonry_enable_page]:checked").val() + '"';
             tagtext += ' masonry_albums_per_page="' + jQuery("#albums_masonry_per_page").val() + '"';
             tagtext += ' masonry_album_images_per_page="' + jQuery("#album_masonry_images_per_page").val() + '"';
-            tagtext += ' sort_by="' + jQuery("#album_masonry_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=album_masonry_order_by]:checked").val() + '"';
+			tagtext += ' all_album_sort_by="' + jQuery("#masonry_album_sort_by").val() + '"';
+            tagtext += ' all_album_order_by="' + jQuery("#masonry_album_order_by").val() + '"';
+			tagtext += ' sort_by="' + jQuery("#album_masonry_sort_by").val() + '"';
+            tagtext += ' order_by="' + jQuery("#album_masonry_order_by").val() + '"';
             tagtext += ' show_search_box="' + jQuery("input[name=album_masonry_show_search_box]:checked").val() + '"';
             tagtext += ' placeholder="' + jQuery("#album_masonry_placeholder").val() + '"';
             tagtext += ' search_box_width="' + jQuery("#album_masonry_search_box_width").val() + '"';
@@ -2028,8 +1951,10 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' extended_album_enable_page="' + jQuery("input[name=album_extended_enable_page]:checked").val() + '"';
             tagtext += ' extended_albums_per_page="' + jQuery("#albums_extended_per_page").val() + '"';
             tagtext += ' extended_album_images_per_page="' + jQuery("#album_extended_images_per_page").val() + '"';
+            tagtext += ' all_album_sort_by="' + jQuery("#extended_album_sort_by").val() + '"';
+            tagtext += ' all_album_order_by="' + jQuery("#extended_album_order_by").val() + '"';
             tagtext += ' sort_by="' + jQuery("#album_extended_sort_by").val() + '"';
-            tagtext += ' order_by="' + jQuery("input[name=album_extended_order_by]:checked").val() + '"';
+            tagtext += ' order_by="' + jQuery("#album_extended_order_by").val() + '"';
             tagtext += ' show_search_box="' + jQuery("input[name=album_extended_show_search_box]:checked").val() + '"';
             tagtext += ' placeholder="' + jQuery("#album_extended_placeholder").val() + '"';
             tagtext += ' search_box_width="' + jQuery("#album_extended_search_box_width").val() + '"';
@@ -2038,7 +1963,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' show_album_name="' + jQuery("input[name=show_album_extended_name]:checked").val() + '"';
 			      tagtext += ' extended_album_description_enable="' + jQuery("input[name=extended_album_description_enable]:checked").val() + '"';
             tagtext += ' show_gallery_description="' + jQuery("input[name=album_extended_show_gallery_description]:checked").val() + '"';
-            tagtext += ' extended_album_view_type="' + jQuery("input[name=album_extended_view_type]:checked").val() + '"';
+            tagtext += ' extended_album_view_type="' + jQuery('#album_extended_view_type option:selected').val() + '"';
             tagtext += ' extended_album_image_title="' + jQuery("input[name=album_extended_image_title_show_hover]:checked").val() + '"';
             tagtext += ' extended_album_mosaic_hor_ver="' + jQuery("input[name=album_extended_mosaic]:checked").val() + '"';
             tagtext += ' extended_album_resizable_mosaic="' + jQuery("input[name=album_extended_resizable_mosaic]:checked").val() + '"';
@@ -2048,6 +1973,8 @@ class ShortcodeView_bwg extends AdminView_bwg {
             tagtext += ' ecommerce_icon="' + jQuery("input[name=album_extended_ecommerce_icon_show_hover]:checked").val() + '"';
             break;
           }
+          default:
+            break;
         }
         // Lightbox paramteres.
         tagtext += ' thumb_click_action="' + jQuery("input[name=thumb_click_action]:checked").val() + '"';
@@ -2081,7 +2008,6 @@ class ShortcodeView_bwg extends AdminView_bwg {
         tagtext += ' addthis_profile_id="' + jQuery("#addthis_profile_id").val() + '"';
         tagtext += ' popup_enable_facebook="' + jQuery("input[name=popup_enable_facebook]:checked").val() + '"';
         tagtext += ' popup_enable_twitter="' + jQuery("input[name=popup_enable_twitter]:checked").val() + '"';
-        tagtext += ' popup_enable_google="' + jQuery("input[name=popup_enable_google]:checked").val() + '"';
         tagtext += ' popup_enable_pinterest="' + jQuery("input[name=popup_enable_pinterest]:checked").val() + '"';
         tagtext += ' popup_enable_tumblr="' + jQuery("input[name=popup_enable_tumblr]:checked").val() + '"';
         tagtext += ' popup_enable_ecommerce="' + jQuery("input[name=popup_enable_ecommerce]:checked").val() + '"';
@@ -2164,6 +2090,7 @@ class ShortcodeView_bwg extends AdminView_bwg {
           <?php
           if ( $params['gutenberg_callback'] ) {
           ?>
+		  window.parent.window.jQuery(".edit-post-layout__content").css({"z-index":"0","overflow":"auto"});
           window.parent['<?php echo $params['gutenberg_callback']; ?>'](content, shortcode_id);
           return;
           <?php

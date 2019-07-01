@@ -1,3 +1,6 @@
-<section class="image-block image-block--full-width"
-  style="background-image: url({{ TimberImage(module.image).src }});">
-</section>
+{% set is_link = (module.image_link == 'yes' and module.image_url) %}
+{% set new_tab = module.image_link == 'yes' and module.new_tab %}
+<{% if is_link %}a href="{{ module.image_url }}"{% else %}section{% endif %} class="image-block image-block--full-width"
+  style="background-image: url({{ TimberImage(module.image).src }});"
+  {% if new_tab %}target="_blank"{% endif %}>
+</{% if is_link %}a{% else %}section{% endif %}>

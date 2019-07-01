@@ -59,15 +59,15 @@ msgstr ""
 "strong>):"
 
 #: image_lazy_load.php:183 image_lazy_load.php:187
-msgid "For no skipping, leave empty"
-msgstr "Ponechte prázdné pro žádné vynechání"
+msgid "For no skipping, leave empty. Multiple classes split by semicolon (e.g. classOne;classTwo)"
+msgstr "Ponechte prázdné pro žádné vynechání. Více css tříd oddělte středníkem (např. tridaJedna;tridaDve)"
 
 #: image_lazy_load.php:186
 msgid ""
 "Skip iframes in parent element (<strong>css class without dot \".\"</"
 "strong>):"
 msgstr ""
-"Přeskočit obrázky v nadřazeném elementu (<strong>css třída bez tečky \".\"</"
+"Přeskočit vnořené rámce v nadřazeném elementu (<strong>css třída bez tečky \".\"</"
 "strong>):"
 
 #: image_lazy_load.php:190

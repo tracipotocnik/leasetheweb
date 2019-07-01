@@ -11,6 +11,10 @@
  * @copyright (c) 2016, Incsub (http://incsub.com)
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Class WP_Smush_Nextgen_Stats
  */
@@ -536,11 +540,11 @@ class WP_Smush_Nextgen_Stats extends WP_Smush_Nextgen {
 	function get_skipped_images( $size_stats, $full_image ) {
 		$skipped = array();
 
-		// If full image was not smushed, reason 1. Large Size logic, 2. Free and greater than 1Mb.
+		// If full image was not smushed, reason 1. Large Size logic, 2. Free and greater than 5Mb.
 		if ( ! array_key_exists( 'full', $size_stats ) ) {
 			// For free version, Check the image size
 			if ( ! $this->is_pro_user ) {
-				// For free version, check if full size is greater than 1 Mb, show the skipped status.
+				// For free version, check if full size is greater than 5 Mb, show the skipped status.
 				$file_size = file_exists( $full_image ) ? filesize( $full_image ) : '';
 				if ( ! empty( $file_size ) && ( $file_size / WP_SMUSH_MAX_BYTES ) > 1 ) {
 					$skipped[] = array(
@@ -575,16 +579,16 @@ class WP_Smush_Nextgen_Stats extends WP_Smush_Nextgen {
 	 * @return string
 	 */
 	function show_resmush( $show_resmush, $wp_smush_data ) {
-		$smush = WP_Smush::get_instance()->core()->mod->smush;
+		$smush = WP_Smush::get_instance()->core()->mod;
 
 		// Resmush: Show resmush link, Check if user have enabled smushing the original and full image was skipped.
-		if ( $smush->smush_original ) {
+		if ( $smush->settings->get( 'original' ) && WP_Smush::is_pro() ) {
 			// IF full image was not smushed.
 			if ( ! empty( $wp_smush_data ) && empty( $wp_smush_data['sizes']['full'] ) ) {
 				$show_resmush = true;
 			}
 		}
-		if ( ! $smush->keep_exif ) {
+		if ( $smush->settings->get( 'strip_exif' ) ) {
 			// If Keep Exif was set to tru initially, and since it is set to false now.
 			if ( ! empty( $wp_smush_data['stats']['keep_exif'] ) && $wp_smush_data['stats']['keep_exif'] == 1 ) {
 				$show_resmush = true;

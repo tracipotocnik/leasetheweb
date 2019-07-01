@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class TenWebLibDeactivate
+class TenWebNewLibDeactivate
 {
     ////////////////////////////////////////////////////////////////////////////////////////
     // Events                                                                             //
@@ -128,7 +128,7 @@ class TenWebLibDeactivate
 
                 $data["name"] = $user_first_name || $user_last_name ? $user_first_name . " " . $user_last_name : $admin_data->data->user_login;
 
-                $response = wp_remote_post(TEN_WEB_LIB_DEACTIVATION_URL, array(
+                $response = wp_remote_post(TEN_WEB_NEW_LIB_DEACTIVATION_URL, array(
                         'method'      => 'POST',
                         'timeout'     => 45,
                         'redirection' => 5,

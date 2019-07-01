@@ -216,6 +216,8 @@ class EditimageView_bwg {
         <?php
       }
       $where = ' `id` = ' . $image_id;
+      $resolution_thumb = intval($thumb_width)."x".intval($thumb_height);
+      WDWLibrary::update_thumb_dimansions($resolution_thumb, $where);
       $updated_image = WDWLibrary::update_image_modified_date( $where );
       $image_data->image_url = WDWLibrary::image_url_version($image_data->image_url, $updated_image['modified_date']);
     }

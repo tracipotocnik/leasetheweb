@@ -84,12 +84,17 @@ class NF_Fields_ListCountry extends NF_Abstracts_List
 
     public function admin_form_element( $id, $value )
     {
+        $field = Ninja_Forms()->form()->get_field( $id );
+
+        $options = $this->get_options();
+        $options = apply_filters( 'ninja_forms_render_options', $options, $field->get_settings() );
+        $options = apply_filters( 'ninja_forms_render_options_' . $field->get_type(), $options, $field->get_settings() );
+
         ob_start();
         echo "<select name='fields[$id]'>";
-	    echo "<option value=''>- " . __( 'Select Country', 'ninja-forms' ) . " -</option>";
-        foreach( Ninja_Forms()->config( 'CountryList' ) as $label => $abbr ){
-            $selected = ( $value == $abbr ) ? ' selected' : '';
-            echo "<option value='" . $abbr . "'" . $selected . ">" . $label . "</option>";
+        foreach( $options as $option ){
+            $selected = ( $option['value'] == $value ) ? ' selected' : '';
+            echo "<option value='" . $option['value'] . "'" . $selected . ">" . $option['label'] . "</option>";
         }
         echo "</select>";
         return ob_get_clean();

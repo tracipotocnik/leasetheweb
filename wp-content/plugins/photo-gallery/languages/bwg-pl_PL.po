@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bwg\n"
 "POT-Creation-Date: 2018-01-24 11:18+0400\n"
-"PO-Revision-Date: 2018-01-24 11:18+0400\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2018-08-01 21:22+0200\n"
+"Last-Translator: Tomasz Mróz <info@viewpro.pl>\n"
 "Language-Team: \n"
 "Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.1.1\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
@@ -27,8 +27,6 @@ msgid ""
 msgstr ""
 
 #: addons/addons.php:13
-#, fuzzy
-#| msgid "Share on Facebook"
 msgid "Photo Gallery Facebook"
 msgstr "Podziel się na Facebooku."
 
@@ -114,8 +112,6 @@ msgstr ""
 #: admin/views/Albums.php:105 admin/views/Comments.php:109
 #: admin/views/Galleries.php:109 admin/views/Galleries.php:733
 #: admin/views/Ratings.php:84 admin/views/Themes.php:101
-#, fuzzy
-#| msgid "Delete Comment"
 msgid "Delete"
 msgstr "Usuń komentarz"
 
@@ -134,8 +130,6 @@ msgid "Galleries / Gallery groups"
 msgstr ""
 
 #: admin/controllers/Comments.php:93 photo-gallery.php:268
-#, fuzzy
-#| msgid "Comment"
 msgid "Comments"
 msgstr "Komentarz"
 
@@ -168,8 +162,6 @@ msgid "Rotate left"
 msgstr ""
 
 #: admin/controllers/Galleries.php:57
-#, fuzzy
-#| msgid "Not rated yet."
 msgid "rotated left"
 msgstr "Jeszcze nie ocenione. "
 
@@ -198,8 +190,6 @@ msgid "Reset"
 msgstr "Zresetować"
 
 #: admin/controllers/Galleries.php:69
-#, fuzzy
-#| msgid "Reset"
 msgid "reset"
 msgstr "Zresetować"
 
@@ -214,10 +204,8 @@ msgid "Add tag"
 msgstr ""
 
 #: admin/controllers/Galleries.php:137 photo-gallery.php:1478
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Galleries"
-msgstr "Galeria jest pusta."
+msgstr "Galerie"
 
 #: admin/controllers/Galleries.php:437 admin/controllers/Options.php:191
 msgid "Item Succesfully Saved."
@@ -558,16 +546,16 @@ msgstr ""
 
 #: admin/models/Comments.php:61 admin/models/Ratings.php:81
 msgid "All galleries"
-msgstr ""
+msgstr "Wszyst. galerie"
 
 #: admin/models/Comments.php:75 admin/models/Ratings.php:100
 msgid "All images"
-msgstr ""
+msgstr "Wszyst. zdjęcia"
 
 #: admin/views/AddTags.php:65 admin/views/Albums.php:50
 #: admin/views/Comments.php:61 admin/views/Themes.php:72
 msgid "Select all"
-msgstr ""
+msgstr "Wybierz wszystkie"
 
 #: admin/views/AddTags.php:68 admin/views/AddTags.php:86
 #: admin/views/Albums.php:89 admin/views/Comments.php:64
@@ -579,15 +567,15 @@ msgstr ""
 #: frontend/views/BWGViewGalleryBox.php:1569
 #: frontend/views/BWGViewGalleryBox.php:1684
 msgid "Name"
-msgstr "Imię"
+msgstr "Nazwa"
 
 #: admin/views/AddTags.php:107
 msgid "Add to image"
-msgstr ""
+msgstr "Dodaj do zdjęcia"
 
 #: admin/views/AdminView.php:94
 msgid "Add New"
-msgstr ""
+msgstr "Dodaj nowe"
 
 #: admin/views/AdminView.php:164 framework/WDWLibrary.php:316
 #: framework/WDWLibrary.php:494 framework/WDWLibrary.php:817
@@ -596,20 +584,16 @@ msgid "Search"
 msgstr "Szukaj"
 
 #: admin/views/AdminView.php:226
-#, fuzzy
-#| msgid "First"
 msgid "First page"
-msgstr "Pierwszy"
+msgstr "Pierwsza"
 
 #: admin/views/AdminView.php:227
-#, fuzzy
-#| msgid "Previous"
 msgid "Previous page"
-msgstr "Poprzedni"
+msgstr "Poprzednia"
 
 #: admin/views/AdminView.php:232
 msgid "Current Page"
-msgstr ""
+msgstr "Bieżąca"
 
 #: admin/views/AdminView.php:235 framework/WDWLibrary.php:447
 #: framework/WDWLibrary.php:596 framework/WDWLibrary.php:679
@@ -617,20 +601,16 @@ msgid "of"
 msgstr "z"
 
 #: admin/views/AdminView.php:248
-#, fuzzy
-#| msgid "Next"
 msgid "Next page"
-msgstr "Następny"
+msgstr "Następna"
 
 #: admin/views/AdminView.php:249
-#, fuzzy
-#| msgid "Last"
 msgid "Last page"
-msgstr "Trwać"
+msgstr "Ostatnia"
 
 #: admin/views/AdminView.php:281 filemanager/view.php:248
 msgid "Select All"
-msgstr ""
+msgstr "Wybierz wszyst."
 
 #: admin/views/AdminView.php:286
 msgid "Select bulk action"
@@ -642,19 +622,19 @@ msgstr ""
 
 #: admin/views/AdminView.php:297
 msgid "Apply"
-msgstr ""
+msgstr "Zastosuj"
 
 #: admin/views/Albums.php:53 admin/views/Albumsgalleries.php:77
 #: admin/views/Albumsgalleries.php:101 admin/views/Shortcode.php:609
 #: admin/views/Themes.php:75 admin/views/Themes.php:94
 msgid "Title"
-msgstr ""
+msgstr "Tytuł"
 
 #: admin/views/Albums.php:54 admin/views/Albums.php:112
 #: admin/views/Albums.php:255 admin/views/Galleries.php:56
 #: admin/views/Galleries.php:117 admin/views/Galleries.php:305
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #: admin/views/Albums.php:98 admin/views/Albums.php:345
 #: admin/views/Albumsgalleries.php:110 admin/views/Comments.php:99
@@ -670,8 +650,6 @@ msgstr ""
 
 #: admin/views/Albums.php:106 admin/views/Albums.php:182
 #: admin/views/Galleries.php:110 admin/views/Galleries.php:207
-#, fuzzy
-#| msgid "Previous"
 msgid "Preview"
 msgstr "Poprzedni"
 
@@ -679,8 +657,6 @@ msgstr "Poprzedni"
 #: admin/views/Comments.php:112 admin/views/Galleries.php:113
 #: admin/views/Galleries.php:736 admin/views/Ratings.php:87
 #: admin/views/Themes.php:104
-#, fuzzy
-#| msgid "Show comments"
 msgid "Show more details"
 msgstr "Pokaż komentarze"
 
@@ -715,7 +691,7 @@ msgstr ""
 
 #: admin/views/Albums.php:204 admin/views/Galleries.php:245
 msgid "Published"
-msgstr ""
+msgstr "Opublikuj"
 
 #: admin/views/Albums.php:206 admin/views/Galleries.php:247
 #: admin/views/Options.php:132 admin/views/Options.php:157
@@ -787,7 +763,7 @@ msgstr ""
 #: wd/includes/overview.php:227 wd/includes/overview.php:234
 #: wd/includes/overview.php:241 wd/includes/overview.php:251
 msgid "Yes"
-msgstr ""
+msgstr "Tak"
 
 #: admin/views/Albums.php:208 admin/views/Galleries.php:249
 #: admin/views/Options.php:133 admin/views/Options.php:158
@@ -859,7 +835,7 @@ msgstr ""
 #: wd/includes/overview.php:236 wd/includes/overview.php:243
 #: wd/includes/overview.php:246 wd/includes/overview.php:251
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: admin/views/Albums.php:219
 msgid "Galleries and Gallery Groups"
@@ -888,7 +864,7 @@ msgstr ""
 #: admin/views/Galleries.php:635 admin/views/Galleries.php:742
 #: frontend/views/BWGViewGalleryBox.php:1584
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #: admin/views/Albums.php:300 admin/views/Galleries.php:270
 msgid "Page or Post editor"
@@ -934,16 +910,14 @@ msgstr ""
 
 #: admin/views/Albumsgalleries.php:118 admin/views/Options.php:75
 #: admin/views/Shortcode.php:66 admin/views/Shortcode.php:270
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery group"
-msgstr "Galeria jest pusta."
+msgstr "Grupa gelerii"
 
 #: admin/views/Albumsgalleries.php:118 admin/views/Options.php:72
 #: admin/views/Shortcode.php:63 admin/views/Shortcode.php:192
 #: admin/views/Shortcode.php:270 admin/views/Widget.php:117
 msgid "Gallery"
-msgstr ""
+msgstr "Galeria"
 
 #: admin/views/Albumsgalleries.php:136
 msgid "Add to Gallery Group"
@@ -954,7 +928,7 @@ msgstr ""
 #: frontend/views/BWGViewGalleryBox.php:1453
 #: frontend/views/BWGViewGalleryBox.php:1460
 msgid "Email"
-msgstr "e-mail "
+msgstr "E-mail "
 
 #: admin/views/Comments.php:70 admin/views/Comments.php:124
 #: frontend/views/BWGViewGalleryBox.php:1438
@@ -981,11 +955,11 @@ msgstr ""
 
 #: admin/views/Editimage.php:785
 msgid "Grayscale"
-msgstr ""
+msgstr "Skla szarości"
 
 #: admin/views/Editimage.php:789
 msgid "Negative"
-msgstr ""
+msgstr "Negatyw"
 
 #: admin/views/Editimage.php:793
 msgid "Removal"
@@ -993,7 +967,7 @@ msgstr ""
 
 #: admin/views/Editimage.php:797
 msgid "Sepia"
-msgstr ""
+msgstr "Sepia"
 
 #: admin/views/Editimage.php:801
 msgid "Slate"
@@ -1001,15 +975,13 @@ msgstr ""
 
 #: admin/views/Editimage.php:805
 msgid "Saturate"
-msgstr ""
+msgstr "Saturacja"
 
 #: admin/views/Editimage.php:809 admin/views/Galleries.php:718
 msgid "Do you want to reset the image?"
 msgstr ""
 
 #: admin/views/Editimage.php:811
-#, fuzzy
-#| msgid "Reset"
 msgid "Reset image"
 msgstr "Zresetować"
 
@@ -1023,21 +995,19 @@ msgstr ""
 
 #: admin/views/Editimage.php:864
 msgid "Contrast"
-msgstr ""
+msgstr "Kontrast"
 
 #: admin/views/Galleries.php:55 admin/views/Galleries.php:116
 msgid "Images count"
 msgstr ""
 
 #: admin/views/Galleries.php:188
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery title"
-msgstr "Galeria jest pusta."
+msgstr "Tytuł galerii"
 
 #: admin/views/Galleries.php:223
 msgid "Basic"
-msgstr ""
+msgstr "Podstawowe"
 
 #: admin/views/Galleries.php:340
 msgid "Gallery content type"
@@ -1049,11 +1019,9 @@ msgstr ""
 
 #: admin/views/Galleries.php:346
 msgid "Instagram only"
-msgstr ""
+msgstr "Tylko Instagram"
 
 #: admin/views/Galleries.php:349 admin/views/Options.php:1474
-#, fuzzy
-#| msgid "Share on Facebook"
 msgid "Facebook"
 msgstr "Podziel się na Facebooku."
 
@@ -1078,14 +1046,12 @@ msgid "Whole post"
 msgstr ""
 
 #: admin/views/Galleries.php:372
-#, fuzzy
-#| msgid "Photo gallery plugin autoupdate interval."
 msgid "Gallery autoupdate option"
 msgstr "Galeria zdjęć plugin interwał automatycznej aktualizacji."
 
 #: admin/views/Galleries.php:374
 msgid "No update"
-msgstr ""
+msgstr "Brak aktualizacji"
 
 #: admin/views/Galleries.php:376
 msgid "Add new media, keep old ones published."
@@ -1130,15 +1096,15 @@ msgstr ""
 
 #: admin/views/Galleries.php:452
 msgid "Pricelist"
-msgstr ""
+msgstr "Cennik"
 
 #: admin/views/Galleries.php:453
 msgid "Add pricelist"
-msgstr ""
+msgstr "Dodaj cennik"
 
 #: admin/views/Galleries.php:454
 msgid "Remove pricelist"
-msgstr ""
+msgstr "Skasuj cennik"
 
 #: admin/views/Galleries.php:471
 msgid ""
@@ -1154,7 +1120,7 @@ msgstr ""
 #: filemanager/view.php:262 filemanager/view.php:263
 #: wd/templates/display_deactivation_popup.php:23
 msgid "Cancel"
-msgstr ""
+msgstr "Anuluj"
 
 #: admin/views/Galleries.php:480
 msgid "<b>Youtube</b> URL example:"
@@ -1216,17 +1182,13 @@ msgstr ""
 
 #: admin/views/Galleries.php:594
 msgid "Description: "
-msgstr ""
+msgstr "Opis:"
 
 #: admin/views/Galleries.php:613
-#, fuzzy
-#| msgid "You have already rated."
 msgid "You have unsaved changes."
-msgstr "Już oceniłeś. "
+msgstr "Masz niezapisane zmiany."
 
 #: admin/views/Galleries.php:626 photo-gallery.php:395
-#, fuzzy
-#| msgid "Show comments"
 msgid "Show order column"
 msgstr "Pokaż komentarze"
 
@@ -1256,16 +1218,16 @@ msgstr ""
 
 #: admin/views/Galleries.php:706 admin/views/Shortcode.php:614
 msgid "Resolution"
-msgstr ""
+msgstr "Rozdzielczość"
 
 #: admin/views/Galleries.php:707 admin/views/Shortcode.php:612
 #: framework/WDWLibrary.php:890
 msgid "Size"
-msgstr "rozmiar"
+msgstr "Rozmiar"
 
 #: admin/views/Galleries.php:717
 msgid "Crop"
-msgstr ""
+msgstr "Przytnij"
 
 #: admin/views/Galleries.php:772
 msgid "Remove tag"
@@ -1344,10 +1306,8 @@ msgid "Show \"Order by\" dropdown list"
 msgstr ""
 
 #: admin/views/Options.php:164 admin/views/Shortcode.php:1368
-#, fuzzy
-#| msgid "Show rating"
 msgid "Show tag box"
-msgstr "Pokaż ocenę"
+msgstr "Pokaż tag"
 
 #: admin/views/Options.php:173
 msgid "Preload images"
@@ -1424,10 +1384,8 @@ msgid ""
 msgstr ""
 
 #: admin/views/Options.php:288
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery role"
-msgstr "Galeria jest pusta."
+msgstr "Ustawienia galerii"
 
 #: admin/views/Options.php:293
 msgid "Only author can change a gallery."
@@ -1494,8 +1452,6 @@ msgstr ""
 #: admin/views/Options.php:1030 admin/views/Shortcode.php:431
 #: admin/views/Shortcode.php:872 admin/views/Shortcode.php:1003
 #: admin/views/Shortcode.php:1052 admin/views/Shortcode.php:1101
-#, fuzzy
-#| msgid "Show info"
 msgid "Show on hover"
 msgstr "Pokaż informacje"
 
@@ -1514,10 +1470,8 @@ msgid "Don't show"
 msgstr ""
 
 #: admin/views/Options.php:400
-#, fuzzy
-#| msgid "Show comments"
 msgid "Show ecommerce icon"
-msgstr "Pokaż komentarze"
+msgstr "Pokaż ikonę sklepu"
 
 #: admin/views/Options.php:413
 msgid "Enable image pagination"
@@ -1720,28 +1674,20 @@ msgid "Number of gallery group columns"
 msgstr ""
 
 #: admin/views/Options.php:997
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery groups per page"
-msgstr "Galeria jest pusta."
+msgstr "Ilość galerii na stronie"
 
 #: admin/views/Options.php:1014
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery group view type"
-msgstr "Galeria jest pusta."
+msgstr ""
 
 #: admin/views/Options.php:1020
-#, fuzzy
-#| msgid "There are no images in this gallery."
 msgid "The gallery images view type in the gallery group."
-msgstr "Nie ma zdjęć w tej galerii."
+msgstr ""
 
 #: admin/views/Options.php:1028
-#, fuzzy
-#| msgid "Show rating"
 msgid "Show title"
-msgstr "Pokaż ocenę"
+msgstr "Pokaż tytuł"
 
 #: admin/views/Options.php:1038
 msgid "Enable extended gallery group description"
@@ -1804,16 +1750,12 @@ msgid "Display hit counter"
 msgstr ""
 
 #: admin/views/Options.php:1208 admin/views/Shortcode.php:1230
-#, fuzzy
-#| msgid "Exit Fullscreen"
 msgid "Enable fullscreen"
-msgstr "Zamknij tryb pełnoekranowy"
+msgstr "Włącz pełny ekran"
 
 #: admin/views/Options.php:1217 admin/views/Shortcode.php:1238
-#, fuzzy
-#| msgid "Hide info"
 msgid "Enable info"
-msgstr "Ukryj informacje"
+msgstr "Włącz informacje"
 
 #: admin/views/Options.php:1226 admin/views/Shortcode.php:1246
 msgid "Display info by default"
@@ -1844,18 +1786,16 @@ msgid "Enable download button"
 msgstr ""
 
 #: admin/views/Options.php:1294
-#, fuzzy
-#| msgid "Show comments"
 msgid "Show images count"
-msgstr "Pokaż komentarze"
+msgstr "Pokaż licznik zdjęć"
 
 #: admin/views/Options.php:1303
 msgid "Enable loop"
-msgstr ""
+msgstr "Włącz pętlę"
 
 #: admin/views/Options.php:1312
 msgid "Enable"
-msgstr ""
+msgstr "Włącz"
 
 #: admin/views/Options.php:1322
 msgid "profile id"
@@ -1871,26 +1811,20 @@ msgid "here"
 msgstr ""
 
 #: admin/views/Options.php:1332 admin/views/Shortcode.php:1261
-#, fuzzy
-#| msgid "Hide rating"
 msgid "Enable rating"
-msgstr "Ukryj ocenił"
+msgstr "Włącz oceny"
 
 #: admin/views/Options.php:1342 admin/views/Shortcode.php:1269
-#, fuzzy
-#| msgid "Show comments"
 msgid "Enable comments"
 msgstr "Pokaż komentarze"
 
 #: admin/views/Options.php:1356
-#, fuzzy
-#| msgid "Your comment is awaiting moderation"
 msgid "Enable comments moderation"
-msgstr "Twój komentarz oczekuje na moderację "
+msgstr "Włącz moderację komentarzy"
 
 #: admin/views/Options.php:1366 admin/views/Shortcode.php:1281
 msgid "Enable Facebook button"
-msgstr ""
+msgstr "Włącz przycisk Facebook"
 
 #: admin/views/Options.php:1376 admin/views/Shortcode.php:1289
 msgid "Enable Twitter button"
@@ -1910,21 +1844,19 @@ msgstr ""
 
 #: admin/views/Options.php:1419 admin/views/Shortcode.php:1324
 msgid "Enable Ecommerce button"
-msgstr ""
+msgstr "Włącz przycisk sklepu"
 
 #: admin/views/Options.php:1438
-#, fuzzy
-#| msgid "Photo gallery plugin autoupdate interval."
 msgid "Gallery autoupdate interval"
-msgstr "Galeria zdjęć plugin interwał automatycznej aktualizacji."
+msgstr "Aktualizacja galerii co"
 
 #: admin/views/Options.php:1441
 msgid "hour"
-msgstr ""
+msgstr "godz."
 
 #: admin/views/Options.php:1443
 msgid "min"
-msgstr ""
+msgstr "min."
 
 #: admin/views/Options.php:1445
 msgid "Minimum 1 min."
@@ -1950,7 +1882,7 @@ msgstr ""
 
 #: admin/views/Options.php:1489 photo-gallery.php:1284
 msgid "Watermark"
-msgstr ""
+msgstr "Znak wodny"
 
 #: admin/views/Options.php:1494
 msgid "Watermark type"
@@ -1960,11 +1892,11 @@ msgstr ""
 #: admin/views/Shortcode.php:1388 admin/views/Themes.php:4578
 #: admin/views/WidgetTags.php:85
 msgid "Text"
-msgstr ""
+msgstr "Treść"
 
 #: admin/views/Options.php:1507
 msgid "Watermark url"
-msgstr ""
+msgstr "Link znaku wodnego"
 
 #: admin/views/Options.php:1518 admin/views/Options.php:1664
 msgid "Add Image"
@@ -2268,8 +2200,6 @@ msgstr ""
 
 #: admin/views/Shortcode.php:421 admin/views/Shortcode.php:729
 #: admin/views/Shortcode.php:773 admin/views/Shortcode.php:817
-#, fuzzy
-#| msgid "More"
 msgid "Load More"
 msgstr "Więcej"
 
@@ -2281,7 +2211,7 @@ msgstr ""
 
 #: admin/views/Shortcode.php:430
 msgid "Ecommerce icon"
-msgstr ""
+msgstr "Ikona sklepu"
 
 #: admin/views/Shortcode.php:443 admin/views/Shortcode.php:479
 msgid "Max. number of album columns"
@@ -2336,8 +2266,6 @@ msgid "Sort images by"
 msgstr ""
 
 #: admin/views/Shortcode.php:608
-#, fuzzy
-#| msgid "Order by: "
 msgid "Order"
 msgstr "Sortuj według"
 
@@ -2377,10 +2305,8 @@ msgstr ""
 
 #: admin/views/Shortcode.php:708 admin/views/Shortcode.php:752
 #: admin/views/Shortcode.php:796
-#, fuzzy
-#| msgid "Album is empty."
 msgid "Albums per page"
-msgstr "Album jest pusty."
+msgstr "Ilość albumów na stronie"
 
 #: admin/views/Shortcode.php:712 admin/views/Shortcode.php:739
 #: admin/views/Shortcode.php:756 admin/views/Shortcode.php:783
@@ -2453,16 +2379,12 @@ msgid "Enter absolute audio file url or add file from Options page."
 msgstr ""
 
 #: admin/views/Shortcode.php:1002
-#, fuzzy
-#| msgid "Album is empty."
 msgid "Album title"
-msgstr "Album jest pusty."
+msgstr "Tytuł albumu"
 
 #: admin/views/Shortcode.php:1010 admin/views/Shortcode.php:1059
-#, fuzzy
-#| msgid "Album is empty."
 msgid "Album view type"
-msgstr "Album jest pusty."
+msgstr "Pokaż typ albumu"
 
 #: admin/views/Shortcode.php:1014 admin/views/Shortcode.php:1063
 msgid "The gallery images view type in the album."
@@ -2542,7 +2464,7 @@ msgstr ""
 
 #: admin/views/Shortcode.php:1327
 msgid "Enable Ecommerce for images."
-msgstr ""
+msgstr "Włącz sklep dla zdjęć."
 
 #: admin/views/Shortcode.php:1340
 msgid "Toggle panel"
@@ -2632,10 +2554,8 @@ msgstr ""
 #: admin/views/Themes.php:773 admin/views/Themes.php:1536
 #: admin/views/Themes.php:1814 admin/views/Themes.php:2780
 #: admin/views/Themes.php:3189 admin/views/Themes.php:4453
-#, fuzzy
-#| msgid "Order by: "
 msgid "Border style:"
-msgstr "Sortuj według"
+msgstr "Styl ramki"
 
 #: admin/views/Themes.php:238 admin/views/Themes.php:538
 #: admin/views/Themes.php:787 admin/views/Themes.php:1550
@@ -3469,8 +3389,6 @@ msgid "Fullscreen close button color:"
 msgstr ""
 
 #: admin/views/Themes.php:3603
-#, fuzzy
-#| msgid "Share on Facebook"
 msgid "Share buttons color:"
 msgstr "Podziel się na Facebooku."
 
@@ -3655,8 +3573,6 @@ msgid "Info margin:"
 msgstr ""
 
 #: admin/views/Themes.php:4194
-#, fuzzy
-#| msgid "Comment"
 msgid "Comments Width:"
 msgstr "Komentarz"
 
@@ -3920,10 +3836,8 @@ msgid "Select"
 msgstr ""
 
 #: admin/views/Widget.php:134
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery Type:"
-msgstr "Galeria jest pusta."
+msgstr "Typ galerii"
 
 #: admin/views/Widget.php:142
 msgid "Gallery Groups:"
@@ -4093,8 +4007,6 @@ msgid "Paste"
 msgstr ""
 
 #: filemanager/view.php:105
-#, fuzzy
-#| msgid " item(s)"
 msgid "Remove items"
 msgstr "pozycja"
 
@@ -4115,8 +4027,6 @@ msgid "To change upload directory go to Options page."
 msgstr ""
 
 #: filemanager/view.php:140
-#, fuzzy
-#| msgid "Order by: "
 msgid "Order by:"
 msgstr "Sortuj według"
 
@@ -4133,10 +4043,8 @@ msgid "Click to sort by date modified"
 msgstr ""
 
 #: filemanager/view.php:256
-#, fuzzy
-#| msgid "There are no images in this gallery."
 msgid "Add selected images to gallery"
-msgstr "Nie ma zdjęć w tej galerii."
+msgstr "Dodaj wybrane zdjęcia do galerii"
 
 #: filemanager/view.php:272
 msgid "Thumbnail Maximum Dimensions:"
@@ -4242,7 +4150,7 @@ msgid "Theme successfully copied."
 msgstr ""
 
 #: framework/WDWLibrary.php:177
-msgid "Items were reset successfully."
+msgid "Items successfully reset."
 msgstr ""
 
 #: framework/WDWLibrary.php:182
@@ -4272,11 +4180,11 @@ msgstr ""
 #: framework/WDWLibrary.php:418 framework/WDWLibrary.php:567
 #: photo-gallery.php:398
 msgid "item"
-msgstr ""
+msgstr "pozycja"
 
 #: framework/WDWLibrary.php:650
 msgid " item(s)"
-msgstr "pozycja"
+msgstr "pozycja/e"
 
 #: framework/WDWLibrary.php:656
 msgid "Previous"
@@ -4296,7 +4204,7 @@ msgstr "Przejdź do poprzedniej strony"
 
 #: framework/WDWLibrary.php:683
 msgid "Go to the next page"
-msgstr " Przejdź do następnej strony"
+msgstr "Przejdź do następnej strony"
 
 #: framework/WDWLibrary.php:684
 msgid "Go to the last page"
@@ -4316,10 +4224,8 @@ msgid "No %s found."
 msgstr ""
 
 #: framework/WDWLibrary.php:2012
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery Tags"
-msgstr "Galeria jest pusta."
+msgstr "Tagi galerii"
 
 #: frontend/views/BWGViewAlbum_compact_preview.php:23
 #: frontend/views/BWGViewAlbum_extended_preview.php:19
@@ -4385,7 +4291,7 @@ msgstr "Galeria jest pusta."
 #: frontend/views/BWGViewThumbnails.php:218
 #: frontend/views/BWGViewThumbnails_mosaic.php:174
 msgid "Play"
-msgstr "Grać"
+msgstr "Odtwórz"
 
 #: frontend/views/BWGViewAlbum_compact_preview.php:471
 #: frontend/views/BWGViewAlbum_compact_preview.php:497
@@ -4397,7 +4303,7 @@ msgstr "Grać"
 #: frontend/views/BWGViewThumbnails_masonry.php:168
 #: frontend/views/BWGViewThumbnails_mosaic.php:191
 msgid "Open"
-msgstr ""
+msgstr "Otwórz"
 
 #: frontend/views/BWGViewAlbum_compact_preview.php:472
 #: frontend/views/BWGViewAlbum_compact_preview.php:498
@@ -4410,7 +4316,7 @@ msgstr ""
 #: frontend/views/BWGViewThumbnails_masonry.php:169
 #: frontend/views/BWGViewThumbnails_mosaic.php:192
 msgid "Ecommerce"
-msgstr ""
+msgstr "Sklep"
 
 #: frontend/views/BWGViewAlbum_compact_preview.php:1013
 #: frontend/views/BWGViewAlbum_extended_preview.php:1037
@@ -4422,8 +4328,6 @@ msgstr ""
 #: frontend/views/BWGViewThumbnails.php:280
 #: frontend/views/BWGViewThumbnails_masonry.php:314
 #: frontend/views/BWGViewThumbnails_mosaic.php:602
-#, fuzzy
-#| msgid "Download original image"
 msgid "Download gallery"
 msgstr "Pobierz oryginalny obraz"
 
@@ -4453,8 +4357,6 @@ msgstr "Nie wybrano galeria lub galeria została usunięta"
 #: frontend/views/BWGViewThumbnails.php:73
 #: frontend/views/BWGViewThumbnails_masonry.php:71
 #: frontend/views/BWGViewThumbnails_mosaic.php:75
-#, fuzzy
-#| msgid "There are no images in this gallery."
 msgid "There are no images."
 msgstr "Nie ma zdjęć w tej galerii."
 
@@ -4499,10 +4401,8 @@ msgid "Share on Tumblr"
 msgstr "Podziel się na Tumblr"
 
 #: frontend/views/BWGViewBlog_style.php:353
-#, fuzzy
-#| msgid "Show comments"
 msgid "Show ecommerce"
-msgstr "Pokaż komentarze"
+msgstr "Pokaż sklep"
 
 #: frontend/views/BWGViewCarousel.php:224
 #: frontend/views/BWGViewCarousel.php:230
@@ -4514,8 +4414,6 @@ msgid "Pause"
 msgstr "Pauza"
 
 #: frontend/views/BWGViewDownload_gallery.php:37
-#, fuzzy
-#| msgid "There are no images in this gallery."
 msgid "There are no images to download."
 msgstr "Nie ma zdjęć w tej galerii."
 
@@ -4578,7 +4476,7 @@ msgstr "Anuluj ocenę. "
 
 #: frontend/views/BWGViewGalleryBox.php:1297
 msgid "You have already rated."
-msgstr "Już oceniłeś. "
+msgstr "Już oceniłeś."
 
 #: frontend/views/BWGViewGalleryBox.php:1406
 msgid "Error. Incorrect Verification Code."
@@ -4611,19 +4509,15 @@ msgstr "Usuń komentarz"
 
 #: frontend/views/BWGViewGalleryBox.php:1531
 #: frontend/views/BWGViewGalleryBox.php:3043
-#, fuzzy
-#| msgid "Hide Comments"
 msgid "Hide Ecommerce"
-msgstr "Ukryj komentarze"
+msgstr "Ukryj sklep"
 
 #: frontend/views/BWGViewGalleryBox.php:1538
 #: frontend/views/BWGViewGalleryBox.php:1726
 msgid "Add to cart"
-msgstr ""
+msgstr "Dodaj do koszyka"
 
 #: frontend/views/BWGViewGalleryBox.php:1541
-#, fuzzy
-#| msgid " item(s)"
 msgid "items"
 msgstr "pozycja"
 
@@ -4638,16 +4532,16 @@ msgstr ""
 #: frontend/views/BWGViewGalleryBox.php:1573
 #: frontend/views/BWGViewGalleryBox.php:1686
 msgid "Price"
-msgstr ""
+msgstr "Cena"
 
 #: frontend/views/BWGViewGalleryBox.php:1593
 msgid "Count"
-msgstr ""
+msgstr "Ilość"
 
 #: frontend/views/BWGViewGalleryBox.php:1673
 #: frontend/views/BWGViewGalleryBox.php:1717
 msgid "Total"
-msgstr ""
+msgstr "Suma"
 
 #: frontend/views/BWGViewGalleryBox.php:1683
 msgid "Choose"
@@ -4659,7 +4553,7 @@ msgstr ""
 
 #: frontend/views/BWGViewGalleryBox.php:1727
 msgid "View cart"
-msgstr ""
+msgstr "Pokaż koszyk"
 
 #: frontend/views/BWGViewGalleryBox.php:1909
 msgid "Please select at least one item"
@@ -4672,10 +4566,8 @@ msgstr ""
 #: frontend/views/BWGViewGalleryBox.php:2668
 #: frontend/views/BWGViewGalleryBox.php:2991
 #: frontend/views/BWGViewGalleryBox.php:3035
-#, fuzzy
-#| msgid "Show comments"
 msgid "Show Ecommerce"
-msgstr "Pokaż komentarze"
+msgstr "Pokaż sklep"
 
 #: frontend/views/BWGViewGalleryBox.php:3000
 #: frontend/views/BWGViewGalleryBox.php:3028
@@ -4701,11 +4593,11 @@ msgstr "Zamknij tryb pełnoekranowy"
 
 #: insert.php:1152
 msgid "Theme 1"
-msgstr ""
+msgstr "Wygląd 1"
 
 #: insert.php:1158
 msgid "Theme 2"
-msgstr ""
+msgstr "Wygląd 2"
 
 #: photo-gallery.php:97
 msgid "This option is disabled in free version."
@@ -4717,11 +4609,11 @@ msgstr ""
 
 #: photo-gallery.php:262
 msgid "Options"
-msgstr ""
+msgstr "Opcje"
 
 #: photo-gallery.php:275
 msgid "Pro Version"
-msgstr ""
+msgstr "Wersja Pro"
 
 #: photo-gallery.php:280
 msgid "Add-ons"
@@ -5032,8 +4924,6 @@ msgid "Generating Shortcode"
 msgstr ""
 
 #: photo-gallery.php:1381
-#, fuzzy
-#| msgid "Hide Comments"
 msgid "Editing Comments"
 msgstr "Ukryj komentarze"
 
@@ -5070,10 +4960,8 @@ msgid "Albums"
 msgstr ""
 
 #: photo-gallery.php:1506
-#, fuzzy
-#| msgid "Gallery is empty."
 msgid "Gallery tags"
-msgstr "Galeria jest pusta."
+msgstr "Tagi galerii"
 
 #: photo-gallery.php:1555
 msgid "Photo gallery plugin autoupdate interval."
@@ -5090,8 +4978,6 @@ msgid "Please update the %s add-ons to start using."
 msgstr ""
 
 #: photo-gallery.php:1641
-#, fuzzy
-#| msgid "Rated."
 msgid "Rate"
 msgstr "Ocenione."
 
@@ -5420,7 +5306,7 @@ msgstr ""
 
 #: wd/templates/display_overview_user_guide.php:26
 msgid "Demo"
-msgstr ""
+msgstr "Demo"
 
 #: wd/templates/display_overview_user_guide.php:36
 msgid "FAQ"
@@ -5436,7 +5322,7 @@ msgstr ""
 
 #: wd/templates/display_overview_welcome.php:26
 msgid "More features"
-msgstr ""
+msgstr "Więcej funkcji"
 
 #: wd/templates/display_subscribe.php:9
 msgid "Hi there"
@@ -5457,12 +5343,12 @@ msgstr ""
 
 #: wd/templates/display_subscribe.php:36
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Polityka Prywatności"
 
 #: wd/templates/display_subscribe.php:42
 msgid "Terms of Use"
-msgstr ""
+msgstr "Regulamin"
 
 #: wd/wd.php:72
 msgid "Overview"
-msgstr ""
+msgstr "Przegląd"

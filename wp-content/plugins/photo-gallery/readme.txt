@@ -1,9 +1,9 @@
-=== Photo Gallery by 10Web - Responsive Image Gallery ===
+=== Photo Gallery by 10Web - Mobile-Friendly Image Gallery ===
 Contributors: webdorado,wdsupport,photogallerysupport,10web
 Tags: gallery, photo gallery, image gallery, responsive gallery, wordpress gallery plugin, photo albums, gallery slider, gallery lightbox, wordpress photo gallery plugin, fullscreen gallery, watermarking, video gallery
 Requires at least: 3.4
-Tested up to: 5.0 
-Stable tag: 1.5.15
+Tested up to: 5.2
+Stable tag: 1.5.29
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -11,25 +11,21 @@ Photo Gallery is a powerful image gallery plugin with a list of advanced options
 
 == Description ==
 
-https://www.youtube.com/watch?v=VDKtGHAJVpc
+Photo Gallery is the leading plugin for building beautiful mobile-friendly galleries in a few minutes.
 
-= Useful Links: =  
-[Premium Photo Gallery by 10Web](https://10web.io/plugins/wordpress-photo-gallery/)    
-    
+= Useful Links: =
     
 [Live Demo](https://demo.10web.io/photo-gallery/)    
     
     
-[User Manual](https://help.10web.io/hc/en-us/sections/360002159111-Photo-Gallery)    
-    
-    
-[Support Forum](https://wordpress.org/support/plugin/photo-gallery)    
+[Premium Photo Gallery by 10Web](https://10web.io/plugins/wordpress-photo-gallery/)    
     
     
 [Special Offer for all Premium Plugins](https://10web.io/plugins-bundle-pricing/)    
     
- 
+https://youtu.be/pA8-5qaMBqM
 
+    
 If you’re looking for a user friendly and feature rich plugin to add responsive galleries and albums to your website, Photo Gallery plugin can be the best option for you. It’s simple in use yet packed with powerful functionality, allowing you to create anything from simple photo galleries to selling digital content right from your website (Premium version). Photo Gallery  comes packed with stunning layout options, gallery and album views, multiple widgets and a number of extensions that take its functionality even further.  WordPress Photo Gallery is a great choice for photography websites and blogs,  as well as sites that want to have robust image galleries with easy navigation.
 Check the extensive feature list of the plugin bellow, have a look at the plugin demo and give it a try. 
 
@@ -109,11 +105,10 @@ Under the social options tab you’ll find settings for the Instagram and Facebo
 
 = Photo Gallery Add-ons =
 [Ecommerce Add-on](https://10web.io/plugins/wordpress-photo-gallery/) - Display your digital content and sell it directly from your website.      
-[Facebook Integration Add-on](https://10web.io/plugins/wordpress-photo-gallery/)  -  Display Facebook photos and videos within Photo Gallery Pro without additional efforts.      
 [Export/Import Add-on](https://10web.io/plugins/wordpress-photo-gallery/)  Export/import galleries, albums and all related data from one WordPress site to another. 
 
 ###IMPORTANT:    
-If you think you found a bug in Photo Gallery or have any problem/question concerning the plugin, please check out [Support Forum](https://wordpress.org/support/plugin/photo-gallery) in our website. If you do not find a solution here, do not hesitate to [click here to contact us](https://10web.io/contact-us/).
+If you think you found a bug in Photo Gallery or have any problem/question concerning the plugin, please check out [Support Forum](https://wordpress.org/support/plugin/photo-gallery) in our website.
 
 
 == Installation ==
@@ -285,8 +280,90 @@ Choose whether to display random or the first/last specific number of images.
 **Dimensions.** Specify the width and height of the widget.
 **Theme.** Choose the theme, which will be applied to the gallery/album.
 
-
 == Changelog ==
+
+
+= 1.5.29 =
+* Added: Functionality to disable ajax actions to open galleries by URL.
+* Fixed: Notice on adding Instagram whole post.
+* Fixed: Pagination styles on admin pages.
+* Fixed: Zip upload.
+* Fixed: Filmstrip scroll in fullscreen mode.
+* Fixed: Message on saving global options.
+
+= 1.5.28 =
+* Changed: Banner text.
+
+= 1.5.27 =
+* Added: Banner to check website performance.
+
+= 1.5.26 =
+* Fixed: Embed issue.
+* Fixed: Issue with uploading multiple images at once.
+
+= 1.5.25 =
+* Fixed: Security issue.
+
+= 1.5.24 =
+* Fixed: Major bug.
+
+= 1.5.23 =
+* Fixed: Authenticated stored XSS.  
+* Fixed: Google fonts with 'Developer mode' set to 'No'.  
+* Fixed: Add images to gallery with exclamation mark in tag name.   
+* Fixed: Galleries list page with big data.  
+* Fixed: Filter in comments page.  
+* Fixed: Random ordering for lightbox.  
+* Fixed: Carousel view.  
+* Fixed: Scroll bar for image info.  
+* Fixed: Do not allow to save <a> tag in image alt.  
+* Fixed: Do not allow backslash in image alt and description.  
+* Fixed: HTML in alt/description.   
+* Changed: Polish translation.
+* Added: Integration with Google photos.  
+* Added: Lazy load(optional).  
+* Removed: Google+.   
+
+= 1.5.22 =
+* Changed: Banner to install image optimizer plugin.   
+
+= 1.5.21 =
+* Added: Ebook delivery confirmation and instructions popup.  
+* Fixed: Screen options.  
+
+= 1.5.20 =
+* Added: "Get Free Ebook" page on activation.   
+* Updated: jQuery upload library.  
+
+= 1.5.19 =
+* Added: Possibility to open gallery in any view from gallery group.  
+* Added: Search functionality for gallery group views.  
+* Added: Separate ordering option for gallery groups.  
+* Fixed: Stars, Hit counter position with opened control buttons.  
+* Fixed: Gallery edit page responsiveness.  
+* Fixed: File extension as folder name.  
+* Fixed: Add images to gallery selected with shortcode CTRL+A.   
+* Fixed: HTML in image title.   
+* Fixed: Error when clicking allow or skip more than once.   
+* Fixed: Enable/Disable Lightbox Filmstrip.  
+* Fixed: Enable/Disable Lightbox Right Click protection.  
+* Fixed: Enable/Disable Lightbox Autoplay.  
+* Fixed: Crop thumbnail popup dimensions.  
+* Fixed: Rating icon in control buttons.  
+* Fixed: Order by date.   
+* Fixed: Shortcode popup height opened from gutenberg.   
+* Fixed: Lightbox filmstrip thumbnails dimensions.     
+* Improved: Filmstrip.   
+
+= 1.5.18 =
+* Changed: Banner to install 10Web manager.
+
+= 1.5.17 =
+* Fixed: Shortcode popup opened from Gutenberg.
+
+= 1.5.16 =
+* Fixed: Shortcode popup opened from Gutenberg.    
+* Fixed: Images upload with empty meta data.   
 
 = 1.5.15 =
 * Fixed: Photo gallery icon doesn't appear in Gutenberg.
@@ -1390,5 +1467,5 @@ This vulnerability was discovered by Fortinet's FortiGuard Labs.
 3.  Photo Gallery - Image Browser View 
 4.  Photo Gallery - Mansory View (Premium version)   
 5.  Photo Gallery - Mosaic View (Premium version) 
-6.  Photo Gallery - Edit Global Options   
-7.  Photo Gallery - Edit Watermark   
+6.  Photo Gallery - Shorecode popup   
+7.  Photo Gallery - Galleries list

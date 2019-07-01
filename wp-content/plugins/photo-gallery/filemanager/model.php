@@ -225,6 +225,7 @@ class FilemanagerModel {
 					$file['size'] = $file_size_kb . ' KB';
 					$image_info = getimagesize(htmlspecialchars_decode($item, ENT_COMPAT | ENT_QUOTES));
 					$file['resolution'] = $this->is_img($file['type']) ? $image_info[0]  . ' x ' . $image_info[1] . ' px' : '';
+					$file['resolution_thumb'] = WDWLibrary::get_thumb_size($file['thumb'] );
 					$exif = WDWLibrary::read_image_metadata( $dir . '/.original/' . $name );
 					$file['alt'] = BWG()->options->read_metadata && $exif['title'] ? $exif['title'] : str_replace("_", " ", $filename);
 					$file['credit'] = !empty($exif['credit']) ? $exif['credit'] : '';

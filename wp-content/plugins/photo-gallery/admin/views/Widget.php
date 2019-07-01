@@ -74,10 +74,12 @@ class WidgetView_bwg {
 			$params['compuct_album_thumb_height'] = $height;
 			$params['compuct_album_image_thumb_width'] = $width;
 			$params['compuct_album_image_thumb_height'] = $height;
+			$params['all_album_sort_by']  = $sort_by;
+			$params['all_album_order_by'] = $order_by;
 			$params['compuct_album_enable_page'] = 0;
 		}
 		$controller = new $controller_class($view);
-    $bwg = WDWLibrary::unique_number();
+		$bwg = WDWLibrary::unique_number();
 		$pairs = WDWLibrary::get_shortcode_option_params( $params );
 		$controller->execute($pairs, 1, $bwg);
 		// After widget.

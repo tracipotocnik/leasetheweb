@@ -3,7 +3,7 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
-class TenWebLibNotices {
+class TenWebNewLibNotices {
 
     protected $promo_link = '';
 

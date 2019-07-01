@@ -36,9 +36,8 @@ class BWGModelGalleryBox {
     if (strtolower($order_by) != 'asc') {
       $order_by = 'desc';
     }
-    WDWLibrary::bwg_session_start();
-    $bwg_random_seed = isset($_SESSION['bwg_random_seed_'. $bwg]) ? $_SESSION['bwg_random_seed_'. $bwg] : '';
 
+    $bwg_random_seed = WDWLibrary::get('bwg_random_seed','');
     $bwg_filter_tag_temp = WDWLibrary::get('filter_tag', 0);
     if ( $bwg_filter_tag_temp == 0 ) {
       $filter_tags = array();
@@ -81,7 +80,7 @@ class BWGModelGalleryBox {
     $where .= ($gallery_id ? ' AND image.gallery_id = "' . $gallery_id . '" ' : '') . ($tag ? ' AND tag.tag_id = "' . $tag . '" ' : '');
     $join = $tag ? 'LEFT JOIN ' . $wpdb->prefix . 'bwg_image_tag as tag ON image.id=tag.image_id' : '';
 
-    $join .= ' LEFT JOIN '. $wpdb->prefix .'bwg_gallery as gallery ON gallery.id = image.gallery_id';
+    $join .= ' LEFT JOIN '. $wpdb->prefix .'bwg_gallery as gallery ON image.gallery_id = gallery.id ';
     $where .= ' AND gallery.published = 1 ';
 
     if ($filter_tags){
@@ -89,7 +88,9 @@ class BWGModelGalleryBox {
       $where .= ' AND CONCAT(",", tags.tags_combined, ",") REGEXP ",(' . implode("|", $filter_tags) . ')," ';
     }
 
-    $rows = $wpdb->get_results('SELECT image.*, rates.rate FROM ' . $wpdb->prefix . 'bwg_image as image LEFT JOIN (SELECT rate, image_id FROM ' . $wpdb->prefix . 'bwg_image_rate WHERE ip="' . $_SERVER['REMOTE_ADDR'] . '") as rates ON image.id=rates.image_id ' . $join . ' WHERE image.published=1 ' . $where . ' ORDER BY ' . str_replace('RAND()', 'RAND(' . $bwg_random_seed . ')', $sort_by) . ' ' . $order_by);
+    $query = 'SELECT image.*, rates.rate FROM ' . $wpdb->prefix . 'bwg_image as image LEFT JOIN (SELECT rate, image_id FROM ' . $wpdb->prefix . 'bwg_image_rate WHERE ip="' . $_SERVER['REMOTE_ADDR'] . '") as rates ON image.id=rates.image_id ' . $join . ' WHERE image.published=1 ' . $where;
+    $query .=  ' ORDER BY ' . str_replace('RAND()', 'RAND(' . $bwg_random_seed . ')', $sort_by) . ' ' . $order_by;
+    $rows = $wpdb->get_results($query);
 
     $images = array();
     if ( !empty($rows) ) {

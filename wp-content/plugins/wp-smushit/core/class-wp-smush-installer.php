@@ -11,6 +11,10 @@
  * @copyright (c) 2018, Incsub (http://incsub.com)
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 /**
  * Class WP_Smush_Installer for handling updates and upgrades of the plugin.
  *
@@ -100,6 +104,10 @@ class WP_Smush_Installer {
 				self::upgrade_3_0();
 			}
 
+			if ( version_compare( $version, '3.2.0', '<' ) ) {
+				self::upgrade_3_2_0();
+			}
+
 			// Create/upgrade directory smush table.
 			self::directory_smush_table();
 
@@ -185,7 +193,7 @@ class WP_Smush_Installer {
 						switch_to_blog( $blog['blog_id'] );
 
 						$settings = get_option( WP_SMUSH_PREFIX . 'last_settings', array() );
-						$settings = array_merge( WP_Smush_Settings::get_instance()->get(), $settings );
+						$settings = array_merge( WP_Smush_Settings::get_instance()->get(), maybe_unserialize( $settings ) );
 						update_option( WP_SMUSH_PREFIX . 'settings', $settings );
 						// Remove previous data.
 						delete_option( WP_SMUSH_PREFIX . 'last_settings' );
@@ -216,6 +224,16 @@ class WP_Smush_Installer {
 				delete_site_option( WP_SMUSH_PREFIX . $key );
 			}
 		}
+	}
+
+	/**
+	 * Upgrade to 3.2.0.
+	 *
+	 * @since 3.2.0
+	 */
+	private static function upgrade_3_2_0() {
+		// Not used.
+		delete_option( 'smush_option' );
 	}
 
 }

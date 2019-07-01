@@ -13,7 +13,7 @@
 .SumoSelect.open>.search>span, .SumoSelect.open>.search>label{visibility:hidden;}
 
 /*this is applied on that hidden select. DO NOT USE display:none; or visiblity:hidden; and Do not override any of these properties. */
-.bwg_thumbnail .SelectClass,.bwg_thumbnail .SumoUnder { position: absolute; top: 0; left: 0; right: 0; height: 100%; width: 100%; border: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)"; filter: alpha(opacity=0); -moz-opacity: 0; -khtml-opacity: 0; opacity: 0; }
+.bwg_thumbnail .SelectClass,.bwg_thumbnail .SumoUnder { position: absolute; top: 0; left: 0; right: 0; height: 100%; width: 100%; border: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; -moz-opacity: 0; -khtml-opacity: 0; opacity: 0; }
 .SelectClass, .SumoUnder {
     display: inline-block;
     position: absolute;
@@ -26,8 +26,6 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: alpha(opacity=0);
     -moz-opacity: 0;
     -khtml-opacity: 0;
     opacity: 0;
@@ -95,7 +93,7 @@
 
 /*disabled state*/
 .SumoSelect > .optWrapper > .options li.opt.disabled { background-color: inherit;pointer-events: none;}
-.SumoSelect > .optWrapper > .options li.opt.disabled * { -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 5-7 */ filter: alpha(opacity=50); /* Netscape */ -moz-opacity: 0.5; /* Safari 1.x */ -khtml-opacity: 0.5; /* Good browsers */ opacity: 0.5; }
+.SumoSelect > .optWrapper > .options li.opt.disabled * { /* Netscape */ -moz-opacity: 0.5; /* Safari 1.x */ -khtml-opacity: 0.5; /* Good browsers */ opacity: 0.5; }
 
 
 /*styling for multiple select*/

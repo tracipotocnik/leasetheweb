@@ -4,22 +4,35 @@
   Text Domain: wp-image-lazy-load
   Domain Path: /languages
   Description: Image lazy load plugin to boost page load time and save bandwidth by removing all the images, background-images, responsive images, iframes and videos. Elements will load just when reach visible part of screen.
-  Version: 1.6.1
+  Version: 1.6.2.2
   Author: Radek Mezulanik
   Author URI: https://cz.linkedin.com/in/radekmezulanik
   License: GPL3
 */
 
-(function($) {
+(function ($) {
     //get options from DB
     var skipIframe = wpimagelazyload_settings.wpimagelazyloadsetting_skipiframe; //true=skip iframe, false=apply the code
     var skipParent = wpimagelazyload_settings.wpimagelazyloadsetting_skipparent;
-    var skipAllParent = wpimagelazyload_settings.wpimagelazyloadsetting_skipallparent;
+    var skipAllParent = wpimagelazyload_settings.wpimagelazyloadsetting_skipallparent.split(";");
     var skipVideo = wpimagelazyload_settings.wpimagelazyloadsetting_skipvideo;
     var loadonposition = parseInt(wpimagelazyload_settings.wpimagelazyloadsetting_loadonposition);
     var importantVC = wpimagelazyload_settings.wpimagelazyloadsetting_importantvc;
 
-    $('document').ready(function() {
+    //Check if element has some class that should be skipped
+    function myClasses(image, skipClasses) {
+        if (image instanceof SVGElement === false) {
+            var myClasses = image.className.split(' ');
+            if (myClasses.some(function (v) { return skipClasses.indexOf(v) >= 0; })) {
+                /*if (myClasses.some(v => skipClasses.indexOf(v) >= 0)) {*/
+                return false
+            } else {
+                return true
+            }
+        }
+    }
+
+    $('document').ready(function () {
 
         //set visible part of screen
         var scrollBottom = $(window).scrollTop() + window.innerHeight;
@@ -30,13 +43,8 @@
         -give back source of visible images
         -for some browsers, `bgbak` is undefined; for others, `bgbak` is false -> check both like: if (typeof srcsetbak !== typeof undefined && srcsetbak !== false)
         */
-        $('img').each(function() {
-            if (skipAllParent.length != 0) {
-                var found = $(this).parents().hasClass(skipAllParent); //look for ignored parent
-            }
-            if (found && skipAllParent.length != 0) {
-                //skip this element
-            } else {
+        $('img').each(function () {
+            if (myClasses(this, skipAllParent)) {
                 this.setAttribute('src-backup', this.src);
                 var elements = $(this);
                 var elementsoffset = elements.offset();
@@ -63,21 +71,21 @@
         give back source of visible videos
         */
         if (skipVideo == "false") {
-            $('video').each(function() {
-                if (skipAllParent.length != 0) {
-                    var found = $(this).parents().hasClass(skipAllParent); //look for ignored parent
-                }
-                if (found && skipAllParent.length != 0) {
-                    //skip this element
-                } else {
+            $('video').each(function () {
+                if (myClasses(this, skipAllParent)) {
                     this.setAttribute('src-backup', this.src);
                     var elements = $(this);
                     var elementsoffset = elements.offset();
                     var isvisibleOriginal = parseInt(elementsoffset.top);
                     var isvisible = isvisibleOriginal + loadonposition;
+                    var source = elements.find("source");
                     if (scrollBottom < isvisible) {
                         this.style.cssText = "opacity:0;";
                         this.setAttribute('src', '');
+                        for (i = 0; i < source.length; i++) {
+                            source[i].setAttribute('src-backup', source[i].src);
+                            source[i].setAttribute('src', '');
+                        }
                     }
                 }
             });
@@ -88,22 +96,14 @@
         give back source of visible iframes
         */
         if (skipIframe == "false") {
-            $('iframe').each(function() {
-                if (skipAllParent.length != 0) {
-                    var found = $(this).parents().hasClass(skipAllParent); //look for ignored parent
-                }
-                if (found && skipAllParent.length != 0) {
-                    //skip this element
-                } else {
+            $('iframe').each(function () {
+                if (myClasses(this, skipParent)) {
                     this.setAttribute('src-backup', this.src);
                     var elements = $(this);
                     var elementsoffset = elements.offset();
                     var isvisibleOriginal = parseInt(elementsoffset.top);
                     var isvisible = isvisibleOriginal + loadonposition;
                     if (skipParent.length != 0) {
-                        var found = $(this).parents().hasClass(skipParent); //look for ignored parent
-                    }
-                    if (found && skipParent.length != 0) {
                         //skip this iframe
                     } else {
                         if (scrollBottom < isvisible) {
@@ -117,13 +117,8 @@
             });
         }
 
-        $("*").each(function() {
-            if (skipAllParent.length != 0) {
-                var found = $(this).parents().hasClass(skipAllParent); //look for ignored parent
-            }
-            if (found && skipAllParent.length != 0) {
-                //skip this element
-            } else {
+        $("*").each(function () {
+            if (myClasses(this, skipAllParent)) {
                 //remove & backup background-image from all elements
                 if ($(this).css('background-image').indexOf('url') > -1) {
                     var bg = $(this).css('background-image');
@@ -154,19 +149,14 @@
     });
 
     //Detect if user scrolled to the image
-    $(window).scroll(function() {
+    $(window).scroll(function () {
 
         //set visible part of screen
         var scrollBottom = $(window).scrollTop() + window.innerHeight;
 
         //give back source of visible images
-        $('img').each(function() {
-            if (skipAllParent.length != 0) {
-                var found = $(this).parents().hasClass(skipAllParent); //look for ignored parent
-            }
-            if (found && skipAllParent.length != 0) {
-                //skip this element
-            } else {
+        $('img').each(function () {
+            if (myClasses(this, skipAllParent)) {
                 var isLoaded = $(this).attr("src");
                 var isLoaded2 = $(this).attr("srcset");
                 var hasBackup = $(this).attr("srcset-backup");
@@ -191,13 +181,8 @@
 
         //give back source of visible videos
         if (skipVideo == "false") {
-            $('video').each(function() {
-                if (skipAllParent.length != 0) {
-                    var found = $(this).parents().hasClass(skipAllParent); //look for ignored parent
-                }
-                if (found && skipAllParent.length != 0) {
-                    //skip this element
-                } else {
+            $('video').each(function () {
+                if (myClasses(this, skipAllParent)) {
                     var isLoaded = $(this).attr("src");
                     var isLoaded2 = $(this).attr("srcset");
                     var hasBackup = $(this).attr("srcset-backup");
@@ -205,11 +190,18 @@
                     var elementsoffset = elements.offset();
                     var isvisibleOriginal = parseInt(elementsoffset.top);
                     var isvisible = isvisibleOriginal + loadonposition;
+                    var source = elements.find("source");
                     if (scrollBottom >= isvisible) {
                         if (!isLoaded) { //check if source is not set
                             this.src = this.getAttribute('src-backup');
-                            this.className += " fadein";
+                            if (this.classList.contains("fadein") == false) {
+                                this.className += " fadein";
+                            }
                             this.style.opacity = "1";
+
+                            for (i = 0; i < source.length; i++) {
+                                source[i].src = source[i].getAttribute('src-backup');
+                            }
                         }
                         if (!isLoaded2) { //check if source is not set
                             if (hasBackup) {
@@ -223,13 +215,8 @@
 
         //give back source of visible iframes
         if (skipIframe == "false") {
-            $('iframe').each(function() {
-                if (skipAllParent.length != 0) {
-                    var found = $(this).parents().hasClass(skipAllParent); //look for ignored parent
-                }
-                if (found && skipAllParent.length != 0) {
-                    //skip this element
-                } else {
+            $('iframe').each(function () {
+                if (myClasses(this, skipParent)) {
                     var isLoaded = $(this).attr("src");
                     var elements = $(this);
                     var elementsoffset = elements.offset();
@@ -256,13 +243,8 @@
         }
 
         //give back background-image of all visible elements        
-        $("*").each(function() {
-            if (skipAllParent.length != 0) {
-                var found = $(this).parents().hasClass(skipAllParent); //look for ignored parent
-            }
-            if (found && skipAllParent.length != 0) {
-                //skip this element
-            } else {
+        $("*").each(function () {
+            if (myClasses(this, skipAllParent)) {
                 var bgbak = $(this).attr("background-image-backup");
                 if (bgbak) {
                     var elements = $(this);

@@ -59,8 +59,8 @@ class FilemanagerView {
     wp_print_styles('wp-auth-check');
     wp_print_styles('wp-pointer');
     ?>
-    <script src="<?php echo BWG()->plugin_url; ?>/filemanager/js/jq_uploader/jquery.iframe-transport.js"></script>
-    <script src="<?php echo BWG()->plugin_url; ?>/filemanager/js/jq_uploader/jquery.fileupload.js"></script>
+    <script src="<?php echo BWG()->plugin_url; ?>/filemanager/js/jq_uploader/jquery.iframe-transport.js?v=9.25.1"></script>
+    <script src="<?php echo BWG()->plugin_url; ?>/filemanager/js/jq_uploader/jquery.fileupload.js?v=9.25.1"></script>
     <script>
 	  var DS = "<?php echo addslashes('/'); ?>";
       var demo_message = "<?php echo addslashes(__('This option is disabled in demo.', BWG()->prefix)); ?>";
@@ -302,7 +302,7 @@ class FilemanagerView {
 		jQuery("#jQueryUploader").fileupload({
 		  dataType: "json",
 		  dropZone: jQuery("#uploader_hitter"),
-		  limitConcurrentUploads: 30, // upload step by step
+		  limitConcurrentUploads: 10, // upload step by step
 		  acceptFileTypes: /(\.|\/)(jpe?g|gif|png)$/i,
 		  submit: function (e, data) {
 			isUploading = true;
@@ -414,6 +414,7 @@ class FilemanagerView {
 			filetype="<?php echo strtoupper( $file['type'] ); ?>"
 			date_modified="<?php echo $file['date_modified']; ?>"
 			fileresolution="<?php echo $file['resolution']; ?>"
+			fileresolution_thumb="<?php echo $file['resolution_thumb']; ?>"
 			fileCredit="<?php echo isset( $file['credit'] ) ? $file['credit'] : ''; ?>"
 			fileAperture="<?php echo isset( $file['aperture'] ) ? $file['aperture'] : ''; ?>"
 			fileCamera="<?php echo isset( $file['camera'] ) ? $file['camera'] : ''; ?>"

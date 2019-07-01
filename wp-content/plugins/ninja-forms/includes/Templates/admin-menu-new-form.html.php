@@ -96,6 +96,7 @@
 <script id="tmpl-nf-app-header-action-button" type="text/template">
     {{{ data.renderPublish() }}}
     {{{ data.maybeRenderCancel() }}}
+    {{{ data.renderPublicLink() }}}
 </script>
 
 <script id="tmpl-nf-mobile-menu-button" type="text/template">
@@ -120,6 +121,9 @@
 
 <script id="tmpl-nf-app-header-view-changes" type="text/template">
     <a class="nf-cancel viewChanges" title="<?php _e( 'View Changes', 'ninja-forms' ); ?>" style="text-decoration: none;" href="#"><span class="dashicons dashicons-backup"></span></a>
+</script>
+<script id="tmpl-nf-app-header-public-link" type="text/template">
+    <a class="nf-public-link publicLink" title="<?php _e( 'Public Link', 'ninja-forms' ); ?>" style="text-decoration: none;" href="#"><span class="dashicons dashicons-admin-links"></span></a>
 </script>
 
 <script id="tmpl-nf-main" type="text/template">
@@ -159,8 +163,29 @@
 </script>
 
 <script id="tmpl-nf-main-content-field" type="text/template">
-    <div id="{{{ data.getFieldID() }}}" class="{{{ data.renderClasses() }}}" data-id="{{{ data.id }}}">{{{ data.renderIcon() }}}<span class="nf-field-label">{{{ _.escape( data.label ) }}} {{{ data.renderRequired() }}}</span>
+    <div id="{{{ data.getFieldID() }}}" class="{{{ data.renderClasses() }}}" data-id="{{{ data.id }}}">
+
+        <!-- Inline overlay to prevent click-throughs. -->
+        <div style="position:absolute;top:0;right:0;bottom:0;left:0;z-index:2;"></div>
+
         <div class="nf-item-controls"></div>
+        
+        <div class="nf-placeholder-label">
+            {{{ data.renderIcon() }}}
+            <span class="nf-field-label">{{{ _.escape( data.label ) }}} {{{ data.renderRequired() }}}</span>
+        </div>
+
+        <#
+            var labelPosition = data.labelPosition();
+            if( 'default' == labelPosition ){
+                labelPosition = Backbone.Radio.channel( 'settings' ).request( 'get:setting', 'default_label_pos' );
+            }
+        #>
+        <div class="nf-realistic-field nf-realistic-field--label-{{{labelPosition}}}" id="nf-field-{{{ data.getFieldID() }}}-wrap">
+            <div class="nf-realistic-field--label"></div>
+            <div class="nf-realistic-field--description">{{{ data.renderDescriptionText() }}}</div>
+            <div class="nf-realistic-field--element" ></div>
+        </div>
     </div>
 </script>
 
@@ -216,6 +241,11 @@
         <span class="dashicons dashicons-admin-collapse"></span><span class="nf-expand-off"><?php _e( 'Full screen', 'ninja-forms' ); ?></span><span class="nf-expand-on"><?php _e( 'Half screen', 'ninja-forms' ); ?></span>
     </a>
     <span id="nf-drawer-footer"></span>
+    <# if(1 != nfAdmin.devMode){ #>
+    <div style="margin-top:100px;padding:20px;opacity:.5;text-align:center;">
+        For more technical features, <a href="<?php echo add_query_arg('page', 'nf-settings', admin_url('admin.php')); ?>#ninja_forms[builder_dev_mode]">enable Developer Mode</a>.
+    </div>
+    <# } #>
 </script>
 
 <script id="tmpl-nf-drawer-content-add-field" type="text/template">
@@ -262,6 +292,13 @@
             <# } #>
         </td>
     </tr>
+</script>
+
+<script id="tmpl-nf-drawer-content-public-link" type="text/template">
+    <h3><?php echo __('Display Your Form', 'ninja-forms'); ?></h3>
+    <div class="embed-form"></div>
+    <div class="enable-public-link"></div>
+    <div class="copy-public-link"></div>
 </script>
 
 <script id="tmpl-nf-drawer-content-edit-settings" type="text/template">
@@ -364,6 +401,12 @@
     </header>
 </script>
 
+<script id="tmpl-nf-drawer-header-public-link" type="text/template">
+    <header class="nf-drawer-header">
+        <a href="#" title="<?php _e( 'Done', 'ninja-forms' ); ?>" class="nf-button primary nf-close-drawer" tabindex="-1"><?php _e( 'Done', 'ninja-forms' ); ?></a>
+    </header>
+</script>
+
 <script id="tmpl-nf-drawer-header-new-form" type="text/template">
     <header class="nf-drawer-header">
         <h3><?php _e( 'Almost there...', 'ninja-forms' ); ?></h3>
@@ -450,6 +493,13 @@ Label Three, value-three, 3
     <label for="{{{ data.name }}}" class="{{{ data.renderLabelClasses() }}}">{{{ data.label }}} {{{ data.renderTooltip() }}}
         <input type="text" class="setting" id="{{{ data.name }}}" value="{{{ data.value }}}" placeholder="{{{ data.placeholder }}}" />
         {{{ data.renderMergeTags() }}}
+    </label>
+</script>
+
+<script id="tmpl-nf-edit-setting-copytext" type="text/template">
+    <label style="position:relative;" for="{{{ data.name }}}" class="{{{ data.renderLabelClasses() }}}">{{{ data.label }}} {{{ data.renderTooltip() }}}
+        <input type="text" class="setting" id="{{{ data.name }}}" value="{{{ data.value }}}" readonly="readonly" />
+        <button class="nf-button primary js-click-copytext" style="position:absolute;top:50%;right:5px;padding:0px 15px;"><?php echo __('Copy', 'ninja-forms'); ?></button>
     </label>
 </script>
 

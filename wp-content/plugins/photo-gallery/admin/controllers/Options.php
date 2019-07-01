@@ -63,6 +63,7 @@ class OptionsController_bwg {
       $this->$task($params);
     }
     else {
+      do_action('bwg_options_execute_task', $task);
       $this->display($params);
     }
   }
@@ -93,7 +94,7 @@ class OptionsController_bwg {
 													BWG()->nonce => wp_create_nonce(BWG()->nonce),
 												), admin_url('admin-ajax.php') );
 
-	$params['instagram_return_url'] = 'https://api.instagram.com/oauth/authorize/?client_id=54da896cf80343ecb0e356ac5479d9ec&scope=basic+public_content&redirect_uri=http://api.web-dorado.com/instagram/?return_url=' . urlencode( admin_url('admin.php?page=options_bwg')) . '&response_type=token';
+  	$params['instagram_return_url'] = 'https://api.instagram.com/oauth/authorize/?client_id=54da896cf80343ecb0e356ac5479d9ec&scope=basic+public_content&redirect_uri=http://api.web-dorado.com/instagram/?return_url=' . urlencode( admin_url('admin.php?page=options_bwg')) . '&response_type=token';
     $params['instagram_reset_href'] =  add_query_arg( array(
 														'page' => $this->page,
 														'task' => 'reset_instagram_access_token',
@@ -111,7 +112,7 @@ class OptionsController_bwg {
   public function reset( $params = array() ) {
     $params['row'] = new WD_BWG_Options(true);
     $params['page'] = $this->page;
-	$params['imgcount'] = $this->model->get_image_count();
+  	$params['imgcount'] = $this->model->get_image_count();
     $params['options_url_ajax'] = add_query_arg( array(
 													'action' => 'options_' . BWG()->prefix,
 													BWG()->nonce => wp_create_nonce(BWG()->nonce),

@@ -3,9 +3,9 @@
     <h1><?php _e( 'Get Help', 'ninja-forms' ); ?></h1>
 <h2><?php _e( 'Before requesting help from our support team please review:', 'ninja-forms' ); ?></h2>
 <ol>
-  <li><a href='https://ninjaforms.com/three/?utm_source=plugin&utm_medium=get-help&utm_campaign=documentation'><?php _e( 'Ninja Forms THREE documentation', 'ninja-forms' ); ?></a></li>
-  <li><a href='https://ninjaforms.com/docs/basic-troubleshooting/?utm_source=plugin&utm_medium=get-help&utm_campaign=documentation'><?php _e( 'Ninja Forms Email troubleshooting', 'ninja-forms' ); ?></a></li>
-  <li><a href='https://ninjaforms.com/docs/troubleshooting-email-problems/?utm_source=plugin&utm_medium=get-help&utm_campaign=documentation'><?php _e( 'What to try before contacting support', 'ninja-forms' ); ?></a></li>
+  <li><a href='https://ninjaforms.com/documentation/?utm_source=plugin&utm_medium=get-help&utm_campaign=documentation'><?php _e( 'Ninja Forms Documentation', 'ninja-forms' ); ?></a></li>
+  <li><a href='https://ninjaforms.com/docs/troubleshooting-email-problems/?utm_source=plugin&utm_medium=get-help&utm_campaign=documentation'><?php _e( 'Ninja Forms Email troubleshooting', 'ninja-forms' ); ?></a></li>
+  <!-- <li><a href='https://ninjaforms.com/docs/basic-troubleshooting/?utm_source=plugin&utm_medium=get-help&utm_campaign=documentation'><?php _e( 'What to try before contacting support', 'ninja-forms' ); ?></a></li> -->
   <li><a href='https://ninjaforms.com/scope-of-support/?utm_source=plugin&utm_medium=get-help&utm_campaign=documentation'><?php _e( 'Our Scope of Support', 'ninja-forms' ); ?></a></li>
 </ol>
 

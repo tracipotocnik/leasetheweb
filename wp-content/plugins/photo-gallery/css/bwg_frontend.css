@@ -182,6 +182,10 @@ div[id^="bwg_container"] div[id^="bwg_container"] .bwg_img_clear {
   width: 35%;
   z-index: 10130;
 }
+#bwg_image_container #spider_popup_left,
+#bwg_image_container #spider_popup_right {
+  width: 25%;
+}
 
 #spider_popup_left-ico,
 #spider_popup_right-ico {
@@ -482,7 +486,6 @@ div[id^="bwg_container"] .bwg-border-box * {
   -moz-backface-visibility: hidden;
   -ms-backface-visibility: hidden;
   opacity: 1;
-  filter: Alpha(opacity=100);
   z-index: 102;
   position: relative;
 }
@@ -508,7 +511,6 @@ div[id^="bwg_container"] .bwg-border-box * {
 .bwg-title1,
 .bwg-ecommerce1 {
   opacity: 1;
-  filter: Alpha(opacity=100);
   text-align: center;
   width: 100%;
 }
@@ -529,14 +531,12 @@ div[id^="bwg_container"] .bwg-border-box * {
 .bwg-item0:hover .bwg-ecommerce1 {
   left: 0 !important;
   opacity: 1 !important;
-  filter: Alpha(opacity=100) !important;
 }
 
 .bwg-play-icon1 {
   display: flex;
   height: 100%;
   opacity: 1;
-  filter: Alpha(opacity=100);
   position: absolute;
   top: 0;
   width: 100%;
@@ -562,7 +562,6 @@ div[id^="bwg_container"] .bwg-border-box * {
   height: 100%;
   background-color: #FFFFFF;
   opacity: 0.95;
-  filter: Alpha(opacity=95);
 }
 .bwg_loading_div_3 {
   display: table-cell;
@@ -954,13 +953,6 @@ margin-right: 10px;
   line-height: 30px;
 }
 
-.bwg_thumbnail.bwg_container .search_line .SumoSelect > .CaptionCont > label > i.closed:before {
-  content: "\e904";
-}
-.bwg_thumbnail.bwg_container .search_line .SumoSelect > .CaptionCont > label > i.opened:before {
-  content: "\e905";
-}
-
 .bwg_thumbnail.bwg_container .search_line .bwg_reset {
   position: absolute;
 }
@@ -1043,13 +1035,11 @@ div[id^="bwg_container1_"] div[id^="bwg_container2_"] div[class^="bwg_slide_cont
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	filter: Alpha(opacity=0);
 	opacity: 0;
 	-webkit-transition: all .45s ease-in-out;
 	transition: all .45s ease-in-out;
 }
 .bwg-zoom-effect:hover .bwg-zoom-effect-overlay {
-	filter: Alpha(opacity=1);
 	opacity: 1;
 }
 .bwg-zoom-effect img {
@@ -1610,6 +1600,7 @@ body .bwg_thumbnail.bwg_container .search_line.bwg-search-line-responsive .SumoS
   cursor: pointer;
   font-size: 15px;
   width: 100%;
+  margin-bottom: 5px;
 }
 
 .bwg_comments , .bwg_ecommerce_panel{
@@ -1691,9 +1682,6 @@ body .bwg_thumbnail.bwg_container .search_line.bwg-search-line-responsive .SumoS
 .bwg_twitter:hover {
   color: #4099FB;
 }
-.bwg_google:hover {
-  color: #DD4B39;
-}
 .bwg_pinterest:hover {
   color: #cb2027;
 }
@@ -1739,13 +1727,11 @@ body .bwg_thumbnail.bwg_container .search_line.bwg-search-line-responsive .SumoS
 }
 .bwg_thumb_active {
   opacity: 1;
-  filter: Alpha(opacity=100);
 }
 
 .bwg_filmstrip_thumbnail_img {
   display: block;
   opacity: 1;
-  filter: Alpha(opacity=100);
 }
 
 .bwg_filmstrip_left {
@@ -1819,7 +1805,6 @@ body .bwg_thumbnail.bwg_container .search_line.bwg-search-line-responsive .SumoS
 .bwg_popup_image_spun {
   height: inherit;
   display: table-cell;
-  filter: Alpha(opacity=100);
   opacity: 1;
   position: absolute;
   vertical-align: middle;
@@ -1830,7 +1815,6 @@ body .bwg_thumbnail.bwg_container .search_line.bwg-search-line-responsive .SumoS
   width: inherit;
   height: inherit;
   display: table-cell;
-  filter: Alpha(opacity=0);
   opacity: 0;
   position: absolute;
   vertical-align: middle;
@@ -1845,7 +1829,6 @@ body .bwg_thumbnail.bwg_container .search_line.bwg-search-line-responsive .SumoS
 }
 .bwg_gridlet {
   opacity: 1;
-  filter: Alpha(opacity=100);
   position: absolute;
 }
 
@@ -1867,6 +1850,7 @@ body .bwg_thumbnail.bwg_container .search_line.bwg-search-line-responsive .SumoS
 
 .bwg_star {
   display: inline-block;
+  width: unset !important;
 }
 
 .bwg_image_count_container {
@@ -1953,7 +1937,11 @@ body .bwg_thumbnail.bwg_container .search_line.bwg-search-line-responsive .SumoS
 #ajax_loading {
   position:absolute;
 }
-
+.bwg_image_info:after {
+    content: "";
+    height: 60px;
+    display: block;
+}
 
 @media (max-width: 480px) {
   .bwg_image_count_container {
@@ -1982,6 +1970,7 @@ div[id^='bwg_container1_'] div[id^='bwg_container2_'] div[class^='bwg_slideshow_
   display: table;
   position: relative;
   text-align: center;
+  margin: auto;
 }
 
 div[id^='bwg_container1_'] div[id^='bwg_container2_'] img[class^='bwg_slideshow_image_'] {
@@ -2145,13 +2134,11 @@ div[id^='bwg_container1_'] div[id^='bwg_container2_'] div[class^='bwg_slideshow_
 
 div[id^='bwg_container1_'] div[id^='bwg_container2_'] div[class^='bwg_slideshow_thumb_active_'] {
   opacity: 1;
-  filter: Alpha(opacity=100);
 }
 
 div[id^='bwg_container1_'] div[id^='bwg_container2_'] img[class^='bwg_slideshow_filmstrip_thumbnail_img_'] {
   display: block;
   opacity: 1;
-  filter: Alpha(opacity=100);
   padding: 0 !important;
 }
 
@@ -2257,7 +2244,6 @@ div[id^='bwg_container1_'] div[id^='bwg_container2_'] span[class^='bwg_slideshow
   width: inherit;
   height: inherit;
   display: table-cell;
-  filter: Alpha(opacity=100);
   opacity: 1;
   position: absolute;
   vertical-align: middle;
@@ -2268,7 +2254,6 @@ div[id^='bwg_container1_'] div[id^='bwg_container2_'] span[class^='bwg_slideshow
   width: inherit;
   height: inherit;
   display: table-cell;
-  filter: Alpha(opacity=0);
   opacity: 0;
   position: absolute;
   vertical-align: middle;
@@ -2285,7 +2270,6 @@ div[id^='bwg_container1_'] div[id^='bwg_container2_'] span[class^='bwg_grid_'] {
 
 div[id^='bwg_container1_'] div[id^='bwg_container2_'] span[class^='bwg_gridlet_'] {
   opacity: 1;
-  filter: Alpha(opacity=100);
   position: absolute;
 }
 
@@ -2313,7 +2297,6 @@ div[id^='bwg_container1_'] div[id^='bwg_container2_'] div[class^='bwg_slideshow_
 }
 div[id^='bwg_container1_'] div[id^='bwg_container2_'] span[class^='bwg_slideshow_dots_active_'] {
   opacity: 1;
-  filter: Alpha(opacity=100);
 }
 
 div[id^='bwg_container1_'] div[id^='bwg_container2_'] span[class^='bwg_slideshow_image_spun1_'] {
@@ -2332,7 +2315,6 @@ div[id^='bwg_container1_'] div[id^='bwg_container2_'] span[class^='bwg_mosaic_pl
   display: flex;
   height: 100%;
   opacity: 1;
-  filter: Alpha(opacity=100);
   position: absolute;
   top: 0;
   width: 100%;
@@ -2344,19 +2326,9 @@ div[id^='bwg_container1_'] div[id^='bwg_container2_'] span[class^='bwg_mosaic_pl
   left: 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.lazy_loader {
+  background-image: url('../images/ajax_loader.png');
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}

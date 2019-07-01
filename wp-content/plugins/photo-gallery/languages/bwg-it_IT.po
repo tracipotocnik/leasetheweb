@@ -1080,7 +1080,7 @@ msgstr ""
 #: admin/views/Galleries.php:334 photo-gallery.php:558
 msgid ""
 "Gallery type cannot be changed, since it is not empty. In case you would "
-"like to have Instagram or Facebook gallery, please create a new one."
+"like to have Instagram gallery, please create a new one."
 msgstr ""
 
 #: admin/views/Galleries.php:340
@@ -1154,7 +1154,7 @@ msgstr ""
 
 #: admin/views/Galleries.php:417
 msgid ""
-"Enter YouTube, Vimeo, Instagram, Facebook, Flickr or Dailymotion URL here."
+"Enter YouTube, Vimeo, Instagram, Flickr or Dailymotion URL here."
 msgstr ""
 
 #: admin/views/Galleries.php:418 admin/views/Galleries.php:454
@@ -1590,7 +1590,7 @@ msgstr ""
 
 #: admin/views/Options.php:494
 msgid ""
-"Set the interval when Instagram or Facebook galleries will be updated, and "
+"Set the interval when Instagram galleries will be updated, and "
 "will display new posts of your Instagram or Facebook account."
 msgstr ""
 
@@ -2668,7 +2668,7 @@ msgstr ""
 
 #: admin/views/Options.php:2624 admin/views/Options.php:3111
 msgid ""
-"Choose the display type for gallery groups, Thumbnails, Masonry or Mosaic."
+"Choose the display type for gallery groups, Thumbnails, Masonry, Mosaic, Slideshow, Image browser, Blog style or Carousel."
 msgstr ""
 
 #: admin/views/Options.php:2729

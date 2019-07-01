@@ -24,8 +24,8 @@
             <div class="plan_features tenweb_clear">
                 <div class="plan_feature pro_plugins">
                     <div class="logo"></div>
-                    <h3><?php _e("60+ pro plugins/Add-ons", $wd_options->prefix); ?></h3>
-                    <p><?php _e("Access 60+ plugins and add-ons, including key plugins, such as gallery, form, slider, social plugins and more.", $wd_options->prefix); ?></p>
+                    <h3><?php _e("60+ pro plugins/Extensions", $wd_options->prefix); ?></h3>
+                    <p><?php _e("Access 60+ plugins and extensions, including key plugins, such as gallery, form, slider, social plugins and more.", $wd_options->prefix); ?></p>
                 </div>
                 <div class="plan_feature dashboard">
                     <div class="logo"></div>

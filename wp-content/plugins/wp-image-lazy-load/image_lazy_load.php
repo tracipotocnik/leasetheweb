@@ -5,7 +5,7 @@
   Text Domain: wp-image-lazy-load
   Domain Path: /languages
   Description: Image lazy load plugin to boost page load time and save bandwidth by removing all the images, background-images, responsive images, iframes and videos. Elements will load just when reach visible part of screen.
-  Version: 1.6.1
+  Version: 1.6.2.2
   Author: Radek Mezulanik
   Author URI: https://cz.linkedin.com/in/radekmezulanik
   License: GPL3
@@ -16,7 +16,7 @@
 add_option( 'wpimagelazyload_skipiframe', 'true', '', 'yes' );
 //Skip iframe in element
 add_option( 'wpimagelazyload_skipparent', '', '', 'yes' );
-//Skip iframe in element
+//Skip video in element
 add_option( 'wpimagelazyload_skipvideo', 'false', '', 'yes' );
 //Skip element in parent
 add_option( 'wpimagelazyload_skipallparent', '', '', 'yes' );
@@ -36,7 +36,7 @@ add_action( 'plugins_loaded', 'wpimagelazyload_load_textdomain' );
 /**
  * Load plugin textdomain.
  *
- * @since 1.6.1
+ * @since 1.6.2
  */
 function wpimagelazyload_load_textdomain() {
   load_plugin_textdomain( 'wp-image-lazy-load', false, basename( dirname( __FILE__ ) ) . '/languages' ); 
@@ -190,11 +190,11 @@ $animationtiming = (get_option('wpimagelazyload_animationtiming') != '') ? get_o
       </tr>
       <tr valign="top">
           <th scope="row"><?php print __('Skip images in parent element (<strong>css class without dot "."</strong>):','wp-image-lazy-load');?></th>
-          <td><input type="text" name="wpimagelazyload_skipallparent" value="<?php echo $skipallparent;?>" /> <?php print __('For no skipping, leave empty','wp-image-lazy-load');?></td>
+          <td><input type="text" name="wpimagelazyload_skipallparent" value="<?php echo $skipallparent;?>" /> <?php print __('For no skipping, leave empty. Multiple classes split by semicolon (e.g. classOne;classTwo)','wp-image-lazy-load');?></td>
       </tr>
       <tr valign="top">
           <th scope="row"><?php print __('Skip iframes in parent element (<strong>css class without dot "."</strong>):','wp-image-lazy-load');?></th>
-          <td><input type="text" name="wpimagelazyload_skipparent" value="<?php echo $skipparent;?>" /> <?php print __('For no skipping, leave empty','wp-image-lazy-load');?></td>
+          <td><input type="text" name="wpimagelazyload_skipparent" value="<?php echo $skipparent;?>" /> <?php print __('For no skipping, leave empty. Multiple classes split by semicolon (e.g. classOne;classTwo)','wp-image-lazy-load');?></td>
       </tr>
       <tr valign="top">
       <th scope="row"><?php print __('Example of use parent element:','wp-image-lazy-load');?></th>

@@ -46,13 +46,14 @@ class GalleriesController_bwg {
 
     $user = get_current_user_id();
     $screen = get_current_screen();
-	if ( !empty($screen) ) {
-		$option = $screen->get_option('per_page', 'option');
-		$this->items_per_page = get_user_meta($user, $option, TRUE);
-		if ( empty ($this->items_per_page) || $this->items_per_page < 1 ) {
-			$this->items_per_page = $screen->get_option('per_page', 'default');
-		}
-	}
+    if ( !empty($screen) ) {
+      $option = $screen->get_option('per_page', 'option');
+      $this->items_per_page = get_user_meta($user, $option, TRUE);
+      if ( empty ($this->items_per_page) || $this->items_per_page < 1 ) {
+        $this->items_per_page = $screen->get_option('per_page', 'default');
+      }
+    }
+    do_action('bwg_before_init_gallery');
   }
 
   /**
@@ -313,10 +314,10 @@ class GalleriesController_bwg {
     $params['shortcode_id'] = WDWLibrary::get_shortcode_id( array('slug' => $params['row']->slug, 'post_type' => 'gallery' ));
     $params['instagram_post_gallery'] = $params['row']->gallery_type == 'instagram_post' ? TRUE : FALSE;
     $params['facebook_post_gallery'] = (!$params['instagram_post_gallery']) ? ($params['row']->gallery_type == 'facebook_post' ? TRUE : FALSE) : FALSE;
-    $params['gallery_type'] = ($params['row']->gallery_type == 'instagram' || $params['row']->gallery_type == 'instagram_post') ? 'instagram' : (($params['row']->gallery_type == 'facebook_post' || $params['row']->gallery_type == 'facebook') ? 'facebook' : '');
+    $params['gallery_type'] = ($params['row']->gallery_type == 'instagram' || $params['row']->gallery_type == 'instagram_post') ? 'instagram' : (($params['row']->gallery_type == 'facebook_post' || $params['row']->gallery_type == 'facebook') ? 'facebook' : $params['row']->gallery_type);
 
     // Image display params.
-    $params['actions'] = WDWLibrary::image_actions();
+    $params['actions'] = WDWLibrary::image_actions( $params['gallery_type'] );
     $params['page_url'] = $params['form_action'];
     $order_by = WDWLibrary::get('order_by', 'order_asc');
     if ( !array_key_exists($order_by, WDWLibrary::admin_images_ordering_choices())) {
@@ -338,7 +339,14 @@ class GalleriesController_bwg {
     $params['rows'] = $this->model->get_image_rows_data($id, $params);
     $params['pager'] = 0;
     $params['facebook_embed'] = $this->get_facebook_embed();
-	$this->view->edit( $params );
+
+    $gallery_types = array('' => __('Mixed', BWG()->prefix), 'instagram' => __('Instagram only', BWG()->prefix));
+    if ( has_action('init_display_facebook_gallery_options_bwg') && $id != 0 ) {
+      $gallery_types['facebook'] = __('Facebook', BWG()->prefix);
+    }
+    $params['gallery_types'] = apply_filters('bwg_get_gallery_types', $gallery_types);
+
+    $this->view->edit( $params );
   }
 
   /**
@@ -348,8 +356,8 @@ class GalleriesController_bwg {
    * @param boolean $all
    */
   public function save( $id = 0, $all = FALSE ) {
-    // Save gallery and images.
     $data = $this->model->save();
+
     $message = array('gallery_message' => $data['saved'], 'image_message' => '');
 
     $ajax_task = WDWLibrary::get('ajax_task', '');

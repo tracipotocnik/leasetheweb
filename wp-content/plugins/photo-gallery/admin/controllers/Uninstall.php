@@ -20,13 +20,13 @@ class UninstallController_bwg {
   public function __construct() {
     if ( !BWG()->is_pro ) {
       global $bwg_options;
-      if ( !class_exists("TenWebLibConfig") ) {
+      if ( !class_exists("TenWebNewLibConfig") ) {
         $plugin_dir = apply_filters('tenweb_free_users_lib_path', array('version' => '1.1.1', 'path' => BWG()->plugin_dir));
         include_once($plugin_dir['path'] . "/wd/config.php");
       }
-      $config = new TenWebLibConfig();
+      $config = new TenWebNewLibConfig();
       $config->set_options($bwg_options);
-      $deactivate_reasons = new TenWebLibDeactivate($config);
+      $deactivate_reasons = new TenWebNewLibDeactivate($config);
       $deactivate_reasons->submit_and_deactivate();
     }
 

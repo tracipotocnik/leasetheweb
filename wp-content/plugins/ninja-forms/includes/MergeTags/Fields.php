@@ -246,6 +246,8 @@ final class NF_MergeTags_Fields extends NF_Abstracts_MergeTags
         // Build our array to store our labels.
         $labels = array();
         // Loop over our options...
+        $field[ 'options' ] = apply_filters( 'ninja_forms_render_options', $field[ 'options' ], $field );
+        $field[ 'options' ] = apply_filters( 'ninja_forms_render_options_' . $field['type'], $field[ 'options' ], $field );
         foreach( $field[ 'options' ] as $options ) {
             // ...checks to see if our list has multiple values.
             if( is_array( $field[ 'value' ] ) ) {

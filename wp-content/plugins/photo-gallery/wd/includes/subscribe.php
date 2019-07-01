@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-class TenWebLibSubscribe
+class TenWebNewLibSubscribe
 {
     // //////////////////////////////////////////////////////////////////////////////////////
     // Events                                                                              //
@@ -45,7 +45,7 @@ class TenWebLibSubscribe
     public function subscribe_display_page()
     {
         $wd_options = $this->config;
-        require_once($wd_options->wd_dir_templates . "/display_subscribe.php");
+        require_once($wd_options->plugin_dir . '/admin/views/LibSubscribe.php');
     }
 
     public function after_subscribe()
@@ -54,7 +54,7 @@ class TenWebLibSubscribe
         if (isset($_GET[$wd_options->prefix . "_sub_action"])) {
 
             if ($_GET[$wd_options->prefix . "_sub_action"] == "allow") {
-                //$api = new TenWebLibApi($wd_options);
+                /*$api = new TenWebLibApi($wd_options);
                 $all_plugins = array();
                 $plugins = get_plugins();
                 foreach ($plugins as $slug => $data) {
@@ -65,7 +65,7 @@ class TenWebLibSubscribe
                         "AuthorURI" => $data["AuthorURI"]
                     );
                     $all_plugins[$slug] = $plugin;
-                }
+                }*/
 
                 $data = array();
                 $data["wp_site_url"] = site_url();
@@ -75,15 +75,16 @@ class TenWebLibSubscribe
                 $user_first_name = get_user_meta($admin_data->ID, "first_name", true);
                 $user_last_name = get_user_meta($admin_data->ID, "last_name", true);
 
-                $data["name"] = $user_first_name || $user_last_name ? $user_first_name . " " . $user_last_name : $admin_data->data->user_login;
+                $name = $user_first_name || $user_last_name ? $user_first_name . " " . $user_last_name : $admin_data->data->user_login;
+                $data["name"] = isset($_GET[$wd_options->prefix . "_user_name"]) ? $_GET[$wd_options->prefix . "_user_name"] : $name;
 
-                $data["email"] = $admin_data->data->user_email;
-                $data["wp_version"] = get_bloginfo('version');
+                $data["email"] = isset($_GET[$wd_options->prefix . "_user_email"]) ? $_GET[$wd_options->prefix . "_user_email"] : $admin_data->data->user_email;
+                /*$data["wp_version"] = get_bloginfo('version');*/
                 $data["product_id"] = $wd_options->plugin_id;
-                $data["all_plugins"] = json_encode($all_plugins);
+                /*$data["all_plugins"] = json_encode($all_plugins);*/
 
 
-                $response = wp_remote_post(TEN_WEB_LIB_SUBSCRIBE_URL, array(
+                $response = wp_remote_post(TEN_WEB_NEW_LIB_SUBSCRIBE_URL, array(
                         'method'      => 'POST',
                         'timeout'     => 45,
                         'redirection' => 5,
@@ -97,8 +98,12 @@ class TenWebLibSubscribe
 
                 $response_body = (!is_wp_error($response) && isset($response["body"])) ? json_decode($response["body"], true) : null;
 
-                if (is_array($response_body) && $response_body["body"]["msg"] == "ok") {
-
+                if (is_array($response_body) && $response_body["status"] == "ok") {
+                  if (get_option($wd_options->prefix . "_subscribe_email") !== false) {
+                    update_option($wd_options->prefix . "_subscribe_email", $data["email"]);
+                  } else {
+                    add_option($wd_options->prefix . "_subscribe_email", $data["email"], '', 'no');
+                  }
                 }
 
             }
@@ -107,8 +112,9 @@ class TenWebLibSubscribe
             } else {
                 add_option($wd_options->prefix . "_subscribe_done", "1", '', 'no');
             }
-
-            wp_safe_redirect($wd_options->after_subscribe);
+            if ($_GET[$wd_options->prefix . "_sub_action"] == "skip") {
+              wp_safe_redirect($wd_options->after_subscribe);
+            }
         }
 
     }

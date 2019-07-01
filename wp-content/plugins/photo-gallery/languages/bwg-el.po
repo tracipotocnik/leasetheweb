@@ -1046,7 +1046,7 @@ msgid "Remove pricelist"
 msgstr "Αφαίρεση τιμοκαταλόγου"
 
 #: admin/views/Galleries.php:471
-msgid "Enter YouTube, Vimeo, Instagram, Facebook, Flickr or Dailymotion URL here."
+msgid "Enter YouTube, Vimeo, Instagram, Flickr or Dailymotion URL here."
 msgstr ""
 
 #: admin/views/Galleries.php:472 admin/views/Galleries.php:510

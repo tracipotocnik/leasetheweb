@@ -179,6 +179,14 @@ final class NF_Database_Models_Form extends NF_Abstracts_Model
                 unset( $settings[ 'id' ] );
                 $settings[ 'created_at' ] = current_time( 'mysql' );
                 $field = Ninja_Forms()->form($form_id)->field()->get();
+                /**
+                 * If this is the default contact form,
+                 * ensure that we properly save the fields
+                 * to avoid the loss of settings when the cache is disabled.
+                 */
+                if ( 1 == $form_id ) {
+                    $field->update_settings( $settings );
+                }
                 $field->save();
             }
 

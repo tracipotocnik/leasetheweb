@@ -7,6 +7,10 @@
  * @var string $upsell_url  Upsell URL.
  */
 
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 ?>
 
 <ul class="smush-pro-features">
@@ -18,6 +22,18 @@
 			esc_html_e(
 				'Optimize images 2x more than regular smushing and with no visible loss
 							in quality using Smush’s intelligent multi-pass lossy compression.',
+				'wp-smushit'
+			);
+			?>
+		</div>
+	</li>
+	<li class="smush-pro-feature-row">
+		<div class="smush-pro-feature-title">
+			<?php esc_html_e( 'WPMU DEV CDN with WebP Support', 'wp-smushit' ); ?></div>
+		<div class="smush-pro-feature-desc">
+			<?php
+			esc_html_e(
+				'Serve your images from our CDN from 45 blazing fast servers around the world. Enable automatic image sizing and WebP support and your website will be absolutely flying.',
 				'wp-smushit'
 			);
 			?>

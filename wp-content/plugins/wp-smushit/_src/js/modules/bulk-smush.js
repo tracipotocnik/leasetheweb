@@ -16,10 +16,13 @@ import Smush from '../smush/smush';
 			/**
 			 * Handle the Bulk Smush/Bulk re-Smush button click.
 			 */
-			$( 'button.wp-smush-all' ).on( 'click', function( e ) {
+			$( '.wp-smush-all' ).on( 'click', function( e ) {
 				e.preventDefault();
 
 				$( '.sui-notice-top.sui-notice-success' ).remove();
+
+				const bulkWarning = document.getElementById('bulk_smush_warning');
+				bulkWarning.classList.add('sui-hidden');
 
 				// Remove limit exceeded styles.
 				const progress = $( '.wp-smush-bulk-progress-bar-wrapper' );
@@ -29,7 +32,7 @@ import Smush from '../smush/smush';
 
 				// Disable re-Smush and scan button.
 				// TODO: refine what is disabled.
-				$( '.wp-resmush.wp-smush-action, .wp-smush-scan, .wp-smush-all:not(.sui-progress-close), a.wp-smush-lossy-enable, button.wp-smush-resize-enable, input#wp-smush-save-settings' ).attr( 'disabled', 'disabled' );
+				$( '.wp-resmush.wp-smush-action, .wp-smush-scan, .wp-smush-all:not(.sui-progress-close), a.wp-smush-lossy-enable, button.wp-smush-resize-enable, button#wp-smush-save-settings' ).attr( 'disabled', 'disabled' );
 
 				// Check for IDs, if there is none (unsmushed or lossless), don't call Smush function.
 				/** @var {array} wp_smushit_data.unsmushed */
@@ -42,9 +45,9 @@ import Smush from '../smush/smush';
 				$( '.wp-smush-remaining' ).hide();
 
 				// Show loader.
-				$( '.sui-summary-smush .smush-stats-icon' )
-					.removeClass( 'sui-icon-info sui-warning' )
-					.addClass( 'sui-icon-loader sui-loading' );
+				progress.find('i.sui-icon-info').removeClass('sui-icon-info')
+					.addClass('sui-loading')
+					.addClass('sui-icon-loader');
 
 				new Smush( $( this ), true );
 			} );

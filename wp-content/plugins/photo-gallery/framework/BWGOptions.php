@@ -11,6 +11,7 @@ class WD_BWG_Options {
   public $upload_thumb_width = 500;
   public $upload_thumb_height = 500;
   public $image_quality = 75;
+  public $lazyload_images = 0;
   public $preload_images = 1;
   public $preload_images_count = 10;
   public $show_hide_custom_post = 0;
@@ -23,6 +24,7 @@ class WD_BWG_Options {
   public $enable_wp_editor = 0;
   public $enable_seo = 1;
   public $read_metadata = 1;
+  public $front_ajax = 0;
   public $developer_mode = 0;
 
   // Thumbnail
@@ -171,7 +173,9 @@ class WD_BWG_Options {
   public $album_image_thumb_height = 140;
   public $album_enable_page = 1;
   public $albums_per_page = 30;
-  public $album_images_per_page = 30;
+  public $album_images_per_page = 30;  
+  public $compact_album_sort_by = 'order';
+  public $compact_album_order_by = 'asc';
   public $album_sort_by = 'order';
   public $album_order_by = 'asc';
   public $album_show_search_box = 0;
@@ -199,6 +203,8 @@ class WD_BWG_Options {
   public $album_masonry_enable_page = 1;
   public $albums_masonry_per_page = 30;
   public $album_masonry_images_per_page = 30;
+  public $masonry_album_sort_by = 'order';
+  public $masonry_album_order_by = 'asc';
   public $album_masonry_sort_by = 'order';
   public $album_masonry_order_by = 'asc';
   public $album_masonry_show_search_box = 0;
@@ -223,6 +229,8 @@ class WD_BWG_Options {
   public $album_extended_enable_page = 1;
   public $albums_extended_per_page = 30;
   public $album_extended_images_per_page = 30;
+  public $extended_album_sort_by = 'order';
+  public $extended_album_order_by = 'asc';
   public $album_extended_sort_by = 'order';
   public $album_extended_order_by = 'asc';
   public $album_extended_show_search_box = 0;
@@ -274,7 +282,6 @@ class WD_BWG_Options {
   public $addthis_profile_id = '';
   public $popup_enable_facebook = 1;
   public $popup_enable_twitter = 1;
-  public $popup_enable_google = 1;
   public $popup_enable_pinterest = 0;
   public $popup_enable_tumblr = 0;
   public $popup_enable_ecommerce = 1;
@@ -358,5 +365,9 @@ class WD_BWG_Options {
 
     $this->jpeg_quality = $this->image_quality;
     $this->png_quality = 9 - round(9 * $this->image_quality / 100);
+  }
+
+  public function __get($name) {
+    return isset($this->$name) ? $this->$name : '';
   }
 }
